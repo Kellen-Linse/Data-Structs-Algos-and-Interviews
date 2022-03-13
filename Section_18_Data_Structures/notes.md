@@ -28,6 +28,8 @@
 <br>
 - Instance Methods: 
   - Provides functionality that pertains to a single instance of a class.
+  
 - Class Methods, and the **static** keyword:
-  - The `static` keyword defines a static method for a class. Static methods are called without instantiating their class and cannot be called through a class instance. Static methods are often used to create utility functions for an application.
+  - The `static` keyword defines a static method for a class. **Static methods are called without instantiating their class and CANNOT BE CALLED through a class instance. Static methods are often used to create utility functions for an application.**
+
   - Not related to an individual instance.
