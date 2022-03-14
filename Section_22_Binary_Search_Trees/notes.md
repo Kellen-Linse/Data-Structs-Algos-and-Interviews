@@ -12,14 +12,14 @@
 
   ![not tree](./resources/!Tree.JPG)
 
-  ### Tree Terminology:
+### Tree Terminology:
 
-    - **Root:** The top node in a tree.
-    - **Child:** A node directly connected to another node when moving away from the root node.
-    - **Parent:** A node directly connected to another node when moving towards the root node.
-    - **Siblings:** A group of nodes who share a single parent.
-    - **Leaf:** A node with no children.
-    - **Edge:** The connection between two nodes.
+  - **Root:** The top node in a tree.
+  - **Child:** A node directly connected to another node when moving away from the root node.
+  - **Parent:** A node directly connected to another node when moving towards the root node.
+  - **Siblings:** A group of nodes who share a single parent.
+  - **Leaf:** A node with no children.
+  - **Edge:** The connection between two nodes.
 
 ## 160: Uses for Trees
 
@@ -49,7 +49,7 @@
 
 ## 164: Setting up BST Class
 
-  ### Base Class:
+### Base Class:
 
   ```js
 
