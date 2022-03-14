@@ -207,7 +207,7 @@ class Queue{
 
 ```
 
-- **The methods for Queues are enqueue and dequeue**
+- The methods for Queues are **enqueue** and **dequeue**
 - We are "pushing" on and "shifting" off
 
 - Enqueue --> pushing  --> adding to the end of a list
@@ -252,7 +252,7 @@ class Queue{
   - Decrement size
   - return the **value** of the node removed
 
-## Dequeue Code
+### Dequeue Code
 
 ```js
 
