@@ -1,5 +1,5 @@
  
- # Quick Sort
+# Quick Sort
 
 ## 91: Intro to the Quick Sort:
 
