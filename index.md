@@ -24,4 +24,5 @@
 20. [Hash Tables](./Section_25_Hashtables/notes.md)
 21. [Graphs](Section_26_27_Graphs/notes_graph_26.md)
 22. [Graph Traversal](Section_26_27_Graphs/notes_graph_trav_27.md)
-23. [Dynamic Programming](Section_29_Dynamic_Programming/notes.md)
+23. [Dijkstra's Algorithm](Section_28_Dijkstras_Algorithm/notes.md)
+24. [Dynamic Programming](Section_29_Dynamic_Programming/notes.md)
