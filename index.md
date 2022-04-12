@@ -16,7 +16,7 @@
 12. [Quick Sort](Section_16_Quick_Sort/notes.md)
 13. [Data Structures](Section_18_Data_Structures/notes.md)
 14. [Singly Linked Lists](Section_19_Singly_Linked_Lists/notes.md)
-15. [](Section_20_Doubly_Linked_Lists/notes.md)
+15. [Doubly Linked Lists](Section_20_Doubly_Linked_Lists/notes.md)
 16. [Stacks and Queues](Section_21_Stacks_Queues/notes.md)
 17. [Binary Search Trees](Section_22_Binary_Search_Trees/notes.md)
 18. [Trees and Tree Traversal](Section_23_Tree_Traversal/notes.md)
