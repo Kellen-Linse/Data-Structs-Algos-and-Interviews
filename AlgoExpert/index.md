@@ -4,8 +4,8 @@
 
 #### Coding Tips:
 
-1. [Coding Skills](./Coding_Tips/Coding_Skills.md)
-2. [How to Best Use AlgoExpert](./Coding_Tips/How_To_Best_Use_AlgoExpert.md)
+1. [Coding Skills](./Coding_Interview_Tips/Coding_Skills.md)
+2. [How to Best Use AlgoExpert](./Coding_Interview_Tips/How_To_Best_Use_AlgoExpert.md)
 
 #### Data Structures Crash Course:
 
