@@ -39,7 +39,7 @@
   - First Half: **none**.
   - Second Half: **35-40 minutes**.
 
-### Hints
+##### Hints
 
 - On any given problem there are 3-4 hints.
 <br>
@@ -52,11 +52,11 @@
 - **Only look at any given hint ~10 minutes after starting or receiving your last hint.**
 - **Try to minimize the amount of hints you use. (Sometimes it is needed or expected, but try to use as little as possible.**
 
-### Running Your Code
+##### Running Your Code
 
 - This is super useful, but it is **not something you will have in a real interview setting.**
 
-### Recommendation:
+##### Recommendation:
 
 - **Run your code as much as you want in the first half of your prep.**
 - Only run your code **once or twice** once you think you have the solution in the second half.
@@ -74,7 +74,7 @@
   - Test cases can give you a very big hint.
 - Ideally, you should try to catch the errors that you have **before looking at the edge cases.**
 
-### Checking the Optimal Time and Space 
+##### Checking the Optimal Time and Space 
 
 - **ALWAYS, ALWAYS, ALWAYS run through a space and time complexity analysis once your test cases are passing.**
 - **You will be asked this in an interview** and you must get in the habit of doing that. 
@@ -88,11 +88,11 @@
         - If so keep working your solution to see if you can match this.
 
 
-### Syntax Highlighting
+##### Syntax Highlighting
 
 - This may be a luxury you do not have in your interview. 
 
-### Looking at the Solutions
+##### Looking at the Solutions
 
 - Don't look until you have solved yourself, or only if you are really, really stuck.
 <br>
