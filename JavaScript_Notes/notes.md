@@ -14,7 +14,7 @@ These are notes specific to Javascript as a language that may come in handy duri
 
   - `numberInstance.toString()`
     - Parameters:
-      - ()
+      - ( )
         - If no argument is passed in, base 10 will be assumed.
       - (radix)
         - An integer in the range 2 through 36 specifying the base to use for representing numeric values.
