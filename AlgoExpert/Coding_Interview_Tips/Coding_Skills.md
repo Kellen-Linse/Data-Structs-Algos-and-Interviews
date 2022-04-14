@@ -4,7 +4,7 @@
 
 ## 6 Things You can do in a Coding Interview to Show Off Your Coding Skills.
 
-##### 1: Descriptive Variable Naming
+### 1: Descriptive Variable Naming
 
 - **Name your variables in such a way that at reader or your interviewer can understand what is going on.**
 - Better to be descriptive and long than confusing and short.
@@ -13,7 +13,7 @@
 - Helps with communication and helps the interviewer follow along.
 <br>
 
-##### 2: Abstraction and Making Use of Helper Methods
+### 2: Abstraction and Making Use of Helper Methods
 
 - Separate your code into logic units
 - Reduce repetition
@@ -23,13 +23,13 @@
 - You can abstract the less meaningful parts of the code, and define the bulk of your algorithm first, communicating what it does and that you will define it later.
 <br>
 
-##### 3: Documentation
+### 3: Documentation
 
 - Not all coding problems will lend themselves to this, but some will.
 - **This is a good positive signal to show the interviewer that you know how to document your code when there is something confusing.**
 - This can help with communication with your interviewer.
 
-##### 4: Descriptive Code
+### 4: Descriptive Code
 
 - This extends 1, and 3, but goes further.
 - If there are complex or confusing parts of your code try to make them easier to understand.
@@ -52,7 +52,7 @@ if(descriptiveTestCondition) "do some thing";
 
 ```
 
-##### 5: Idiomatic Coding Style
+### 5: Idiomatic Coding Style
 
 - Every coding language has a "good version" of how to code in that language.
 - Example:
@@ -64,7 +64,7 @@ if(descriptiveTestCondition) "do some thing";
 - **Know your language!**
 - <br>
 
-##### 6: Testing
+### 6: Testing
 
 - **If you can demonstrate that you can create good tests for your algorithms, that is going to be a good signal.**
 - Generally, you don't need to write out the tests, just speak to what you would do.

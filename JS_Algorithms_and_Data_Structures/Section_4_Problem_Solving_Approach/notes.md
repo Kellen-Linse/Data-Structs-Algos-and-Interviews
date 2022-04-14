@@ -10,7 +10,7 @@
   - **Devise** a plan for solving problems
   - **Master** common problem solving patterns
 
-##### Problem Solving
+### Problem Solving
   - Understanding the Problem 
   - Explore Concrete Examples
   - Break It Down
@@ -25,7 +25,7 @@
 
   - It is worth being deliberate and having a game plan, a step by step guide to help you think about how to solve problems
 
-##### Understanding the Problem:
+### Understanding the Problem:
 
   - An important first step to take is to understand the problem ahead of you.
   - Thoroughly investigate the problem and ask clarifying questions before you get started on anything else.

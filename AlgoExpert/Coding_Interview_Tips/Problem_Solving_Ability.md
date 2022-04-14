@@ -14,7 +14,7 @@
 - Some of these tips will overlap with tips given in other videos, such as communication, because they are all interrelated. 
 <br>
 
-##### 1. Eliminate Ambiguity 
+### 1. Eliminate Ambiguity 
 
   - On the job you are often given ambiguous problems.
     - You need to show that you can handle it.
@@ -30,7 +30,7 @@
 - **There is no worse signal you can give than jumping into a problem without asking any questions.**
 <br>
 
-##### 2. Take Some Time to Discover the Problem
+### 2. Take Some Time to Discover the Problem
 
 - What you **don't** want to do is read the problem, then immediately jump into coding the solution.
   - That tells your interviewer you don't take time to fully understand the problem, and that you don't consider other possible solutions.
@@ -46,7 +46,7 @@
   - You can consider what type of data structure will work best for you.
 <br>
 
-##### 3. Discuss Trade Offs
+### 3. Discuss Trade Offs
 
 - **There is almost always more than one way to solve a problem.**
 - When you come up with a solution you should **always discuss the tradeoffs, or pros and cons of that solution.**
@@ -60,7 +60,7 @@
       - bad: This solution uses extra memory.
 <br>
 
-##### 4. Implementing or Tackling the Problem in an Organized Manner
+### 4. Implementing or Tackling the Problem in an Organized Manner
 
 - Sometimes it is better to not start from the very beginning.
   - Maybe you need to do something like define a class or helper methods.
@@ -75,7 +75,7 @@
 <br>
 
 
-##### 5. Test Proactively
+### 5. Test Proactively
 
 - **Don't** let your interviewer ask about how confident you are or how you would test it.
 - **Mention testing BEFORE your interviewer does.**
