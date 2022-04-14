@@ -2,7 +2,7 @@
 
 ## Site:
 
-Site is published at [https://kellen-linse.github.io/JS_DS-A_Udemy_Notes/](https://kellen-linse.github.io/JS_DS-A_Udemy_Notes/)
+Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Interviews/](https://kellen-linse.github.io/Data-Structs-Algos-and-Interviews/)
 
 
 ## Content:
