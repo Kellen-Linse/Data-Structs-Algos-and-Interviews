@@ -12,6 +12,6 @@ Site is published at [https://kellen-linse.github.io/JS_DS-A_Udemy_Notes/](https
 2. [JavaScript Language Notes](./JavaScript_Notes/notes.md)
 
 
-3. [General Notes](./General%20Notes/index.md)
+3. [General Notes](./General_Notes/index.md)
 
 4. 
