@@ -7,6 +7,7 @@
 1. [Coding Skills](./Coding_Interview_Tips/Coding_Skills.md)
 2. [How to Best Use AlgoExpert](./Coding_Interview_Tips/How_To_Best_Use_AlgoExpert.md)
 3. [Problem Solving Ability](Coding_Interview_Tips/Problem_Solving_Ability.md)
+4. [Coding Interview Questions](./Coding_Interview_Questions/index.md)
 
 #### Data Structures Crash Course:
 
