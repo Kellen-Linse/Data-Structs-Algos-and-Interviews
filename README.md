@@ -9,7 +9,7 @@ Site is published at [https://kellen-linse.github.io/JS_DS-A_Udemy_Notes/](https
 
 1. [Javascript Algorithms and Data Structures (Udemy)](/JS_Algorithms_and_Data_Structures/index.md)
 
-2. [General Notes](./General_Notes/index.md)
+2. [General](./General_Notes/index.md)
   
 3. [JavaScript Language Notes](./JavaScript_Notes/notes.md)
 
