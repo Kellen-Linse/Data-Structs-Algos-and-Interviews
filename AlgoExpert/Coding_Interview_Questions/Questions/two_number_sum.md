@@ -18,7 +18,7 @@
 
 #### Solution #2, hashtable
 
-- Could possibly use a hash table
+- Solve using a hash table
   - This will take more space
   - but will allow us to access the numbers in constant time
 
