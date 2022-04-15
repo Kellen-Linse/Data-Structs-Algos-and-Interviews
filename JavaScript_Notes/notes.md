@@ -2,7 +2,10 @@
 
 These are notes specific to Javascript as a language that may come in handy during coding interviews.
 
+### Contents:
+
 1. Built In Methods
+2. Operators
 
 ---
 
@@ -20,3 +23,17 @@ These are notes specific to Javascript as a language that may come in handy duri
         - An integer in the range 2 through 36 specifying the base to use for representing numeric values.
     - Code Questions:
       - number palindrome
+
+<br>
+
+---
+
+## 2. Operators
+
+  #### **in**
+
+  - The **in** operator **returns true if the specified property is in the specified object** or its prototype chain.
+
+  - syntax
+
+>   prop **in** object
