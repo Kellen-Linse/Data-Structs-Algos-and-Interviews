@@ -7,3 +7,5 @@
 2. [Technical Interview Steps to Follow](./Steps_To_Follow.md)
 
 3. [Links](./links.md)
+
+4. [Big O Cheat Sheet](./resources/Big_O.png)
