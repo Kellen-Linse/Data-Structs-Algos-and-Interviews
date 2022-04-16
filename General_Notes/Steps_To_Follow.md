@@ -1,5 +1,6 @@
 # Steps to Follow When Solving a Code Challenge:
 
+- **When approaching a new problem, evaluate what data structure might work best, and what the trade offs of using it might be.**
 
 ## Steps:
 
