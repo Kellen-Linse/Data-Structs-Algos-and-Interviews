@@ -7,9 +7,8 @@ Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Inte
 
 ## Content:
 
-
-
 1. [Quick Reference](./Quick_Reference/index.md)
+  - Quick Reference Cheat Sheet
 
 2. [General](./General_Notes/index.md)
   - Catch all area for notes.
