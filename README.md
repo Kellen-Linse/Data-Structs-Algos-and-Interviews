@@ -7,14 +7,19 @@ Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Inte
 
 ## Content:
 
-1. [General](./General_Notes/index.md)
+
+
+1. [Quick Reference](./Quick_Reference/index.md)
+
+2. [General](./General_Notes/index.md)
   - Catch all area for notes.
 
-2. [JavaScript Language Notes](./JavaScript_Notes/notes.md)
+3. [JavaScript Language Notes](./JavaScript_Notes/notes.md)
   - Notes related specifically to JavaScript
 
-3. [Javascript Algorithms and Data Structures (Udemy)](/JS_Algorithms_and_Data_Structures/index.md)
+4. [Javascript Algorithms and Data Structures (Udemy)](/JS_Algorithms_and_Data_Structures/index.md)
   - Notes related to Colt Steele's JS DS&A class on Udemy.
 
-4. [AlgoExpert](./AlgoExpert/index.md)
+5. [AlgoExpert](./AlgoExpert/index.md)
   - Note related to AlgoExpert.com
+
