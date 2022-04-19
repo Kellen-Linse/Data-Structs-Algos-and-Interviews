@@ -27,12 +27,13 @@
       - **slice extracts up to but not including end.**
     - **splice(start, [deleteCount, item1, item2, itemN])** - Slice changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
       - **returns an array containing the deleted elements.**
-    - **sort([compare function])** - Sorts the elements of an array in place and returns the sorted array. 
+    - **map(callback(element[, index]))** - Map creates a new array populated with the results of calling a provided function on every element in the calling array.
+    - **sort([compare_callback((a, b) => ... ))** - Sorts the elements of an array in place and returns the sorted array. 
       - If compare function is omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
         - Compare function returns:
-          - greater than 0, ascending
-          - less than 0, descending
-          - == 0, no change
+          - **greater than 0**, ascending
+          - **less than 0**, descending
+          - **== 0**, no change
 
 ### Big O:
 
