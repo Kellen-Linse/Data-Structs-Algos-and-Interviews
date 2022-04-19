@@ -32,7 +32,7 @@
 
 ### Big O:
 
-| Action  | Big 0  | S&T  |
+| Action  | Big 0  |
 |---|---|---|
 |  get | O(1) space and time  |
 |  set | O(1) space and time  |
