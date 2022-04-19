@@ -81,14 +81,14 @@
 
 | Completed  | Question  | Difficulty  | Link  |
 |---|---|---|---|
-|   | Climbing Stairs  | Easy  | [Link]()  |
-|   | Coin Change  | Medium  | [Link]()  |
-|   | Longest Increasing Subsequence  | Medium  | [Link]()  |
-|   | Combination Sum  | Medium  | [Link]()  |
-|   | House Robber  | Medium  | [Link]()  |
-|   | House Robber II  | Medium  | [Link]()  |
-|   | Decode Ways  | Medium  | [Link]()  |
-|   | Unique Paths  | Medium  | [Link]()  |
-|   | Jump Game  | Medium  | [Link]()  |
-|   | Word Break  | Medium  | [Link]()  |
+|   | Climbing Stairs  | Easy  | [Link](https://leetcode.com/problems/climbing-stairs/)  |
+|   | Coin Change  | Medium  | [Link](https://leetcode.com/problems/coin-change/)  |
+|   | Longest Increasing Subsequence  | Medium  | [Link](https://leetcode.com/problems/longest-increasing-subsequence/)  |
+|   | Combination Sum  | Medium  | [Link](https://leetcode.com/problems/combination-sum-iv/)  |
+|   | House Robber  | Medium  | [Link](https://leetcode.com/problems/house-robber/)  |
+|   | House Robber II  | Medium  | [Link](https://leetcode.com/problems/house-robber-ii/)  |
+|   | Decode Ways  | Medium  | [Link](https://leetcode.com/problems/decode-ways/)  |
+|   | Unique Paths  | Medium  | [Link](https://leetcode.com/problems/unique-paths/)  |
+|   | Jump Game  | Medium  | [Link](https://leetcode.com/problems/jump-game/)  |
+|   | Word Break  | Medium  | [Link](https://leetcode.com/problems/word-break/)  |
 
