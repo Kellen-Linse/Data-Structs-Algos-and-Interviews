@@ -19,16 +19,20 @@
 ### Specifics:
 
   - Some of the many built in methods:
-    - push(val) - **Add to end** of array.
-    - pop() - **Remove from end** of array, return removed item.
-    - unshift(val) - **Add to the beginning** of array.
-    - shift() - **Remove to the beginning** of array, return removed item.
-    - slice(start, [end]) - Slice returns a shallow copy of a portion of the array into a **new array**. The original array will **not** be modified.
+    - **push(val)** - **Add to end** of array.
+    - **pop()** - **Remove from end** of array, return removed item.
+    - **unshift(val)** - **Add to the beginning** of array.
+    - **shift()** - **Remove to the beginning** of array, return removed item.
+    - **slice(start, [end])** - Slice returns a shallow copy of a portion of the array into a **new array**. The original array will **not** be modified.
       - **slice extracts up to but not including end.**
-    - splice(start, [deleteCount, item1, item2, itemN]) - Slice changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
+    - **splice(start, [deleteCount, item1, item2, itemN])** - Slice changes the contents of an array by removing or replacing existing elements and/or adding new elements in place.
       - **returns an array containing the deleted elements.**
-    - sort([compare function]) - Sorts the elements of an array in place and returns the sorted array. 
+    - **sort([compare function])** - Sorts the elements of an array in place and returns the sorted array. 
       - If compare function is omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
+        - Compare function returns:
+          - > 0, ascending
+          - < 0, descending
+          - == 0, no change
 
 ### Big O:
 
