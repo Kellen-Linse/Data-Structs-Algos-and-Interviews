@@ -3,7 +3,7 @@
 A quick cheat sheet of the Data Structures, Sorting Methods, and Algorithms.
 
 ### Data Structures:
-  - [Arrays]
+  - [Arrays](Data_Structures/Arrays.md)
   - [Strings]
   - [Singly Linked Lists]
   - [Doubly Linked Lists]
