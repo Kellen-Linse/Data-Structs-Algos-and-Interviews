@@ -20,6 +20,7 @@
 |   | Group Anagrams  | Medium  | [Link](https://leetcode.com/problems/group-anagrams/)  |
 |   | Maximum Product Sub Array  | Medium  | [Link](https://leetcode.com/problems/maximum-product-subarray/)  |
 |   | Search in Rotated Sorted Array  | Medium  | [Link](https://leetcode.com/problems/search-in-rotated-sorted-array/)  |
+
 <br>
 
 ### Data Structures
@@ -37,6 +38,7 @@
 |   | Palindromic Substrings  | Medium  | [Link](https://leetcode.com/problems/palindromic-substrings/)  |
 |   | Pacific Atlantic Water Flow  | Medium  | [Link](https://leetcode.com/problems/pacific-atlantic-water-flow/)  |
 |   | Minimum Window Substring  | Hard  | [Link](https://leetcode.com/problems/minimum-window-substring/)  |
+
 <br>
 
 ### Non-linear Data Structures
@@ -55,6 +57,7 @@
 |   | Binary Tree Level Order Traversal  | Medium  | [Link](https://leetcode.com/problems/binary-tree-level-order-traversal/)  |
 |   | Serialize and Deserialize Binary Tree  | Hard  | [Link](https://leetcode.com/problems/serialize-and-deserialize-binary-tree/)  |
 |   | Binary Tree Maximum Path Sum  | Hard  | [Link](https://leetcode.com/problems/binary-tree-maximum-path-sum/)  |
+
 <br>
 
 ### Data Structures Cont...
@@ -71,6 +74,7 @@
 |   | Merge K Sorted Lists  | Hard  | [Link](https://leetcode.com/problems/merge-k-sorted-lists/)  |
 |   | Find Median from Data Stream  | Hard  | [Link](https://leetcode.com/problems/find-median-from-data-stream/)  |
 |   | Word Search II  | Hard  | [Link](https://leetcode.com/problems/word-search-ii/)  |
+
 <br>
 
 ### Dynamic Programming
