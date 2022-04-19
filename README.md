@@ -26,3 +26,4 @@ Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Inte
   - A popular set of leet code questions.
 
 7. [Leet Code Notes](Leet_Code_Notes/index.md)
+  - Notes from answering Leet Code questions

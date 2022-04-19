@@ -2,6 +2,7 @@
 
 - Notes from solving Leet code problems
 
+
 ### Arrays
 
-- [1672. Richest Customer Wealth](pages/arrays/richest.md)
+- [1672. Richest Customer Wealth](pages/richest.md)
