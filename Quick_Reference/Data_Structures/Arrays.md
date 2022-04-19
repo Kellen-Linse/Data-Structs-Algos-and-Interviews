@@ -38,16 +38,16 @@
 
 | Action  | Big 0  |
 |---|---|---|
-|  get | O(1) space and time  |
-|  set | O(1) space and time  |
-| traverse | O(n) time  |
-| copy | O(n) space and time  |
-|  unshift - beg| O(n) time, O(1) space |
-|  inserting - mid| O(n) time, O(1) space |
-|  inserting - end, dynamic | O(1) space, O(1) time |
-|  shift - beginning | O(n) space and time  |
-|  remove - middle | O(n) space and time  |
-|  pop | O(1) space and time |
+|  **get** | O(1) space and time  |
+|  **set** | O(1) space and time  |
+| **traverse** | O(n) time  |
+| **copy** | O(n) space and time  |
+|  **unshift** - beg| O(n) time, O(1) space |
+|  **inserting** - mid| O(n) time, O(1) space |
+|  **inserting** - end, dynamic | O(1) space, O(1) time |
+|  **shift** - beginning | O(n) space and time  |
+|  **remove** - middle | O(n) space and time  |
+|  **pop** | O(1) space and time |
 
 ### Possible Problem Questions:
 
