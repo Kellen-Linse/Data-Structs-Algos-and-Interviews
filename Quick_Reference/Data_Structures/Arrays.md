@@ -30,8 +30,8 @@
     - **sort([compare function])** - Sorts the elements of an array in place and returns the sorted array. 
       - If compare function is omitted, the array elements are converted to strings, then sorted according to each character's Unicode code point value.
         - Compare function returns:
-          - > 0, ascending
-          - < 0, descending
+          - greater than 0, ascending
+          - less than 0, descending
           - == 0, no change
 
 ### Big O:
