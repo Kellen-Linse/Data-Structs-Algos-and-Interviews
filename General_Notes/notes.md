@@ -11,3 +11,7 @@
 4/18/22
 
 - One of the things you are judged on in a coding interview is how well you can ask clarifying questions. So don't hesitate to ask if you need something clarified. 
+
+4/19/22
+
+- **If you are solving an algorithm that has to do with comparing two arrays that contain the same amount of values, be sure to start by checking to see if they are the same length!**
