@@ -12,7 +12,7 @@
 | X  | Contains Duplicate  | Easy  | [Link](https://leetcode.com/problems/contains-duplicate/)  | []() |
 | X  | Best Time to Buy and Sell Stock	  | Easy  | [Link](https://leetcode.com/problems/best-time-to-buy-and-sell-stock/)  | []() |
 | X  | Valid Anagram  | Easy  | [Link](https://leetcode.com/problems/valid-anagram/)  | [Notes](./notes/valid_anagram.md) |
-|   | Valid Parentheses  | Easy  | [Link](https://leetcode.com/problems/valid-parentheses/)  | []() |
+| X  | Valid Parentheses  | Easy  | [Link](https://leetcode.com/problems/valid-parentheses/)  | []() |
 |   | Maximum Sub Array  | Easy  | [Link](https://leetcode.com/problems/maximum-subarray/)  | []() |
 |   | Product of Array Except Self  | Medium  | [Link](https://leetcode.com/problems/product-of-array-except-self/)  | []() |
 |   | 3Sum  | Medium  | [Link](https://leetcode.com/problems/3sum/)  | []() |
