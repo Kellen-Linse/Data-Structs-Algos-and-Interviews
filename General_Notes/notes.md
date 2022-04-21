@@ -15,3 +15,8 @@
 4/19/22
 
 - **If you are solving an algorithm that has to do with comparing two arrays that contain the same amount of values, be sure to start by checking to see if they are the same length!**
+
+4/20/22 
+
+- **Don't confuse Big O of 2n and Big O of n^2, they are very different things. 2 passes of n vs 2 passes for each in n**\
+- When considering solutions for a problem, start at the best time complexity, then work backwards until you find a solution, then try to apply that solution to see if you can find a better solution. 
