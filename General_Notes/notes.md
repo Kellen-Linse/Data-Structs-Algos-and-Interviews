@@ -24,3 +24,7 @@
 5/22/22
 
 - **Don't forget that when checking for existence you need to account for the possibility that the value will be zero and therefore return a falsy value.**
+
+- **Every detail of a problem is in there for a reason. Make sure you're considering all details. They are all hints towards the solution.**
+
+- **You can use the `in` operator to check for existence to avoid the problem mentioned above.**
