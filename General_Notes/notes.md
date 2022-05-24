@@ -28,3 +28,7 @@
 - **Every detail of a problem is in there for a reason. Make sure you're considering all details. They are all hints towards the solution.**
 
 - **You can use the `in` operator to check for existence to avoid the problem mentioned above.**
+
+5/24/22
+
+- **Break Problems into smaller and smaller chunks until you find your solution.**
