@@ -31,4 +31,4 @@
 
 5/24/22
 
-- **Break Problems into smaller and smaller chunks until you find your solution.**
+- **Break problems into smaller and smaller chunks until you find your solution.**
