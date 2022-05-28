@@ -347,6 +347,202 @@ anagrams(stringA, stringB){
 
 10: Capitalize 
 
+### Remember: STRINGS ARE IMMUTABLE in JS!
+
 #### Prompt:
   - Write a function that accepts a string.  The function should capitalize the first letter of each word in the string then return the capitalized string.
 
+#### Solution:
+
+  - Example 1: K
+    - O(n)t&s
+    - No built in methods!
+
+```js
+function capitalize(str){
+  let returnString = '';
+
+  for(let i = 0; i < str.length; i++){
+    let char = str[i];
+    if(str[i - 1] == ' ' || i === 0){
+      char = str[i].toUpperCase();
+    } 
+    returnString += char;
+  }
+
+  return returnString;
+}
+```
+
+  - Example 2: Video, inefficient 
+    - create words array
+    - split input string into array at ' '
+    - iterate over words in array
+    - add return value of word[0].toUpperCase() and word.slice(1);
+    - push that result to words array
+    - return words.join(' ');
+
+```js
+
+function capitalize(str){
+  const words = [];
+
+  for(let word of str.split(' ')){
+    words.push(word[0].toUpperCase() + word.slice(1));
+  }
+
+  return words.join(' ');
+}
+
+```
+
+Section 11: Steps
+
+#### Prompt:
+
+  - Write a function that accepts a positive number N. The function should console log a step shape with N levels using the # character.  Make sure the step has spaces on the right hand side!
+
+#### Iterative Solution -K
+
+```js
+function steps(n) {
+
+  // loop once for each step
+  for(let i = 1; i <= n; i++){
+    //create string to print
+    let str = '';
+    // loop once for length if string
+    for(let j = 1; j <= n; j++){
+      if(j <= i){
+        str+= '#';
+      } else {
+        str+= ' ';
+      }
+    }
+    console.log(str);
+  }
+  
+}
+
+```
+
+#### Iterative Solution Using Rows and Cols - Video
+
+```js
+function steps(n) {
+
+  // loop once for each step
+  for(let row = 0; row < n; row++){
+    //create string to print
+    let str = '';
+    // loop once for length if string
+    for(let col = 0; col < n; col++){
+      if(row <= col){
+        str+= '#';
+      } else {
+        str+= ' ';
+      }
+    }
+    console.log(str);
+  }
+}
+
+```
+
+#### Recursive Solution - Video
+
+  - Not the recommended route unless you are specifically asked;
+  
+##### Recursion Tips:
+
+  - Figure out the bare pieces of information to represent your problem
+  - Give reasonable defaults to your info
+  - Check the base case, return if no work
+  - Do some work
+  - call function with new arguments
+
+```js
+
+function printNumber(num){
+  // ALWAYS START WITH BASE CASE
+  if(num <= 0) return;
+
+  console.log(num);
+
+  // WE MUST MAKE SURE THAT OUR INPUT HAS CHANGED 
+  // AND IS TRENDING TOWARDS OUR BASE CASE!
+  printNum(num - 1);
+}
+
+```
+
+##### "Bare pieces of information"
+
+  - if(row === n) then we have hit the end of our problem
+  - if(str has length n) we are at the end of a row
+  - if(length of the str is less or equal to the row we are on)
+    - add '#' else, ' '
+
+##### Recursive Solution 1: Containing function definitions within one outer function
+
+  - Benefits: 
+    - Enclosed functions know about variables within their scope (closure).
+    - So, less variables to pass around, less chances for mistakes
+  - Disadvantages:
+    - Harder to read, modify
+
+```js
+
+// Create String to Print
+function steps(n) {
+
+  function printRow(row, n){
+    if(row > n) return;
+    let str = '';
+    function addToStr(pos){
+      if(pos > n) return;
+      if(pos <= row){
+        str+= '#';
+      } else {
+        str+= ' ';
+      }
+      addToStr(pos + 1);
+    }
+    addToStr(1);
+    console.log(str);
+    printRow(row + 1, n);
+  }
+  printRow(1, n);
+}
+
+```
+##### Recursive Solution 2: Containing function definitions within one outer function
+
+  - Benefits: 
+    - Easier to read, modify
+  - Disadvantages:
+    - More variables to pass around, easier to make mistakes.
+
+```js
+
+// create row, represented as string to print
+function createString(pos, row, n, str){
+  if(pos > n) return str;
+  pos <= row ? str+= '#' : str+= ' ';
+  return createString(pos + 1, row, n, str);
+}
+
+// Print Row from 1 to n;
+function printRows(row, n){
+  if(row > n) return;
+  let str = '';
+  console.log(createString(1, row, n, str));
+  printRows(row + 1, n);
+}
+
+// Print steps
+function steps(n) {
+  printRows(1, n);
+}
+
+```
