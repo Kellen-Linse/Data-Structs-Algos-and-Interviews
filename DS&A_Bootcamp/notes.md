@@ -550,7 +550,7 @@ function steps(n) {
 
 ```
 
-## Two Sided Steps - Pyramid
+## Section 12. Two Sided Steps - Pyramid
 
 #### Prompt: 
   - Write a function that accepts a positive number N. The function should console log a pyramid shape  with N levels using the # character.  Make sure the pyramid has spaces on both the left *and* right hand sides.
@@ -628,7 +628,7 @@ function pyramid(n) {
 
 ```
 
-## Matrix Spiral
+## Section 13. Matrix Spiral
 
 #### Prompt:
   - Write a function that accepts an integer N and returns a NxN spiral matrix.
@@ -752,3 +752,190 @@ function matrix(n) {
 //  ^ eR  [7, 6, 5]];
   }
 ```
+
+## Section 16. Fibonacci
+
+#### Prompt: Print out the n-th entry in the fibonacci series. The fibonacci series is an ordering of numbers where each number is the sum of the preceding two. For example, the sequence [0, 1, 1, 2, 3, 5, 8, 13, 21, 34].
+
+##### Iterative Solution:
+
+```js
+function fib(n) {
+
+  let last = 0; 
+  let current = 1; 
+  let total = 1; 
+
+  for(let i = 1; i < n; i++){ 
+    total = current + last;
+    last = current;
+    current = total;
+  }
+
+  return total;
+}
+```
+
+#### Recursive Solution:
+
+  - **Classic example of almost impossible to solve until you have seen it before.**
+  - This is an O(2^n) solution! **very bad!**
+  - This is where **Memoization** comes in!
+
+
+```js
+
+function fib(n) {
+  if(n < 2) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+```
+
+#### Memoized Recursive Solution
+
+```js
+function memoFib(n, cache){
+
+  // create cache, or set cache
+  let cache = cache || [];
+
+  // if value exists in cache return it
+  if(cache[n]) return cache[n];
+
+  // if n < 3 return 1
+  if(n < 3) return 1;
+
+  // If we have gotten this far, store return value in cache
+  cache[n] = memoFib(n - 1, cache) + (n - 2, cache);
+
+  // return the value just found and store
+  return cache[n];
+}
+```
+
+#### Memoized Recursive Solution Using Factory Memo Function
+
+```js
+// Generic memoizing function, closure
+function memoize(fn) {
+
+  let cache = {};
+  //...args, defensive coding that allows us to catch all arguments
+  return function(...args){
+    if(cache[args]) return cache[args];
+
+    // The Function.prototype.apply() method allows you to
+    // call a function with a given this value and arguments provided as an array. 
+    const result = fn.apply(this, args);
+    cache[args] = result;
+
+    return result;
+  };
+}
+
+function fib(n) {
+  if(n < 2) return n;
+  return fib(n - 1) + fib(n - 2);
+}
+
+// reset fib to be to be the memoized version
+fib = memoize(fib);
+```
+
+## Section 18: The Queue
+
+##### Note on JS Data Structures
+
+- There are portions of JS that take care of certain Data Structures for you automatically, however you may still have an interviewer ask you to build basic versions of certain data structures. 
+- But we will ofter use built in data structures such as arrays, but treat them like queues in JS.
+- **We do not have basic Arrays in Javascript**
+
+##### Queues
+
+- First In Last Out
+  - **Enqueuing or Adding:** Add to beginning of queue.
+  - **Dequeuing or Removing:** Remove from end of queue.
+
+##### DS in JS
+
+- When we build a data structure in JS, we restrict the methods of the JS data structure we are are working with
+- For example:
+  - When we build a queue in JS what we are doing is taking an array with lots of methods, and restricting what methods and properties are available.
+
+| Queue  | Array  |
+|---|---|
+| queue.enqueue(x), queue.add(x)  | array.unshift(x)  | 
+| queue.dequeue(), queue.remove()  | queue.dequeue()  |
+
+##### Prompt
+
+- // Create a queue data structure.  The queue should be a class with methods 'add' and 'remove'. Adding to the queue should store an element until it is removed. 
+
+#### Solution:
+
+```js
+class Queue {
+
+  data = [];
+  
+  peek = () => this.data[this.data.length - 1];
+  add = (record) => this.data.unshift(record);
+  remove = () => this.data.pop();
+}
+```
+
+Section 19: Stacks
+
+#### Prompt:
+  - Create a stack data structure.  The stack should be a class with methods 'push', 'pop', and 'peek'.  Adding an element to the stack should store it until it is removed.
+
+#### Solution:
+
+```js
+class Stack {
+
+  data = [];
+  
+  peek = () => this.data[this.data.length - 1];
+  push = (record) => this.data.push(record);
+  pop = () => this.data.pop();
+}
+```
+
+Section 20: Stacks and Queues
+
+##### Prompt:
+- Make a Queue out of two stacks
+
+##### Solution:
+
+```js
+class Queue {
+
+  constructor(){
+    this.inStack = new Stack();
+    this.outStack = new Stack();
+  }
+
+  add = (x) => {
+    this.inStack.push(x);
+  };
+
+  remove = () => {
+    while(this.inStack.peek()) this.outStack.push(this.inStack.pop());
+    let returnItem = this.outStack.pop();
+    while(this.outStack.peek()) this.inStack.push(this.outStack.pop());
+    return returnItem;
+  };
+  peek = () => {
+    while(this.inStack.peek()) this.outStack.push(this.inStack.pop());
+    let returnItem = this.outStack.peek();
+    while(this.outStack.peek()) this.inStack.push(this.outStack.pop());
+    return returnItem;
+  };
+}
+```
+
+Section 22: Midpoint of a LL
+
