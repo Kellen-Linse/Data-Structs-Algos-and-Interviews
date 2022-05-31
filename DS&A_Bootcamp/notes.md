@@ -396,7 +396,7 @@ function capitalize(str){
 
 ```
 
-Section 11: Steps
+## Section 11: Steps
 
 #### Prompt:
 
@@ -411,7 +411,7 @@ function steps(n) {
   for(let i = 1; i <= n; i++){
     //create string to print
     let str = '';
-    // loop once for length if string
+    // loop once for length of string
     for(let j = 1; j <= n; j++){
       if(j <= i){
         str+= '#';
@@ -435,7 +435,7 @@ function steps(n) {
   for(let row = 0; row < n; row++){
     //create string to print
     let str = '';
-    // loop once for length if string
+    // loop once for length of string
     for(let col = 0; col < n; col++){
       if(row <= col){
         str+= '#';
@@ -499,6 +499,7 @@ function steps(n) {
   function printRow(row, n){
     if(row > n) return;
     let str = '';
+
     function addToStr(pos){
       if(pos > n) return;
       if(pos <= row){
@@ -508,10 +509,12 @@ function steps(n) {
       }
       addToStr(pos + 1);
     }
+
     addToStr(1);
     console.log(str);
     printRow(row + 1, n);
   }
+
   printRow(1, n);
 }
 
@@ -545,4 +548,207 @@ function steps(n) {
   printRows(1, n);
 }
 
+```
+
+## Two Sided Steps - Pyramid
+
+#### Prompt: 
+  - Write a function that accepts a positive number N. The function should console log a pyramid shape  with N levels using the # character.  Make sure the pyramid has spaces on both the left *and* right hand sides.
+
+#### Iterative Solution
+
+```js
+
+function pyramid(n) {
+  
+  // find the length of each row
+  let length = n * 2 - 1;
+
+  // find middle, Math.floor((n * 2 - 1) / 2)
+  let middle = Math.floor(length / 2);
+
+  
+  // loop once for each row in pyramid
+  for(let row = 0; row < n; row++){
+
+    // create string to print
+    let str = '';
+
+    // loop once for each row in pyramid (to create string of length n) - col
+    for(let col = 0; col < length; col++){
+      // if(col < middle - row || col > middle + row)
+      if(col < middle - row || col > middle + row){
+        // add ' ' to string
+        str+= ' ';
+      } else {
+        // else add '#'
+        str+= '#';
+      }
+    }
+    // print string
+    console.log(str);
+  }
+}
+
+```
+
+#### Recursive Solution, Separated Functions
+
+```js
+
+function createString(pos, row, n, str){
+  // find the length of each row
+  let length = n * 2 - 1;
+
+  // find middle of that row
+  let middle = Math.floor(length / 2);
+
+  if(pos > length - 1) return str;
+  if(pos < middle - row || pos > middle + row){
+    str += ' ';
+  } else {
+    str += '#';
+  }
+  return createString(pos + 1, row, n, str);
+}
+
+// Print Row from 1 to n;
+function printRows(row, n){
+  if(row > n - 1) return;
+  let str = '';
+  console.log(createString(0, row, n, str));
+  printRows(row + 1, n);
+}
+
+// Print steps
+function pyramid(n) {
+  printRows(0, n);
+}
+
+
+```
+
+## Matrix Spiral
+
+#### Prompt:
+  - Write a function that accepts an integer N and returns a NxN spiral matrix.
+
+##### My attempt:
+  - Close but not functional.
+
+```js
+function matrix(n) {
+  let res = [];
+
+  for(let i = 0; i < n; i++){
+    res.push([]);
+  }
+
+  let count = 1;
+  let cUB = n;
+  let rUB = n;
+  let cLB = 0;
+  let rLB = 0;
+  let r = 0;
+  let c = 0;
+
+  while(count <= n*n){
+
+    while( c < cUB){
+      res[r][c] = count;
+      count++;
+      c++;
+    }
+    c--;
+    rLB++;
+    r = rLB;
+
+    while(r < rUB){
+      res[r][c] = count;
+      count++;
+      r++;
+    }
+    r--;
+    cUB--;
+    c = cUB;
+
+    while(c >= cLB){
+      res[r][c] = count;
+      count++;
+      c--;
+    }
+    c++;
+    rUB--;
+    r = rUB;
+
+    while(r >= rLB){
+      res[r][c] = count;
+      count++;
+      r--;
+    }
+    r++;
+    cLB++;
+    c = cLB;
+  }
+  return res;
+}
+```
+
+#### Solution:
+
+```js
+function matrix(n) {
+  let res = [];
+
+  for(let i = 0; i < n; i++){
+    res.push([]);
+  }
+
+  let count = 1;
+  let startCol = 0;
+  let endCol = n - 1;
+  let startRow = 0;
+  let endRow = n - 1;
+
+  while(startCol <= endCol && startRow <= endRow){
+
+    // Top Row
+    for(let i = startCol; i <= endCol; i++){
+      res[startRow][i] = count;
+      count++;
+    }
+    startRow++;
+
+    // Right Col
+    for(let i = startRow; i <= endRow; i++){
+      res[i][endCol] = count;
+      count++;
+    }
+    endCol--;
+
+    // Bottom Row
+    for(let i = endCol; i >= startCol; i--){
+      res[endRow][i] = count;
+      count++;
+    }
+    endRow--;
+
+    // Left Col
+    for(let i = endRow; i >= startRow; i--){
+      res[i][startCol] = count;
+      count++;
+    }
+    startCol++;
+  }
+  return res;
+}
+```
+
+```js
+  while(sC <= eC && sR <= eR){
+//      sC->   <-eC
+//  v sR [[1, 2, 3],
+//        [8, 9, 4],
+//  ^ eR  [7, 6, 5]];
+  }
 ```
