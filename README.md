@@ -18,6 +18,9 @@ Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Inte
 
 4. [Javascript Algorithms and Data Structures (Udemy)](/JS_Algorithms_and_Data_Structures/index.md)
   - Notes related to Colt Steele's JS DS&A class on Udemy.
+  - 
+5. [The Coding Interview Bootcamp: Algorithms + Data Structures (Udemy)](/DS&A_Bootcamp/notes.md)
+  - Notes related to Stephen Grinder's JS DS&A class on Udemy.
 
 5. [AlgoExpert](./AlgoExpert/index.md)
   - Note related to AlgoExpert.com

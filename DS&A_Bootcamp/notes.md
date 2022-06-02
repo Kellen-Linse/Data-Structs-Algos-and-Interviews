@@ -8,40 +8,41 @@
 
 ## Mistakes to Watch out for:
 
-- Setting up for loop wrong is an easy place to make a mistake, especially in an stressful environment.
+- Setting up for loop wrong is an easy place to make a mistake! Especially in a stressful environment.
 
 
 ## 1: Getting Started
 
-  - Problems often are really difficult unless you know the specific trick to a given problem.
+  - Interview problems are often really difficult unless you know the specific trick to a given problem.
     - Once you know that specific trick, those hard problems can become quite easy. 
-
+<br>
   - Often, the only way to know that solution is to have seen it before. 
     - The only way to have seen it? 
-      - **practice practice practice**
+      - practice practice practice
 
 ## 3: String Reversal
 
-### Prompt: Reverse String
+##### Prompt: Reverse String
 
   - Questions to ask:
-    - Do I need to take spaces into consideration?
+    - **Do I need to take spaces into consideration?**
 
   - Easy mistake to make:
 
 ```js
+// This method will fail, as '  ab  ' will be returned as 'ba' 
+// spaces will be removed.
+
 function reverse(str) {
   let returnStr = '';
 
   for(const char of str){
+    // Here we are adding the char BEFORE each current char in the returnStr
     returnStr+=char
   }
 
   return returnStr;
 }
-
-// This method will fail, as '  ab  ' will be returned as 'ba' 
-// spaces will be removed.
 ```
 
 ### Solutions:
@@ -66,18 +67,19 @@ function reverse(str) {
 
 #### Video Solutions:
 
-1. Using built in methods `split` and `join`
+##### Using built in methods `split`, `reverse`, and `join`
 
 ```js
 
 function reverse(str){
+  // split the str into an array (to use reverse)
+  // reverse the array (not a method of the string object)
+  // join the array back into a string 
   return str.split('').reverse().join('');
 }
 
 ```
-
-2. Standard for loop
-3. reduce
+##### reduce()
 
 ```js
 
@@ -225,12 +227,11 @@ function fizzBuzz(n){
 
 
 ```js
-
 function chunk(array, size) {
 
   let resultsArr = [];
   let count = 0;
-  // Iterate over array
+
   while(count < array.length){
     let arr = [];
     for(let i = 0; i < size; i++){
@@ -243,13 +244,44 @@ function chunk(array, size) {
   return resultsArr;
 }
 
+//============ Notated ============
+
+function chunk(array, size) {
+  // create results array
+  let resultsArr = [];
+
+  // create count variable
+  let count = 0;
+  // Iterate over array
+  while(count < array.length){
+
+    // create an array that will hold a chunk
+    let arr = [];
+
+    // add elements to arr in the given size amount
+    for(let i = 0; i < size; i++){
+      arr.push(array[count]);
+
+      // increment count here, we are still counting every index,
+      // we are just doing so as we push it into the chunked array.
+      count++;
+    }
+
+    // add the correctly sized array to the results array.
+    resultsArr.push(arr);
+  }
+
+  // return results array
+  return resultsArr;
+}
+
 ```
 
 ## 9. Anagrams
 
 #### Notes:
 
-  - Be careful with your for...of loops vs for...in loops!!
+  - **Be careful with your for...of loops vs for...in loops!!**
 
 #### Prompt: 
 
@@ -298,7 +330,7 @@ function cleanStr(str){
   return str.replace(/[^\w]/g, '').toLowercase();
 }
 
-function mapString(str){
+function stringToMap(str){
   let map = {};
   for(char of str){
     map[char] = map[char] + 1 || 1;
@@ -315,25 +347,28 @@ function anagrams(stringA, stringB) {
   if(stringA.length !== stringB.length) return false;
 
   // map the chars of stringA
-  let mapA = mapString(stringA);
+  let mapA = stringToMap(stringA);
 
   // map the chars of stringB
-  let mapB = mapString(stringB);
+  let mapB = stringToMap(stringB);
 
   // compare the values in mapA against mapB
   for(prop in mapA){
     if(mapA[prop] !== mapB[prop]) return false;
   }
 
+  // compare the values in mapB against mapA
+  for(prop in mapB){
+    if(mapA[prop] !== mapB[prop]) return false;
+  }
+
   return true;
 }
-
 ```
 
-  - EXAMPLE 3: Short, interesting, but inefficient.
-
+- EXAMPLE 3: Short, interesting, but inefficient.
   - Use JS methods
-  - Clean, Sort, Compare
+  - Clean and Sort, then Compare
 
 ```js
 
@@ -345,7 +380,7 @@ anagrams(stringA, stringB){
 
 ```
 
-10: Capitalize 
+## 10: Capitalize 
 
 ### Remember: STRINGS ARE IMMUTABLE in JS!
 
@@ -355,7 +390,7 @@ anagrams(stringA, stringB){
 #### Solution:
 
   - Example 1: K
-    - O(n)t&s
+    - **O(n)** t&s
     - No built in methods!
 
 ```js
@@ -373,8 +408,9 @@ function capitalize(str){
   return returnString;
 }
 ```
+##### Inefficient Solution using Methods: 
 
-  - Example 2: Video, inefficient 
+  - Example 2: 
     - create words array
     - split input string into array at ' '
     - iterate over words in array
@@ -383,7 +419,6 @@ function capitalize(str){
     - return words.join(' ');
 
 ```js
-
 function capitalize(str){
   const words = [];
 
@@ -393,7 +428,6 @@ function capitalize(str){
 
   return words.join(' ');
 }
-
 ```
 
 ## Section 11: Steps
@@ -458,6 +492,7 @@ function steps(n) {
   - Figure out the bare pieces of information to represent your problem
   - Give reasonable defaults to your info
   - Check the base case, return if no work
+  - **ALWAYS START WITH A BASE CASE**
   - Do some work
   - call function with new arguments
 
@@ -473,7 +508,6 @@ function printNumber(num){
   // AND IS TRENDING TOWARDS OUR BASE CASE!
   printNum(num - 1);
 }
-
 ```
 
 ##### "Bare pieces of information"
@@ -492,7 +526,6 @@ function printNumber(num){
     - Harder to read, modify
 
 ```js
-
 // Create String to Print
 function steps(n) {
 
@@ -517,7 +550,6 @@ function steps(n) {
 
   printRow(1, n);
 }
-
 ```
 ##### Recursive Solution 2: Containing function definitions within one outer function
 
@@ -527,7 +559,6 @@ function steps(n) {
     - More variables to pass around, easier to make mistakes.
 
 ```js
-
 // create row, represented as string to print
 function createString(pos, row, n, str){
   if(pos > n) return str;
@@ -547,18 +578,16 @@ function printRows(row, n){
 function steps(n) {
   printRows(1, n);
 }
-
 ```
 
 ## Section 12. Two Sided Steps - Pyramid
 
 #### Prompt: 
-  - Write a function that accepts a positive number N. The function should console log a pyramid shape  with N levels using the # character.  Make sure the pyramid has spaces on both the left *and* right hand sides.
+  - Write a function that accepts a positive number N. The function should console log a pyramid shape with N levels using the `#` character.  Make sure the pyramid has spaces on both the left *and* right hand sides.
 
 #### Iterative Solution
 
 ```js
-
 function pyramid(n) {
   
   // find the length of each row
@@ -589,13 +618,11 @@ function pyramid(n) {
     console.log(str);
   }
 }
-
 ```
 
 #### Recursive Solution, Separated Functions
 
 ```js
-
 function createString(pos, row, n, str){
   // find the length of each row
   let length = n * 2 - 1;
@@ -624,8 +651,6 @@ function printRows(row, n){
 function pyramid(n) {
   printRows(0, n);
 }
-
-
 ```
 
 ## Section 13. Matrix Spiral
@@ -698,12 +723,17 @@ function matrix(n) {
 
 ```js
 function matrix(n) {
+  // Create a results array
   let res = [];
 
+  // Because we are going to be adding to a 2D array we 
+  // need to set it up ahead of time.
   for(let i = 0; i < n; i++){
     res.push([]);
   }
 
+  // We need to set up some variables ahead of time to 
+  // Track where the beginning and ends of our rows and cols are.
   let count = 1;
   let startCol = 0;
   let endCol = n - 1;
@@ -712,45 +742,63 @@ function matrix(n) {
 
   while(startCol <= endCol && startRow <= endRow){
 
-    // Top Row
+    // Top Row - l to r
     for(let i = startCol; i <= endCol; i++){
       res[startRow][i] = count;
       count++;
     }
     startRow++;
 
-    // Right Col
+    // Right Col - t to b
     for(let i = startRow; i <= endRow; i++){
       res[i][endCol] = count;
       count++;
     }
     endCol--;
 
-    // Bottom Row
+    // Bottom Row - r to l
     for(let i = endCol; i >= startCol; i--){
       res[endRow][i] = count;
       count++;
     }
     endRow--;
 
-    // Left Col
+    // Left Col - b to t
     for(let i = endRow; i >= startRow; i--){
       res[i][startCol] = count;
       count++;
     }
     startCol++;
   }
+
   return res;
 }
 ```
 
 ```js
+// Can picture it like:
+function matrix(n) {
+  let res = [];
+
+  for(let i = 0; i < n; i++){
+    res.push([]);
+  }
+
+  let count = 1;
+  let sC = 0;
+  let eC = n - 1;
+  let sR = 0;
+  let eR = n - 1;
+
   while(sC <= eC && sR <= eR){
 //      sC->   <-eC
 //  v sR [[1, 2, 3],
 //        [8, 9, 4],
 //  ^ eR  [7, 6, 5]];
   }
+
+  return res;
+}
 ```
 
 ## Section 16. Fibonacci
@@ -776,23 +824,19 @@ function fib(n) {
 }
 ```
 
-#### Recursive Solution:
+##### Recursive Solution:
 
   - **Classic example of almost impossible to solve until you have seen it before.**
   - This is an O(2^n) solution! **very bad!**
-  - This is where **Memoization** comes in!
-
-
 ```js
-
 function fib(n) {
   if(n < 2) return n;
   return fib(n - 1) + fib(n - 2);
 }
-
 ```
+- This is where **Memoization** comes in!
 
-#### Memoized Recursive Solution
+##### Memoized Recursive Solution
 
 ```js
 function memoFib(n, cache){
@@ -809,7 +853,7 @@ function memoFib(n, cache){
   // If we have gotten this far, store return value in cache
   cache[n] = memoFib(n - 1, cache) + (n - 2, cache);
 
-  // return the value just found and store
+  // return the value just found and stored
   return cache[n];
 }
 ```
@@ -859,20 +903,24 @@ fib = memoize(fib);
 
 ##### DS in JS
 
-- When we build a data structure in JS, we restrict the methods of the JS data structure we are are working with
-- For example:
-  - When we build a queue in JS what we are doing is taking an array with lots of methods, and restricting what methods and properties are available.
+- **When we build a data structure in JS, we restrict the methods of the JS data structure we are are working with.**
+  - For example:
+    - When we build a queue in JS what we are doing is taking an array with lots of methods, and restricting what methods and properties are available.
 
 | Queue  | Array  |
 |---|---|
-| queue.enqueue(x), queue.add(x)  | array.unshift(x)  | 
-| queue.dequeue(), queue.remove()  | queue.dequeue()  |
+| queue.enqueue(x) -or- queue.add(x)  | array.unshift(x)  | 
+| queue.dequeue( )  -or- queue.remove( )  | queue.dequeue()  |
 
-##### Prompt
+#### Prompt
 
-- // Create a queue data structure.  The queue should be a class with methods 'add' and 'remove'. Adding to the queue should store an element until it is removed. 
+- **Create a queue data structure.**  The queue should be a class with methods 'add' and 'remove'. Adding to the queue should store an element until it is removed. 
 
 #### Solution:
+
+- The **Queue** Data Structure uses:
+  - **array.unshift(val)** to **add** items to the queue
+  - **array.pop()** to **remove** items to the queue
 
 ```js
 class Queue {
@@ -885,12 +933,31 @@ class Queue {
 }
 ```
 
-Section 19: Stacks
+#### Note:
+  - **UNSHIFT IS ADD**
+  - **UNSHIFT IS ADD**
+  - **UNSHIFT IS ADD**
+  - **UNSHIFT IS ADD**
+  - **UNSHIFT IS ADD**
+<br>
+
+  - **SHIFT IS REMOVE**
+  - **SHIFT IS REMOVE**
+  - **SHIFT IS REMOVE**
+  - **SHIFT IS REMOVE**
+  - **SHIFT IS REMOVE**
+  - **SHIFT IS REMOVE**
+
+## Section 19: Stacks
 
 #### Prompt:
-  - Create a stack data structure.  The stack should be a class with methods 'push', 'pop', and 'peek'.  Adding an element to the stack should store it until it is removed.
+  - **Create a stack data structure.**  The stack should be a class with methods 'push', 'pop', and 'peek'.  Adding an element to the stack should store it until it is removed.
 
 #### Solution:
+
+- The **Stack** Data Structure uses:
+  - **array.push(val)** to **add** items to the queue
+  - **array.pop()** to **remove** items to the queue
 
 ```js
 class Stack {
@@ -909,6 +976,12 @@ Section 20: Stacks and Queues
 - Make a Queue out of two stacks
 
 ##### Solution:
+
+- two cups:
+  - fill cup1 (stack1)
+  - empty cup1 into cup2 (stack2)
+  - take the top value out of cup2
+  - empty cup2 into cup1
 
 ```js
 class Queue {
@@ -943,6 +1016,7 @@ class Queue {
   - Return the 'middle' node of a linked list, without using size or a counter.
 
 ##### Solution:
+- **Fast and Slow pointers**
 
 ```js
 function midpoint(list) {
@@ -1005,7 +1079,7 @@ function fromLast(list, n) {
 
 ## Section 25: Building a Tree
 
-- In the case of the tree, we manipulate the tree by modifying the nodes of the tree, un like a linked list.
+- In the case of the tree, we manipulate the tree by modifying the nodes of the tree, unlike a linked list.
 
 #### Tree
 
@@ -1166,20 +1240,20 @@ function validate(node, min = null, max = null) {
 function validate(node, min = null, max = null) {
   if(! node) return null;
 
-// these top two statements are check if the value at a given node
+// these top two statements are checking if the value at a given node
 // is larger or smaller than it should be.
 
-  // skip if no max, or if there is a max 
-  // but value at a given node is greater than max
-  if(max !== null && node.data > max){
-    return false;
-  }
+    // skip if no max, or if there is a max 
+    // but value at a given node is greater than max
+    if(max !== null && node.data > max){
+      return false;
+    }
 
-  // skip if no min, or there is a min
-  // but the value at a given node is less than min
-  if(min !== null && node.data < min){
-    return false;
-  } 
+    // skip if no min, or there is a min
+    // but the value at a given node is less than min
+    if(min !== null && node.data < min){
+      return false;
+    } 
 
 // IF THERE IS A FALSE VALUE IT CASCADES UP!
 
@@ -1204,7 +1278,7 @@ function validate(node, min = null, max = null) {
     return false;
   }
 
-  // if we get to the bottom of the tre and have not found any out of order nodes
+  // if we get to the bottom of the tree and have not found any out of order nodes:
   return true;
 }
 
@@ -1255,23 +1329,27 @@ function swap(arr, idx1, idx2){
 
 function selectionSort(arr) {
 
-  // Iterate over each value in the array.
+  // Iterate over each value in the array
+  // Here you are starting at what will be the position of the lowest value
+  // You will be looking to swap this value if a smaller value is found
   for(let i = 0; i < arr.length; i++){
 
     // Set the current i to be the index of the lowest
     // known value regardless of the value
-    let min = i;
+    let minIndex = i;
 
     // iterate from current i + 1
     for(let j = i + 1; j < arr.length; j++){
 
       // If the value at index j is less than the value at i
-      // se min to be tj 
-      if(arr[j] < arr[min]) min = j;
+      // set minIndex to be j 
+      if(arr[j] < arr[minIndex]) min = j;
     }
 
-    // if a new smallest index was found, swap the value at i and j
-    if(i !== min) swap(arr, i, min);
+    // at the end of each check,
+    // if a new smallest index was found, 
+    // swap the value at i and minIndex
+    if(i !== minIndex) swap(arr, i, minIndex);
   }
 
   // return arr
@@ -1288,6 +1366,7 @@ function selectionSort(arr) {
 ```js
 function mergeSort(arr) {
 
+  // base case
   if(arr.length === 1) return arr;
 
   // find the mid, then create arrays out of the left and right halves
@@ -1314,9 +1393,10 @@ function merge(left, right) {
     }
   }
 
-  // Afterwards, ONLY the left OR the right will have values inside
-  // These values have already been sorted, so are guaranteed to be larger
-  // than the largest value in the results arr and in sorted order.
+  // Afterwards, ONLY the left OR the right will have values inside of it!
+  // These values have already been sorted, so are **guaranteed** to be larger
+  // than the largest value in the results arr **and** in sorted order.
+  // so they wil be added after the results array.
   return [...results, ...left, ...right];
 }
 ```
