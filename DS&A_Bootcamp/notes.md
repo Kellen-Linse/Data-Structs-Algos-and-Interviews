@@ -937,5 +937,386 @@ class Queue {
 }
 ```
 
-Section 22: Midpoint of a LL
+## Section 22: Midpoint of a LL
 
+##### Prompt: 
+  - Return the 'middle' node of a linked list, without using size or a counter.
+
+##### Solution:
+
+```js
+function midpoint(list) {
+  let fast = list.head;
+  let slow = list.head;
+
+  while(fast?.next?.next){
+    fast = fast.next.next;
+    slow = slow.next;
+  }
+
+  return slow;
+}
+```
+
+## Section 23: Circular LL
+
+##### Prompt: 
+  - Determine whether a LL is circular.
+
+##### Solution:
+
+```js
+function circular(list) {
+
+  let fast = list.head;
+  let slow = list.head;
+
+  while(fast?.next?.next){
+    fast = fast.next.next;
+    slow = slow.next;
+
+    if(fast === slow) return true;
+  }
+
+  return false;
+}
+```
+## Section 24: One from Last - LL
+
+##### Prompt: 
+  - Given a linked list, return the element n spaces from the last node in the list.
+
+##### Solution:
+
+```js
+function fromLast(list, n) {
+  let fast = list.head;
+  let slow = list.head;
+  let count = 0;
+
+  while(fast.next){
+    fast = fast.next;
+    if(count >= n) slow = slow.next;
+    count++;
+  }
+  return slow;
+}
+```
+
+## Section 25: Building a Tree
+
+- In the case of the tree, we manipulate the tree by modifying the nodes of the tree, un like a linked list.
+
+#### Tree
+
+  - Iterative BFS and DFS
+  - **The difference between iterative BFS and DFS is that BFS uses and queue and DFS uses a stack!**
+
+```js
+class Node {
+  constructor(data){
+    this.data = data;
+    this.children = [];
+  }
+
+  add = (data) => 
+    this.children.push(new Node(data));
+
+  remove = (data) =>
+    this.children = this.children.filter(node => node.data !== data);;
+}
+
+class Tree {
+  constructor(){
+    this.root = null;
+  }
+
+  traverseBF(fn){
+    // Create and fill queue with node children
+    const queue = [this.root];
+    //  Visit each node
+    while(queue.length){
+      // pop node from front of queue
+      let currentNode = queue.shift();
+      // add the children of current node to queue
+      queue.push(...currentNode.children);
+      // read data in node
+      fn(currentNode);
+    }
+  }
+
+
+  traverseDF(fn){
+    // Create and fill queue with node children
+    const queue = [this.root];
+    //  Visit each node
+    while(queue.length){
+      // pop node from front of queue
+      let currentNode = queue.shift();
+      // add the children of current node to queue
+      queue.unshift(...currentNode.children);
+      // read data in node
+      fn(currentNode);
+    }
+  }
+}
+```
+
+## Tree Width at Level
+
+- Use BFS
+
+#### Code:
+
+```js
+    let levelCount = 0;
+    let levelArr = [];
+
+    //loop over the queue
+    while(queue.length){
+      //take out one node at a time
+      let node = queue.shift();
+
+      //count the children of each node
+      levelCount += node.children.length;
+
+      //add the children of that node to the levelArr
+      levelArr.push(...node.children);
+    }
+
+    // after counting and adding all nodes at a given level,
+    // if there were any nodes at that level
+    // add the level count to the count and the nodes to the queue
+    if(levelArr.length){
+    countArr.push(levelCount);
+    queue.push(...levelArr)
+    }
+    
+  }
+  return countArr
+}
+```
+
+## Section 27: BST
+
+- Up to **two** children 
+- The value of the **left** child has to have a value that is **less than** it's parent.
+- The value of the **right** child has to have a value that is **greater than** it's parent.
+- **Binary Tree:**
+  - At most two children, but not in a less than, greater than order.
+
+#### Code:
+
+```js
+class Node {
+  constructor(data){
+    this.data = data;
+    this.left = null;
+    this.right = null;
+  }
+
+  insert(data){
+
+    if(data < this.data && this.left){
+      this.left.insert(data);
+    } else if (data < this.data) {
+      this.left = new Node(data);
+    } else if(data > this.data && this.right){
+      this.right.insert(data);
+    } else if (data > this.data){
+      this.right = new Node(data);
+    }; 
+  }
+
+  contains(data){
+    if(data === this.data) return this;
+    if(data < this.data && this.left) return this.left.contains(data);
+    if(data > this.data && this.right) return this.right.contains(data);
+    return null;
+  }
+}
+```
+
+## Section 28: Validating a Binary Search Tree
+
+##### Code
+
+```js
+// --- Directions
+// Given a node, validate the binary search tree,
+// ensuring that every node's left hand child is
+// less than the parent node's value, and that
+// every node's right hand child is greater than
+// the parent
+
+function validate(node, min = null, max = null) {
+  if(! node) return null;
+
+  if(max !== null && node.data > max) return false;
+  if(min !== null && node.data < min) return false;
+
+  if(node.left  && !validate(node.left,  min, node.data))  return false;
+  if(node.right && !validate(node.right, node.data, max)) return false;
+
+  return true;
+}
+
+//======== with comments ========
+
+function validate(node, min = null, max = null) {
+  if(! node) return null;
+
+// these top two statements are check if the value at a given node
+// is larger or smaller than it should be.
+
+  // skip if no max, or if there is a max 
+  // but value at a given node is greater than max
+  if(max !== null && node.data > max){
+    return false;
+  }
+
+  // skip if no min, or there is a min
+  // but the value at a given node is less than min
+  if(min !== null && node.data < min){
+    return false;
+  } 
+
+// IF THERE IS A FALSE VALUE IT CASCADES UP!
+
+// These bottom two statements check to see if a node exists and checks to 
+// validate them
+
+  // if there is a left node, we wil validate it.
+  // if the validation results come back false
+  // we will return false
+  // THE VALUE AT THE LEFT CHILD NODE CANNOT BE BIGGER THAN THE 
+  // VALUE OF THE PARENT NODE OR SMALLER THAN THE MIN
+  if(node.left && !validate(node.left, min, node.data)){
+    return false;
+  }
+
+  // if there is a right node, we wil validate it.
+  // if the validation results come back false
+  // we will return false
+  // THE VALUE AT THE RIGHT CHILD NODE CANNOT BE SMALLER THAN 
+  // THE VALUE OF THE PARENT NODE OR LARGER THAN THE MAX
+  if(node.right && !validate(node.right, node.data, max)){
+    return false;
+  }
+
+  // if we get to the bottom of the tre and have not found any out of order nodes
+  return true;
+}
+
+```
+
+## Section 31: Bubble Sort
+
+- Bubble sort works by dragging the largest numbers to the right side.
+- Time: O(n^2) **Bad**
+
+##### Code:
+
+```js
+function bubbleSort(arr) {
+
+  // Iterate over the array one time for each item in the array
+  for(let i = 0; i < arr.length; i++){
+
+    // Iterate over each item up until i from the last - 1;
+    for(let j = 0; j < arr.length - i - 1; j++){
+
+      // If the value at index j is less than the value at j + 1, swap
+      if(arr[j] > arr[j+1]) swap(arr, j, j + 1);
+    }
+  }
+
+   return arr;
+}
+
+// swap two values in an array
+function swap(arr, idx1, idx2){
+  let temp = arr[idx1];
+  arr[idx1] = arr[idx2];
+  arr[idx2] = temp;
+}
+```
+
+## Section 32: Selection Sort
+
+- Set index to minimum index, check every other index, if a lesser value is found, set min index to be that value's index. Swap if a new min has been found.
+
+##### Code:
+
+```js
+function swap(arr, idx1, idx2){
+  [arr[idx1], arr[idx2]] = [arr[idx2], arr[idx1]];
+}
+
+function selectionSort(arr) {
+
+  // Iterate over each value in the array.
+  for(let i = 0; i < arr.length; i++){
+
+    // Set the current i to be the index of the lowest
+    // known value regardless of the value
+    let min = i;
+
+    // iterate from current i + 1
+    for(let j = i + 1; j < arr.length; j++){
+
+      // If the value at index j is less than the value at i
+      // se min to be tj 
+      if(arr[j] < arr[min]) min = j;
+    }
+
+    // if a new smallest index was found, swap the value at i and j
+    if(i !== min) swap(arr, i, min);
+  }
+
+  // return arr
+  return arr
+}
+```
+
+## Section 33: MergeSort
+
+- Split until each array only has one element, then merge back together in sorted order.
+
+##### Code:
+
+```js
+function mergeSort(arr) {
+
+  if(arr.length === 1) return arr;
+
+  // find the mid, then create arrays out of the left and right halves
+  let mid = Math.floor(arr.length / 2);
+  let left = arr.slice(0, mid);
+  let right = arr.slice(mid);
+
+  // call merge, but recursively call mergesort on each half as arguments
+  return merge(mergeSort(left), mergeSort(right));
+}
+
+function merge(left, right) {
+
+  // Create a results array
+  let results = [];
+
+  // While there is both a left and a right array
+  // shift the lower of the two first values into the results array.
+  while(left.length && right.length){
+    if(left[0] < right[0]){
+      results.push(left.shift());
+    } else {
+      results.push(right.shift());
+    }
+  }
+
+  // Afterwards, ONLY the left OR the right will have values inside
+  // These values have already been sorted, so are guaranteed to be larger
+  // than the largest value in the results arr and in sorted order.
+  return [...results, ...left, ...right];
+}
+```
