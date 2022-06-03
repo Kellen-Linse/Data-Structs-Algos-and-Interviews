@@ -5,4 +5,4 @@
 
 ### Arrays
 
-- [1672. Richest Customer Wealth](pages/richest.md)
+- [1672. Richest Customer Wealth](pages/arrays/richest.md)
