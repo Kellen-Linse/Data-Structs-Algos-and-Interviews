@@ -22,7 +22,7 @@
 
 ## 3: String Reversal
 
-##### Prompt: Reverse String
+#### Prompt: Reverse String
 
   - Questions to ask:
     - **Do I need to take spaces into consideration?**
@@ -67,7 +67,7 @@ function reverse(str) {
 
 #### Video Solutions:
 
-##### Using built in methods `split`, `reverse`, and `join`
+#### Using built in methods `split`, `reverse`, and `join`
 
 ```js
 
@@ -79,7 +79,7 @@ function reverse(str){
 }
 
 ```
-##### reduce()
+#### reduce()
 
 ```js
 
@@ -289,8 +289,8 @@ function chunk(array, size) {
 
 #### Code:
 
- - EXAMPLE 1:
-   - This code will fail if we consider A === a or if we don't count symbols like '!'
+ - **EXAMPLE 1:**
+   - This code will fail if we consider 'A' to be equal to 'a' or if we don't count symbols like '!'
 
 ```js
 function anagrams(stringA, stringB) {
@@ -318,11 +318,11 @@ function anagrams(stringA, stringB) {
 }
 ```
 
-- EXAMPLE 2:
+- **EXAMPLE 2:**
 
   -  Only consider characters, not spaces or punctuation.  Consider capital letters to be the same as lower case.
 
-  - **Here he uses REGEX and .toLowercase()**
+  - **Here we are using REGEX and .toLowercase()**
 
 ```js
 
@@ -343,6 +343,7 @@ function anagrams(stringA, stringB) {
   // Clean Strings
   stringA = cleanStr(stringA);
   stringB = cleanStr(stringB);
+
   //check to see if strings are equal length, return false if not
   if(stringA.length !== stringB.length) return false;
 
@@ -366,8 +367,10 @@ function anagrams(stringA, stringB) {
 }
 ```
 
-- EXAMPLE 3: Short, interesting, but inefficient.
+- **EXAMPLE 3:** Short, interesting, but inefficient.
+
   - Use JS methods
+
   - Clean and Sort, then Compare
 
 ```js
@@ -382,14 +385,14 @@ anagrams(stringA, stringB){
 
 ## 10: Capitalize 
 
-### Remember: STRINGS ARE IMMUTABLE in JS!
+### Remember: _STRINGS ARE IMMUTABLE in JS!_
 
 #### Prompt:
   - Write a function that accepts a string.  The function should capitalize the first letter of each word in the string then return the capitalized string.
 
 #### Solution:
 
-  - Example 1: K
+  - **Example 1:** K's attempt
     - **O(n)** t&s
     - No built in methods!
 
@@ -408,7 +411,7 @@ function capitalize(str){
   return returnString;
 }
 ```
-##### Inefficient Solution using Methods: 
+#### Inefficient Solution using Methods: 
 
   - Example 2: 
     - create words array
@@ -455,7 +458,6 @@ function steps(n) {
     }
     console.log(str);
   }
-  
 }
 
 ```
@@ -487,12 +489,13 @@ function steps(n) {
 
   - Not the recommended route unless you are specifically asked;
   
-##### Recursion Tips:
+#### Recursion Tips:
 
   - Figure out the bare pieces of information to represent your problem
   - Give reasonable defaults to your info
   - Check the base case, return if no work
   - **ALWAYS START WITH A BASE CASE**
+  - **ALWAYS TEND TOWARDS YOUR BASE CASE**
   - Do some work
   - call function with new arguments
 
@@ -510,14 +513,14 @@ function printNumber(num){
 }
 ```
 
-##### "Bare pieces of information"
+#### "Bare pieces of information"
 
   - if(row === n) then we have hit the end of our problem
   - if(str has length n) we are at the end of a row
   - if(length of the str is less or equal to the row we are on)
     - add '#' else, ' '
 
-##### Recursive Solution 1: Containing function definitions within one outer function
+#### Recursive Solution 1: Containing function definitions within one outer function
 
   - Benefits: 
     - Enclosed functions know about variables within their scope (closure).
@@ -551,7 +554,7 @@ function steps(n) {
   printRow(1, n);
 }
 ```
-##### Recursive Solution 2: Containing function definitions within one outer function
+#### Recursive Solution 2: Containing function definitions within one outer function
 
   - Benefits: 
     - Easier to read, modify
@@ -658,7 +661,7 @@ function pyramid(n) {
 #### Prompt:
   - Write a function that accepts an integer N and returns a NxN spiral matrix.
 
-##### My attempt:
+#### My attempt:
   - Close but not functional.
 
 ```js
@@ -805,7 +808,7 @@ function matrix(n) {
 
 #### Prompt: Print out the n-th entry in the fibonacci series. The fibonacci series is an ordering of numbers where each number is the sum of the preceding two. For example, the sequence [0, 1, 1, 2, 3, 5, 8, 13, 21, 34].
 
-##### Iterative Solution:
+#### Iterative Solution:
 
 ```js
 function fib(n) {
@@ -824,7 +827,7 @@ function fib(n) {
 }
 ```
 
-##### Recursive Solution:
+#### Recursive Solution:
 
   - **Classic example of almost impossible to solve until you have seen it before.**
   - This is an O(2^n) solution! **very bad!**
@@ -836,7 +839,7 @@ function fib(n) {
 ```
 - This is where **Memoization** comes in!
 
-##### Memoized Recursive Solution
+#### Memoized Recursive Solution
 
 ```js
 function memoFib(n, cache){
@@ -889,19 +892,19 @@ fib = memoize(fib);
 
 ## Section 18: The Queue
 
-##### Note on JS Data Structures
+#### Note on JS Data Structures
 
 - There are portions of JS that take care of certain Data Structures for you automatically, however you may still have an interviewer ask you to build basic versions of certain data structures. 
 - But we will ofter use built in data structures such as arrays, but treat them like queues in JS.
 - **We do not have basic Arrays in Javascript**
 
-##### Queues
+#### Queues
 
 - First In Last Out
   - **Enqueuing or Adding:** Add to beginning of queue.
   - **Dequeuing or Removing:** Remove from end of queue.
 
-##### DS in JS
+#### DS in JS
 
 - **When we build a data structure in JS, we restrict the methods of the JS data structure we are are working with.**
   - For example:
@@ -972,10 +975,10 @@ class Stack {
 
 Section 20: Stacks and Queues
 
-##### Prompt:
+#### Prompt:
 - Make a Queue out of two stacks
 
-##### Solution:
+#### Solution:
 
 - two cups:
   - fill cup1 (stack1)
@@ -1012,10 +1015,10 @@ class Queue {
 
 ## Section 22: Midpoint of a LL
 
-##### Prompt: 
+#### Prompt: 
   - Return the 'middle' node of a linked list, without using size or a counter.
 
-##### Solution:
+#### Solution:
 - **Fast and Slow pointers**
 
 ```js
@@ -1034,10 +1037,10 @@ function midpoint(list) {
 
 ## Section 23: Circular LL
 
-##### Prompt: 
+#### Prompt: 
   - Determine whether a LL is circular.
 
-##### Solution:
+#### Solution:
 
 ```js
 function circular(list) {
@@ -1057,10 +1060,10 @@ function circular(list) {
 ```
 ## Section 24: One from Last - LL
 
-##### Prompt: 
+#### Prompt: 
   - Given a linked list, return the element n spaces from the last node in the list.
 
-##### Solution:
+#### Solution:
 
 ```js
 function fromLast(list, n) {
@@ -1213,7 +1216,7 @@ class Node {
 
 ## Section 28: Validating a Binary Search Tree
 
-##### Code
+#### Code
 
 ```js
 // --- Directions
@@ -1289,7 +1292,7 @@ function validate(node, min = null, max = null) {
 - Bubble sort works by dragging the largest numbers to the right side.
 - Time: O(n^2) **Bad**
 
-##### Code:
+#### Code:
 
 ```js
 function bubbleSort(arr) {
@@ -1320,7 +1323,7 @@ function swap(arr, idx1, idx2){
 
 - Set index to minimum index, check every other index, if a lesser value is found, set min index to be that value's index. Swap if a new min has been found.
 
-##### Code:
+#### Code:
 
 ```js
 function swap(arr, idx1, idx2){
@@ -1361,7 +1364,7 @@ function selectionSort(arr) {
 
 - Split until each array only has one element, then merge back together in sorted order.
 
-##### Code:
+#### Code:
 
 ```js
 function mergeSort(arr) {
