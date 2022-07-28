@@ -10,8 +10,10 @@
 
 3. [Technical Interview Steps to Follow](./Steps_To_Follow.md)
 
-4. [Links](./links.md)
+4. [Avoiding Burnout](avoiding_burnout.md)
 
-5. [Big O Cheat Sheet](./resources/Big_O.png)
+5. [Links](./links.md)
+
+6. [Big O Cheat Sheet](./resources/Big_O.png)
    - https://www.bigocheatsheet.com/
 
