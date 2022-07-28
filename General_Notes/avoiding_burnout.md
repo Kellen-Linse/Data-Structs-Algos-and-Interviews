@@ -1,9 +1,6 @@
 # Staying Motivated and Avoiding Burnout
 
-## Link
   - [9 Ways to Stay Motivated and Avoid Burnout While Preparing for a Tech Interview](https://www.interviewkickstart.com/blog/ways-to-stay-motivated-and-avoid-burnout-while-preparing-for-a-tech-interview)
-
-## Content
 
 ### Interview Prep Burnout is Real
 
