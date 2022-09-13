@@ -831,9 +831,14 @@ function fib(n) {
 
   - **Classic example of almost impossible to solve until you have seen it before.**
   - This is an O(2^n) solution! **very bad!**
+
 ```js
 function fib(n) {
+
+  // if n == 0 or n == 1, just return n
   if(n < 2) return n;
+
+  // the fib of any given number is the sum of the fib of the two previous numbers.
   return fib(n - 1) + fib(n - 2);
 }
 ```
@@ -854,7 +859,7 @@ function memoFib(n, cache){
   if(n < 3) return 1;
 
   // If we have gotten this far, store return value in cache
-  cache[n] = memoFib(n - 1, cache) + (n - 2, cache);
+  cache[n] = memoFib(n - 1, cache) + memoFib(n - 2, cache);
 
   // return the value just found and stored
   return cache[n];
@@ -900,7 +905,7 @@ fib = memoize(fib);
 
 #### Queues
 
-- First In Last Out
+- First In First Out
   - **Enqueuing or Adding:** Add to beginning of queue.
   - **Dequeuing or Removing:** Remove from end of queue.
 
@@ -1246,14 +1251,14 @@ function validate(node, min = null, max = null) {
 // these top two statements are checking if the value at a given node
 // is larger or smaller than it should be.
 
-    // skip if no max, or if there is a max 
-    // but value at a given node is greater than max
+    // If there is no max defined, skip
+    // if there is a max defined, if the data at the current node is greater than the max, return false.
     if(max !== null && node.data > max){
       return false;
     }
 
-    // skip if no min, or there is a min
-    // but the value at a given node is less than min
+    // If there is no min defined, skip
+    // if there is a min defined, if the data at the current node is less than the min, return false.
     if(min !== null && node.data < min){
       return false;
     } 
