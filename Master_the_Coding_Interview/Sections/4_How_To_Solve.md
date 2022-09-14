@@ -69,7 +69,6 @@
 ### Notes on an Interview at Google Video:
 
 #### [Link](https://www.youtube.com/watch?v=XKu_SEDAykw)
-<br>
 
 - Clarifications
 - Think Out Loud
