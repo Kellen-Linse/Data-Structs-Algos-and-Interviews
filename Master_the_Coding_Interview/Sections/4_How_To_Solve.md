@@ -1,5 +1,8 @@
 # How to Solve Coding Problems
 
+#### Cheatsheet:
+  - [Link](./Resources/Solving_cheatsheet.pdf)
+
 #### Overview
 
 - At the end of the day, an interview is a way for a company to find out whether or not you can solve a problem that the company or employer has. If you are able to solve their problems, then you are valuable to them. 
