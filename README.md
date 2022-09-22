@@ -34,3 +34,7 @@ Site is published at [https://kellen-linse.github.io/Data-Structs-Algos-and-Inte
 
 9. [Master the Coding Interview](./Master_the_Coding_Interview/index.md)
   - Notes on Master the Coding Interview: Data Structures + Algorithms on Udemy
+
+10. [Cracking the Coding Interview](./Cracking_the_Coding_Interview/CTCI_video/video_notes.md)
+  - Notes on Cracking the Coding Interview and Associated Videos
+
