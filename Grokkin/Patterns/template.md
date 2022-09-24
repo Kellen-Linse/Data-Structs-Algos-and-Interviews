@@ -5,9 +5,15 @@
 <br>
 
 - **Example:**
-```
+```js
 
 ```
+<br>
+
+- **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - 
 <br>
 
 - **Basic Pattern:**
@@ -18,11 +24,15 @@
   1.
 <br>
 
+- **Big O:**
+  - Time: 
+  - Space:
+
 - **Code:**
 ```js
-// No comments
-
-
 // Comments
+
+
+// No comments
 
 ```
