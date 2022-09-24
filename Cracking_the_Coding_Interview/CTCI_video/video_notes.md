@@ -15,7 +15,7 @@
   - Prior Experience: 5 minutes
   - 1 to 2 Questions: 45 minutes
     - 1 complex or 2 simpler
-  - Questions FOR the Interviewer: 5 minutes
+    - Questions FOR the Interviewer: 5 minutes
 
 ### Behavioral Questions
 
@@ -28,9 +28,9 @@
 - Prompt the interviewer
   - What do you want your interviewer to ask you about?
 - Hobbies
-  - If you have a compelling hobby.
-  - Frame them in the most positive light.
-  - Anything technical hobby
+  - If you have a compelling hobby...
+  - Frame them in the most positive light
+  - Any technical hobby
 
 ![ctci](./resources/ctci.JPG)
 
@@ -49,10 +49,10 @@
 
 #### What about YOU?
 
-- Be **PASSIONATE**.
+- Be **PASSIONATE**
 - Be **KNOWLEDGEABLE**
 - Be a **GOOD TEAMMATE**
-  <br>
+<br>
 - Show that you are someone who can contribute and that you are someone people want to work with.
 
 ### Design Questions
@@ -105,7 +105,7 @@
 
 ### Algorithm Questions
 
-- Why Algorithm Questions are Asked because they show:
+- **Algorithm Questions are Asked because they show:**
   - Your analytical skills
   - How you think
   - How you decide to make trade offs
