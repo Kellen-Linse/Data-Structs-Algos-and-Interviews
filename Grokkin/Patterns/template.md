@@ -25,14 +25,14 @@
 <br>
 
 - **Big O:**
-  - Time: 
-  - Space:
+  - Time: ``
+  - Space: ``
 
 - **Code:**
 ```js
-// Comments
-
-
 // No comments
+
+
+// Comments
 
 ```

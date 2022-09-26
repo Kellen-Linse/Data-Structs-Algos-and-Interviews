@@ -59,7 +59,7 @@ const pair_with_targetsum = function(arr, target_sum) {
   let lPtr = 0;
   let rPtr = arr.length - 1;
 
-  while(lPtr < rPtr){
+  while(lPtr < rPtr){ // O(n)t
     const currentSum = arr[lPtr] + arr[rPtr]; 
     if(currentSum === target_sum) return [lPtr, rPtr];
     if(currentSum > target_sum){
@@ -82,7 +82,7 @@ const pair_with_targetsum = function(arr, target_sum) {
   // Here we create a loop that will run until the pointers touch,
   // that means that one of the two pointers MUST move 
   // every time through the loop.
-  while(lPtr < rPtr){
+  while(lPtr < rPtr){ 
     // Here we find the current condition we will be checking against.
     // Creating a well named variable here will make your code more readable.
     const currentSum = arr[lPtr] + arr[rPtr]; 
@@ -158,7 +158,7 @@ Explanation: The first four elements after removing the duplicates will be [2, 3
 const remove_duplicates = function(arr) {
   let write = 1;
 
-  for(let read = 1; read < arr.length; read++){
+  for(let read = 1; read < arr.length; read++){ // O(n)t
     if(arr[read] !== arr[read - 1]){
       arr[write] = arr[read];
       write++;
@@ -242,11 +242,34 @@ Output: [0, 1, 4, 4, 9]
 
 - **Code:**
 ```js
+// No comments
+const make_squares = function(arr) {
+  
+  const squareArr = []; // O(n)s
+  let lPtr = 0;
+  let rPtr = arr.length - 1;
+
+  for(let i = arr.length - 1; i >= 0; i--){ // O(n)t
+    let lVal = arr[lPtr]**2;
+    let rVal = arr[rPtr]**2;
+
+    if(lVal > rVal){
+      squareArr[i] = lVal;
+      lPtr++;
+    } else {
+      squareArr[i] = rVal;
+      rPtr--;
+    }
+  }
+
+  return squareArr;
+};
+
 // Comments
 const make_squares = function(arr) {
 
   // Here we create the arr that will hold our squared values
-   const squareArr = [];
+   const squareArr = []; 
 
   // Create two pointers 
   // set them such that they will begin on either side of the array.
@@ -255,7 +278,7 @@ const make_squares = function(arr) {
 
   // Create a for loop using the input array length and moving FROM END TO BEGINNING,
   // because our output array will be the same length.
-  for(let i = arr.length - 1; i >= 0; i--){
+  for(let i = arr.length - 1; i >= 0; i--){ 
 
     // Here we are creating two variables that hold the square or the values at each pointer.
     let lVal = arr[lPtr]**2;
@@ -277,28 +300,120 @@ const make_squares = function(arr) {
   return squareArr;
 };
 
+```
 
+### Triplet Sum to Zero (medium)
+
+- **Prompt:** Given an **array of unsorted numbers**, **find all unique triplets** in it that **add up to zero**.
+<br>
+
+- **Example:**
+```js
+Input: [-3, 0, 1, 2, -1, 1, -2]
+Output: [-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]
+Explanation: There are four unique triplets whose sum is equal to zero.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - 
+<br>
+
+- **Basic Pattern:**
+  1.
+ <br>
+
+- **Algorithm:**
+  1.
+<br>
+
+- **Big O:**
+  - Time: `O(n^2)`
+  - Space: `O(n)`
+
+- **Code:**
+```js
 // No comments
-const make_squares = function(arr) {
+const search_triplets = function(arr) {
+  arr.sort(); // O(n log n)
   
-  const squareArr = [];
-  let lPtr = 0;
-  let rPtr = arr.length - 1;
+  triplets = []; // O(n)s
 
-  for(let i = arr.length - 1; i >= 0; i--){
-    let lVal = arr[lPtr]**2;
-    let rVal = arr[rPtr]**2;
+  for(let i = 0; i < arr.length-2; i++){  //O(n)t
+    let target = -arr[i];
+    let lPtr = i+1;
+    let rPtr = arr.length-1;
 
-    if(lVal > rVal){
-      squareArr[i] = lVal;
-      lPtr++;
-    } else {
-      squareArr[i] = rVal;
-      rPtr--;
+    while(lPtr < rPtr){ //O(n)t
+      const sum = arr[lPtr] + arr[rPtr];
+
+      if(sum === target){
+        triplets.push([ arr[i], arr[lPtr], arr[rPtr] ]);
+        lPtr++;
+      }
+
+      if(sum < target){
+        lPtr++;
+      } else {
+        rPtr--;
+      }
     }
   }
 
-  return squareArr;
+  return triplets;
 };
 
+// Comments
+const search_triplets = function(arr) {
+
+  // To begin we sort our array, this will allow us to use two pointer method, effectively dropping an order from our run time.
+  arr.sort();
+
+  // Here we are creating a new array to hold our triplet values that we will return at the end.
+  triplets = [];
+
+  // Here we iterate over our array evaluating each index until two less than the length, because we are looking
+  // for triplets, we do not need to evaluate passed the third to last, as those three values will make up our last triplet.
+  for(let i = 0; i < arr.length-2; i++){
+
+    // To begin we create the target for our twoSum technique out of the value at the current index of the loop.
+    // Because we are looking for a triplet that adds to zero, X + Y + Z == 0, or Y + Z == −X
+    // our target will be the negation of the value at the current index.
+    let target = -arr[i];
+
+    // Once we have a target, we can run a twoSum style algorithm, for each element in our array 
+    // taking O(n) time.
+
+    // We begin th twoSum potion of the algo by creating one pointer at one greater than 
+    // the current index of the loop and another at the last index in the array.
+    let lPtr = i+1;
+    let rPtr = arr.length-1;
+
+    // We loop while the pointers are not touching
+    while(lPtr < rPtr){
+      const sum = arr[lPtr] + arr[rPtr];
+
+      if(sum === target){
+
+        // The only difference is that here, when a target is found, 
+        // we do not return, we push the current indices to the triplets array.
+        triplets.push([ arr[i], arr[lPtr], arr[rPtr] ]);
+
+        // We step over the lPtr so as not to have duplicate values
+        lPtr++;
+      }
+
+      // Here we are moving the pointers towards each other
+      if(sum < target){
+        lPtr++;
+      } else {
+        rPtr--;
+      }
+    }
+  }
+
+  return triplets;
+};
 ```

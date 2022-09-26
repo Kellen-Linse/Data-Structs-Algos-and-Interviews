@@ -18,17 +18,24 @@
 
 4/20/22 
 
-- **Don't confuse Big O of 2n and Big O of n^2, they are very different things. 2 passes of n vs 2 passes for each in n**\
+- Don't confuse Big O of 2n and Big O of n^2, they are very different things. 2 passes of n vs 2 passes for each in n
 - When considering solutions for a problem, start at the best time complexity, then work backwards until you find a solution, then try to apply that solution to see if you can find a better solution. 
 
 5/22/22
 
-- **Don't forget that when checking for existence you need to account for the possibility that the value will be zero and therefore return a falsy value.**
+- **Don't forget that when checking for existence! You need to account for the possibility that the value will be zero and therefore return a falsy value.**
 
-- **Every detail of a problem is in there for a reason. Make sure you're considering all details. They are all hints towards the solution.**
+- Every detail of a problem is in there for a reason. Make sure you're considering all details. They are all hints towards the solution.
 
-- **You can use the `in` operator to check for existence to avoid the problem mentioned above.**
+- You can use the `in` operator to check for existence to avoid the problem mentioned above.
 
 5/24/22
 
-- **Break problems into smaller and smaller chunks until you find your solution.**
+- Break problems into smaller and smaller chunks until you find your solution.
+
+9/25/22
+
+- **ALWAYS ALWAYS use a comparison function with Array.sort() it will return some screwy answers if you don't!**
+  - Example: 
+    - `[-1, 3, -4, 0, 2].sort()` will return `[-1, -4, 0, 2, 3]`
+    - `[[-1, 3, -4, 0, 2].sort((a, b) => a - b)` will return `[-4, -1, 0, 2, 3]`
