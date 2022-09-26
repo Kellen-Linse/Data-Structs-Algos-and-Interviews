@@ -336,84 +336,104 @@ Explanation: There are four unique triplets whose sum is equal to zero.
 - **Code:**
 ```js
 // No comments
-const search_triplets = function(arr) {
-  arr.sort(); // O(n log n)
-  
-  triplets = []; // O(n)s
-
-  for(let i = 0; i < arr.length-2; i++){  //O(n)t
-    let target = -arr[i];
-    let lPtr = i+1;
-    let rPtr = arr.length-1;
-
-    while(lPtr < rPtr){ //O(n)t
-      const sum = arr[lPtr] + arr[rPtr];
-
-      if(sum === target){
-        triplets.push([ arr[i], arr[lPtr], arr[rPtr] ]);
-        lPtr++;
-      }
-
-      if(sum < target){
-        lPtr++;
-      } else {
-        rPtr--;
-      }
+const search_triplets = function(arr) {  
+    arr.sort((a, b) => a - b);  
+    let resultsArr = [];
+    
+    for(let i = 0; i < arr.length && arr[i] <= 0; i++){
+        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr);
     }
-  }
-
-  return triplets;
+    
+    return resultsArr;
 };
+
+
+function twoSum(idx, inputArr, resArr){
+    let lPtr = idx + 1;
+    let rPtr = inputArr.length - 1;
+    let target = -inputArr[idx];
+    
+    while(lPtr < rPtr){
+        const sum = inputArr[lPtr] + inputArr[rPtr];
+        
+        if(sum < target){           
+            lPtr++;  
+        } else if (sum > target){
+            rPtr--;
+        } else {
+            resArr.push([ inputArr[idx], inputArr[lPtr], inputArr[rPtr]]);
+            lPtr++;
+            rPtr--;
+            while(lPtr < rPtr && inputArr[lPtr] === inputArr[lPtr-1]){
+                lPtr++;
+            }
+        }      
+    }
+}
 
 // Comments
 const search_triplets = function(arr) {
+    // If there is less than 3 values within the array we do not have enough values to make a triplet.
+    if(arr.length < 3) return null;
 
-  // To begin we sort our array, this will allow us to use two pointer method, effectively dropping an order from our run time.
-  arr.sort();
-
-  // Here we are creating a new array to hold our triplet values that we will return at the end.
-  triplets = [];
-
-  // Here we iterate over our array evaluating each index until two less than the length, because we are looking
-  // for triplets, we do not need to evaluate passed the third to last, as those three values will make up our last triplet.
-  for(let i = 0; i < arr.length-2; i++){
-
-    // To begin we create the target for our twoSum technique out of the value at the current index of the loop.
-    // Because we are looking for a triplet that adds to zero, X + Y + Z == 0, or Y + Z == −X
-    // our target will be the negation of the value at the current index.
-    let target = -arr[i];
-
-    // Once we have a target, we can run a twoSum style algorithm, for each element in our array 
-    // taking O(n) time.
-
-    // We begin th twoSum potion of the algo by creating one pointer at one greater than 
-    // the current index of the loop and another at the last index in the array.
-    let lPtr = i+1;
-    let rPtr = arr.length-1;
-
-    // We loop while the pointers are not touching
-    while(lPtr < rPtr){
-      const sum = arr[lPtr] + arr[rPtr];
-
-      if(sum === target){
-
-        // The only difference is that here, when a target is found, 
-        // we do not return, we push the current indices to the triplets array.
-        triplets.push([ arr[i], arr[lPtr], arr[rPtr] ]);
-
-        // We step over the lPtr so as not to have duplicate values
-        lPtr++;
-      }
-
-      // Here we are moving the pointers towards each other
-      if(sum < target){
-        lPtr++;
-      } else {
-        rPtr--;
-      }
+    // We must first sort the array, this will allow us to then run a twoSum style algorithm 
+    arr.sort((a, b) => a - b);
+    
+    // Create an array that will store our triplet values to return 
+    let resultsArr = [];
+    
+    // We will iterate over our input array, until there is only three values left, or
+    // until the current value in the array is greater than or equal to zero ( arr[i] <= 0 ),
+    // this is because two larger numbers cannot add to a smaller number and all numbers
+    // in a sorted array after 0 are larger.
+    for(let i = 0; i < arr.length - 2 && arr[i] <= 0; i++){
+        
+        // Here we are calling a twoSum algorithm to search for the pair of values that will add to i to make zero.
+        // We do not want duplicates within our array, so we will check before.
+        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr);
     }
-  }
-
-  return triplets;
+    
+    // Once we have iterated over our array we return any triplets we have found.
+    return resultsArr;
 };
+
+// This function is essentially the "Pair with Target Sum" problem from above
+// Except we are storing any solutions we find and skipping over duplicated values within our array.
+function twoSum(idx, inputArr, resArr){
+
+    // Create pointers starting at one more than the current index of for loop in the search_triplets function 
+    // and one at the last index in the array.
+    let lPtr = idx + 1;
+    let rPtr = inputArr.length - 1;
+
+    // Here we define the target we are searching for to be the negation of the current value of the input array in the for loop 
+    // in the search_triplets function, because we are searching for 0, 0 = X + Y + Z is equal to -X = Y + Z where X is the current value in the input array. 
+    let target = -inputArr[idx];
+    
+    while(lPtr < rPtr){
+        // Here we create a sum variable for readability
+        const sum = inputArr[lPtr] + inputArr[rPtr];
+        
+        // We check the current sum against the target
+        // Moving the pointers that help make up the sum as needed
+        if(sum < target){           
+            lPtr++;  
+        } else if (sum > target){
+            rPtr--;
+        } else {
+            // When we have found a sum that matches our target, we add all the values into an array and
+            // push that array to our results array.
+            resArr.push([ inputArr[idx], inputArr[lPtr], inputArr[rPtr]]);
+
+            // Because we do not want duplicates we must move both pointers from their current positions.
+            lPtr++;
+            rPtr--;
+
+            // Also we will continue moving the lPtr up as long as we find duplicate values
+            while(lPtr < rPtr && inputArr[lPtr] === inputArr[lPtr-1]){
+                lPtr++;
+            }
+        }      
+    }
+}
 ```
