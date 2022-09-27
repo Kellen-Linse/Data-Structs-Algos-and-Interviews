@@ -316,27 +316,43 @@ Explanation: There are four unique triplets whose sum is equal to zero.
 <br>
 
 - **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - 
+  - *Pointers:* The first left to right, increasing order, then two pointers one at each end of the array past that first index.
+  - *Movement:* The first to iterate over the array, the two pointers moving towards each other.
+  - Avoiding duplicates is what makes this question more difficult.
 <br>
 
 - **Basic Pattern:**
-  1.
+  1. Sort the input array
+  2. create array to hold results values
+  3. iterate up to end or zero in array
+  4. call twoSum algo for each element in the array
+  5. return the results array
  <br>
 
 - **Algorithm:**
-  1.
+  1. Sort the input array
+  2. create array to hold results values
+  3. iterate up to end or zero in array
+  4. Check for duplicated value, if not, call twoSum
+     1. Create pointers at i+1 and last index
+     2. Define target as negation of the value currently at i
+     3. Create a loop that runs while the lower pointer is less than the higher pointer
+     4. Move one of two pointers accordingly if the sum of the value at the two pointers is more or less than the target
+     5. Or, if a match is found, create a new array with the values at i and each pointer, then push it to the results array
+        1. then increment the lower pointer and decrement the higher pointer so as to avoid duplicates
+        2. continue incrementing the lower pointer if it is a duplicate of the last value
+  5. return the results array
 <br>
 
 - **Big O:**
   - Time: `O(n^2)`
-  - Space: `O(n)`
+  - Space: `~O(n)` dependant on the sorting algo
 
 - **Code:**
 ```js
 // No comments
 const search_triplets = function(arr) {  
+    if(arr.length < 3) return [];
     arr.sort((a, b) => a - b);  
     let resultsArr = [];
     
@@ -374,23 +390,23 @@ function twoSum(idx, inputArr, resArr){
 // Comments
 const search_triplets = function(arr) {
     // If there is less than 3 values within the array we do not have enough values to make a triplet.
-    if(arr.length < 3) return null;
+    if(arr.length < 3) return [];
 
-    // We must first sort the array, this will allow us to then run a twoSum style algorithm 
-    arr.sort((a, b) => a - b);
+    // We first sort the array, this will allow us to then run a twoSum style algorithm later on
+    arr.sort((a, b) => a - b); // O(n log n)
     
     // Create an array that will store our triplet values to return 
-    let resultsArr = [];
+    let resultsArr = []; //O(n)s
     
     // We will iterate over our input array, until there is only three values left, or
     // until the current value in the array is greater than or equal to zero ( arr[i] <= 0 ),
     // this is because two larger numbers cannot add to a smaller number and all numbers
     // in a sorted array after 0 are larger.
-    for(let i = 0; i < arr.length - 2 && arr[i] <= 0; i++){
+    for(let i = 0; i < arr.length - 2 && arr[i] <= 0; i++){ // O(n)t
         
         // Here we are calling a twoSum algorithm to search for the pair of values that will add to i to make zero.
         // We do not want duplicates within our array, so we will check before.
-        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr);
+        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr); // O(n)t
     }
     
     // Once we have iterated over our array we return any triplets we have found.
@@ -402,15 +418,16 @@ const search_triplets = function(arr) {
 function twoSum(idx, inputArr, resArr){
 
     // Create pointers starting at one more than the current index of for loop in the search_triplets function 
-    // and one at the last index in the array.
+    // and one at the last index of the array.
     let lPtr = idx + 1;
     let rPtr = inputArr.length - 1;
 
-    // Here we define the target we are searching for to be the negation of the current value of the input array in the for loop 
-    // in the search_triplets function, because we are searching for 0, 0 = X + Y + Z is equal to -X = Y + Z where X is the current value in the input array. 
+    // Here we define the target we are searching for
+    // the target is the negation of the current value at the i-th index of the input array in the search_triplets function, 
+    // we are searching for triplets that sum to 0, 0 = X + Y + Z is equal to -X = Y + Z, where X is the current value in the input array. 
     let target = -inputArr[idx];
     
-    while(lPtr < rPtr){
+    while(lPtr < rPtr){ // O(n)t
         // Here we create a sum variable for readability
         const sum = inputArr[lPtr] + inputArr[rPtr];
         
@@ -425,11 +442,11 @@ function twoSum(idx, inputArr, resArr){
             // push that array to our results array.
             resArr.push([ inputArr[idx], inputArr[lPtr], inputArr[rPtr]]);
 
-            // Because we do not want duplicates we must move both pointers from their current positions.
+            // Then, because we do not want duplicates, we must move both pointers from their current positions.
             lPtr++;
             rPtr--;
 
-            // Also we will continue moving the lPtr up as long as we find duplicate values
+            // We will continue moving the lPtr up as long as we find duplicate values at that pointer
             while(lPtr < rPtr && inputArr[lPtr] === inputArr[lPtr-1]){
                 lPtr++;
             }
@@ -437,3 +454,359 @@ function twoSum(idx, inputArr, resArr){
     }
 }
 ```
+
+### Triplet Sum Close to Target (medium) 
+
+- **Prompt:** Given an **array** of **unsorted numbers** and a **target number**, *find a triplet in the array whose sum is as close to the target number as possible*, **return the sum** of the triplet. If there are *more than one such triplet, return the sum of the triplet with the smallest sum.*
+<br>
+
+- **Example:**
+```js
+Input: [-2, 0, 1, 2], target=2
+Output: 1
+Explanation: The triplet [-2, 1, 2] has the closest sum to the target.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* One iterating over the array, two at each end of the remaining array after the first index
+  - *Movement:* The first moving left to right, increasing, the two moving towards each other looking for a target value
+  - You need to keep track of the closest, and the smallest sum, but when a new closest is found the smallest sum must be redefined!
+<br>
+
+- **Basic Pattern:**
+  1. Sort the input array
+  2. create variables to track the smallest sum and the closest sum to the target
+  3. Iterate over the array running a twoSum style algorithm to find the closest sum to the target
+  4. return the smallest sum
+ <br>
+
+- **Algorithm:**
+  1. Sort the input array
+  2. create variables to track the smallest sum and the closest sum to the target
+  3. Iterate over the array running a twoSum style algorithm to find the closest sum to the target
+     1. Create pointers at one more than the current index and the last index
+     2. Loop while the left pointer is less than the right pointer
+        1. add the values at each pointer to find the current sum
+        2. find the absolute value (distance) of the target minus the current sum
+        3. if we have found a new closest
+           1. set the closest to the current distance 
+           2. set the smallest sum to be the the sum of the current indices
+        4. else if the distance is equal
+           1. check if the current sum is less than the saved sum, if so, set it to be the smallest sum.
+        5. move one of the pointers in the direction so as to bring the current sum closer to the target
+  4. return the smallest sum variable.
+<br>
+
+- **Big O:**
+  - Time: `O(n^2)`
+  - Space: `~O(n)` dependant on the sorting algo
+
+- **Code:**
+```js
+// No comments
+const triplet_sum_close_to_target = function(arr, target) {
+
+  arr.sort((a, b) => a - b); // O(n log n)
+
+  let smallest = null;
+  let closest = null;
+    
+  for(let i = 0; i < arr.length - 2; i++){ // O(n) -> O(n^2)
+    let lPtr = i + 1;
+    let rPtr = arr.length - 1;
+
+    while(lPtr < rPtr){ // O(n) 
+      const sum = arr[lPtr] + arr[rPtr] + arr[i];
+      let dist = Math.abs( target - sum );
+
+      if(!closest || dist < closest){
+        closest = dist;
+        smallest = sum;
+      } else if ( dist === closest ){
+          if(sum < smallest) smallest = sum;
+      }
+
+      if(sum < target){
+        lPtr++;
+      } else {
+        rPtr--;
+      }
+    }
+  }
+
+  return smallest;
+}
+
+// Comments
+const triplet_sum_close_to_target = function(arr, target) {
+
+  // Sorting helps use two pointer technique, lowering Big 0
+  arr.sort((a, b) => a - b);
+
+  // We need to track how close a sum is, and what the smallest sum of close values are.
+  let smallest = null;
+  let closest = null;
+    
+  for(let i = 0; i < arr.length - 2; i++){
+    
+    // create two pointers for twoSum
+    let lPtr = i + 1;
+    let rPtr = arr.length - 1;
+
+    while(lPtr < rPtr){
+      const sum = arr[lPtr] + arr[rPtr] + arr[i];
+
+      // Finding the absolute value tells us the distance from the target
+      // Because the values may be negative we need to use Math.absolute
+      let dist = Math.abs( target - sum );
+
+      // Check if the current distance is closer or equally as close
+      // If there is not currently a value saved in closest,
+      // or the current distance is closer than the closest,
+      // we have found a new closest.
+      if(!closest || dist < closest){
+
+        //set our tracker variables if we have a new closest
+        closest = dist;
+        smallest = sum;
+      } else if ( dist === closest ){
+          // If it is equally close, we need to save the smaller of the two sums
+          if(sum < smallest) smallest = sum;
+      }
+
+      // If we haven't found a value that is closer,
+      // move one of our pointers to try to get closer to the sum
+      if(sum < target){
+        lPtr++;
+      } else {
+        rPtr--;
+      }
+    }
+  }
+
+  // We return the sum of the triplet closest to to sum
+  return smallest;
+}
+```
+
+### Triplets with Smaller Sum (medium)
+
+- **Prompt:** Given an **array** arr of **unsorted numbers** and a **target sum**, *count all triplets in it such that arr[i] + arr[j] + arr[k] < target, where i, j, and k are three different indices.* Write a function to **return the count** of such triplets.
+<br>
+
+- **Example:**
+```js
+Input: [-1, 0, 2, 3], target=3 
+Output: 2
+Explanation: There are two triplets whose sum is less than the target: [-1, 0, 3], [-1, 0, 2]
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* One to evaluate each index of the array, two to search for all sums less than the target (twoSum style).
+  - *Movement:* The first left to right, the next to towards each other.
+  -  The trick with this problem is once you find a triplet that works, every value lower than the current rPtr will work for the current lPtr, so you can just subtract the rPtr from the lPtr to get the number of triplets to add to the count, then move on from that lPtr. 
+<br>
+
+- **Basic Pattern:**
+  1. Create a count variable.
+  2. Sort the array.
+  3. Iterate over the array, running a twoSum style algo
+     1. Adding the number of triplet sums less than the target for any give index to the count.
+  4. Return the the count.
+ <br>
+
+- **Algorithm:**
+  1. Create a count variable.
+  2. Sort the array.
+  3. Iterate over the array, running a twoSum style algo
+     1. Creating pointer variables, one at one more than the index of the for loop, and one at the last index.
+     2. While the left pointer is less than the right,
+        1. Move the pointers such that they find the first value lower than the target
+        2. Then, subtract the right pointer from the left pointer, and add that value to the count.
+        3. Then increment the left pointer.
+  4. Return the count.
+<br>
+
+- **Big O:**
+  - Time: `O(n^2)`
+  - Space: `~O(n)` dependant on the sorting algo
+
+- **Code:**
+```js
+// No comments
+const triplet_with_smaller_sum = function(arr, target) {
+	let count = 0;
+
+	arr.sort((a, b) => a - b); // O(n log n)t - O(n)s
+
+	// O(n) -> O(n^2)
+	for(let i = 0; i < arr.length - 2; i++){
+		let lPtr = i + 1;
+		let rPtr = arr.length - 1;
+        
+		// O(n)
+		while(lPtr < rPtr){
+		    let sum = arr[i] + arr[lPtr] + arr[rPtr];
+
+            if(sum >= target){
+                rPtr--;
+            }else{
+              count += rPtr - lPtr;
+                lPtr++;
+            }
+        } 
+  }
+  return count;
+}
+
+// Comments
+const triplet_with_smaller_sum = function(arr, target) {
+
+  // Sort array, this will allow us to run twoSum style algo later on
+	arr.sort((a, b) => a - b); 
+
+  // Create a variable to track the number of triplets with a smaller sum
+  let count = 0;  
+	
+  // Evaluate each index in the array, until only two are left (not enough to make up a triplet)
+  // Run twoSum style algorithm starting at one passed the i-th index
+	for(let i = 0; i < arr.length - 2; i++){
+		let lPtr = i + 1;
+		let rPtr = arr.length - 1;
+        
+		
+		while(lPtr < rPtr){
+		    let sum = arr[i] + arr[lPtr] + arr[rPtr];
+
+            // We want to decrement the rPtr to make the sum value less for any value equal to or larger than our target.
+            if(sum >= target){
+              rPtr--;
+            }else{
+              // Once you find a triplet that works, every value lower than the current rPtr will work for a given lPtr as well
+              // So we can just add each of those to the count and be done with that lPtr
+              count += rPtr - lPtr;
+              lPtr++;
+            }
+        } 
+  }
+  return count;
+}
+```
+
+### Dutch National Flag Problem (medium)
+
+- **Prompt:** **Given an array containing 0s, 1s and 2s, sort the array in-place.** You should *treat numbers of the array as objects*, hence, we can’t count 0s, 1s, and 2s to recreate the array.
+<br>
+
+- **Example:**
+```js
+Input: [1, 0, 2, 1, 0]
+Output: [0, 0, 1, 1, 2]
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Three pointers, two on each end and one in the middle.
+  - *Movement:* The two on the end move in, while the pointer in the middle moves left to right starting in the same position as the lower pointer.
+  - The trick to this problem is knowing when to swap the variables and when to move the pointers.
+<br>
+
+- **Basic Pattern:**
+  1. Create pointers
+  2. Iterate once over array
+  3. Swap the values at the middle pointer and move the pointers accordingly
+ <br>
+
+- **Algorithm:**
+  1. Create three pointers, one at each end of the array and one to traverse the array 
+  2. Loop while the traversing pointer is less than the right pointer
+     1. If the value at the traversing pointer is 0, 
+        1. swap the value with the value at left pointer
+        2. increment the left pointer
+        3. increment the traversing ptr
+     2. Else if the value at the traversing pointer is 2
+        1. swap the value at the traversing pointer with the value at the right pointer
+        2. decrement the right pointer (do NOTHING to the traversing pointer)
+     3. Else
+        1. increment the traversing pointer (this means we have found a 1, which belongs in the middle).
+  3. Return the input array
+<br>
+
+- **Big O:**
+  - Time: `O(n)`
+  - Space: `O(1)`
+
+- **Code:**
+```js
+// No comments
+const dutch_flag_sort = function(arr) {
+
+
+  let low = 0;
+  let high = arr.length - 1;
+  let ptr = 0;
+
+	while(ptr <= high){ //O(n)
+		if(arr[ptr] === 0){
+			swap(arr, ptr, low);
+			low++;
+      ptr++;
+    } else if (arr[ptr] === 2){
+	    swap(arr, ptr, high);
+      high--;
+    } else {
+	    ptr++;
+    }
+  }
+  return arr;
+}
+
+
+function swap(arr, ptr1, ptr2){
+	[arr[ptr1], arr[ptr2]] = [arr[ptr2], arr[ptr1]]
+}
+
+
+// Comments
+const dutch_flag_sort = function(arr) {
+	
+  // We are going to need three pointers for this problem
+  // One at the each end and one in between
+  let low = 0;
+  let high = arr.length - 1;
+	let ptr = 0;
+
+  // We are going to move the middle ptr until it reaches the high pointer
+	while(ptr <= high){
+
+    // If the value at the ptr var is 0, swap it with the value at the low pointer
+    // Then move both the low and ptr vars up one step
+		if(arr[ptr] === 0){
+			swap(arr, ptr, low);
+			low++;
+      ptr++;
+    // If the value at the ptr var is 2, swap it with the value at the high pointer
+    // The move the high pointer down one step, but leave the ptr var where it is
+    } else if (arr[ptr] === 2){
+	    swap(arr, ptr, high);
+      high--;
+    // If we have reached this part of the conditional we have found a 1, and will just move the ptr var up by one step
+    } else {
+	    ptr++;
+    }
+  }
+
+  // Finally we will return the input array
+  return arr;
+}
+
+// Swap two values within an array
+function swap(arr, ptr1, ptr2){
+	[arr[ptr1], arr[ptr2]] = [arr[ptr2], arr[ptr1]]
+}
+
+```
+
+
