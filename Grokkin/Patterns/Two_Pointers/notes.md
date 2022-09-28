@@ -810,3 +810,227 @@ function swap(arr, ptr1, ptr2){
 ```
 
 
+### Quadruple Sum to Target (medium)#
+
+- **Prompt:** Given an array of unsorted numbers and a target number, find all unique quadruplets in it, whose sum is equal to the target number.
+<br>
+
+- **Example:**
+```js
+Input: [4, 1, 2, -1, 1, -3], target=1
+Output: [-3, -1, 1, 4], [-3, 1, 1, 2]
+Explanation: Both the quadruplets add up to the target.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* 4 ptrs, two in a nested forloop and two acting as the pointers for twoSum style algo
+  - *Movement:* The two nested for loop pointers move left to right, and tw thw twoSum style pointers move in towards each other. 
+  - Again, with all nested non-duplicate xSum style problems, the thing to watch out for is duplicate values.
+  - **In this problem we just push past all non-duplicates every time after we find a new solution.**
+<br>
+
+- **Basic Pattern:**
+  1. threeSum with an extra for loop
+ <br>
+
+- **Algorithm:**
+  1. Sort input array
+  2. Create array to hold quadruplets
+  3. Create nested for loop
+  4. run twoSum style algo
+  5. if a sum is found that matches the target
+     1. push an array containing all pointers to the results array
+     2. **run a while loop for each of the pointers to skip over any of the duplicate values**
+     3. **Then increment the lPtr and decrement the rPtr once more**
+  6. return results array
+<br>
+
+- **Big O:**
+  - Time: `O(n^3)`
+  - Space: `O(n) - sorting`
+
+- **Code:**
+```js
+// No Comments
+var fourSum = function(nums, target) {
+    nums.sort((a,b) => a-b); // O(n)s
+    let result = [];
+
+    for (let i=0; i<nums.length - 3; i++) { // O(n^2)t
+        for (let j=i+1; j<nums.length - 2; j++) {
+
+            let lPtr = j+1, 
+            rPtr = nums.length - 1;
+
+            while (lPtr < rPtr) { // O(n)t
+                let sum = nums[i] + nums[j] + nums[lPtr] + nums[rPtr];
+
+                if (sum > target){
+                  rPtr--;
+                }
+                else if(sum < target){
+                  lPtr++;
+                }  
+                else {
+                    result.push([nums[i], nums[j], nums[lPtr], nums[rPtr]]);
+                    while (nums[i] === nums[i+1]) i++;
+                    while (nums[j] === nums[j+1]) j++;
+                    while (nums[lPtr] === nums[lPtr+1]) lPtr++;
+                    while (nums[rPtr] === nums[rPtr-1]) rPtr--;
+                    lPtr++; rPtr--;
+                }   
+            }
+        }
+        
+    }
+    return result;
+};
+
+//Comments
+var fourSum = function(nums, target) {
+
+    // Sort input array
+    nums.sort((a,b) => a-b); //O(n)s
+    // Create an array to hold the quadruplets whose sum match the target
+    let result = [];
+
+    // Create a nested for loop - O(n^2)t
+    for (let i=0; i<nums.length - 3; i++) {
+        for (let j=i+1; j<nums.length - 2; j++) {
+
+            // twoSum Style algo - O(n)t
+            // Create pointers
+            let lPtr = j+1, 
+                rPtr = nums.length - 1;
+
+            while (lPtr < rPtr) {
+
+                // Find current sum
+                let sum = nums[i] + nums[j] + nums[lPtr] + nums[rPtr];
+
+                // Move sum towards target
+                if (sum > target){
+                  rPtr--;
+                }
+                else if(sum < target){
+                  lPtr++;
+                }
+                // If a match is found
+                else {
+                    // Push current values to the results array as a quadruplet
+                    result.push([nums[i], nums[j], nums[lPtr], nums[rPtr]]);
+                    
+                    //Increment i, j, lPtr and decrement rPtr while there are duplicate values
+                    while (nums[i] === nums[i+1]) i++;
+                    while (nums[j] === nums[j+1]) j++;
+                    while (nums[lPtr] === nums[lPtr+1]) lPtr++;
+                    while (nums[rPtr] === nums[rPtr-1]) rPtr--;
+
+                    // Increment and decrement once more to avoid duplicates
+                    lPtr++; rPtr--;
+                }   
+            }
+        }
+    }
+
+    // Return results array
+    return result;
+};
+```
+
+- **Alternate Solution:**
+```js
+// No comments
+var fourSum = function(arr, target) {
+    
+  let resultsArr = [];
+	arr.sort((a, b) => a - b);
+
+	for(let i=0; i < arr.length-3 ; i++){ // O(n)
+		if (arr[i] === arr[i - 1]) continue; 
+
+		for(let j = i+1; j < arr.length-2; j++){ // O(n)
+            if (j > i + 1 && arr[j] === arr[j - 1]) continue;           
+            findPair(i, j, arr, resultsArr, target); // O(n)
+      }
+    }
+	return resultsArr;
+}
+
+function findPair(i, j, arr, resArr, target){
+    let lPtr = j+1;
+    let rPtr = arr.length-1;
+    
+    while(lPtr < rPtr){
+        const sum = arr[i] + arr[j] + arr[lPtr] + arr[rPtr];
+        
+        if(sum < target){
+            lPtr++;
+        } else if (sum > target){
+            rPtr--;
+        } else {
+            resArr.push([arr[i], arr[j], arr[lPtr], arr[rPtr]]);
+            lPtr++;
+            rPtr--;
+            while(lPtr < rPtr && arr[lPtr] === arr[lPtr-1]){
+                lPtr++;
+            }
+        }
+    }
+}
+
+// Comments
+var fourSum = function(arr, target) {
+    
+    // Create an array to store the quadruplets that add to the target 
+    let resultsArr = [];
+	
+    // Sort the array O(n log n)t
+	arr.sort((a, b) => a - b);
+    
+    // Iterate over the array until you can make one final triplet
+	for(let i=0; i < arr.length-3 ; i++){ // O(n)
+        
+        // If you find a duplicate skip to the next i value
+		if (arr[i] === arr[i - 1]) continue; 
+        
+        // Starting at one more than i, iterate over the array
+		for(let j = i+1; j < arr.length-2; j++){
+            
+            // If j is at least one more than i and is a duplicate, skip to next j value
+            if (j > i + 1 && arr[j] === arr[j - 1]) continue;
+            
+            findPair(i, j, arr, resultsArr, target);
+      }
+    }
+	return resultsArr;
+}
+
+// twoSum style algo, making sure there are no duplicate values
+// and pushing any found values to the resultsArr
+function findPair(i, j, arr, resArr, target){
+    let lPtr = j+1;
+    let rPtr = arr.length-1;
+    
+    while(lPtr < rPtr){
+        const sum = arr[i] + arr[j] + arr[lPtr] + arr[rPtr];
+        
+        if(sum < target){
+            lPtr++;
+        } else if (sum > target){
+            rPtr--;
+        } else {
+            // Push the quadruplet to the results array
+            resArr.push([arr[i], arr[j], arr[lPtr], arr[rPtr]]);
+            // move on from both indices to avoid duplicates
+            lPtr++;
+            rPtr--;
+            // keep incrementing the lPtr if it holds the same value as the last lPtr
+            while(lPtr < rPtr && arr[lPtr] === arr[lPtr-1]){
+                lPtr++;
+            }
+        }
+    }
+}
+```
