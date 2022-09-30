@@ -14,6 +14,7 @@
 <br>
 
 - **Example:**
+
 ```js
 Input: [1, 2, 3, 4, 6], target=6
 Output: [1, 3]
@@ -53,6 +54,7 @@ Explanation: The numbers at index 1 and 3 add up to 6: 2+4=6
   - Space: `O(1)`
 
 - **Code:**
+
 ```js
 // No comments
 const pair_with_targetsum = function(arr, target_sum) {
@@ -114,6 +116,7 @@ const pair_with_targetsum = function(arr, target_sum) {
 <br>
 
 - **Example:**
+
 ```js
 Input: [2, 3, 3, 3, 6, 9, 9]
 Output: 4
@@ -153,6 +156,7 @@ Explanation: The first four elements after removing the duplicates will be [2, 3
   - Space: `O(1)`
 
 - **Code:**
+
 ```js
 // No comments
 const remove_duplicates = function(arr) {
@@ -203,6 +207,7 @@ const remove_duplicates = function(arr) {
 <br>
 
 - **Example:**
+
 ```js
 Input: [-2, -1, 0, 2, 3]
 Output: [0, 1, 4, 4, 9]
@@ -241,6 +246,7 @@ Output: [0, 1, 4, 4, 9]
   - Space: `O(n)` // building the return array
 
 - **Code:**
+
 ```js
 // No comments
 const make_squares = function(arr) {
@@ -299,7 +305,6 @@ const make_squares = function(arr) {
   // After the loop we return our new array that has been filled with the squared values.
   return squareArr;
 };
-
 ```
 
 ### Triplet Sum to Zero (medium)
@@ -308,6 +313,7 @@ const make_squares = function(arr) {
 <br>
 
 - **Example:**
+
 ```js
 Input: [-3, 0, 1, 2, -1, 1, -2]
 Output: [-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]
@@ -349,6 +355,7 @@ Explanation: There are four unique triplets whose sum is equal to zero.
   - Space: `~O(n)` dependant on the sorting algo
 
 - **Code:**
+
 ```js
 // No comments
 const search_triplets = function(arr) {  
@@ -461,6 +468,7 @@ function twoSum(idx, inputArr, resArr){
 <br>
 
 - **Example:**
+
 ```js
 Input: [-2, 0, 1, 2], target=2
 Output: 1
@@ -503,6 +511,7 @@ Explanation: The triplet [-2, 1, 2] has the closest sum to the target.
   - Space: `~O(n)` dependant on the sorting algo
 
 - **Code:**
+
 ```js
 // No comments
 const triplet_sum_close_to_target = function(arr, target) {
@@ -596,6 +605,7 @@ const triplet_sum_close_to_target = function(arr, target) {
 <br>
 
 - **Example:**
+
 ```js
 Input: [-1, 0, 2, 3], target=3 
 Output: 2
@@ -634,6 +644,7 @@ Explanation: There are two triplets whose sum is less than the target: [-1, 0, 3
   - Space: `~O(n)` dependant on the sorting algo
 
 - **Code:**
+
 ```js
 // No comments
 const triplet_with_smaller_sum = function(arr, target) {
@@ -701,6 +712,7 @@ const triplet_with_smaller_sum = function(arr, target) {
 <br>
 
 - **Example:**
+
 ```js
 Input: [1, 0, 2, 1, 0]
 Output: [0, 0, 1, 1, 2]
@@ -739,6 +751,7 @@ Output: [0, 0, 1, 1, 2]
   - Space: `O(1)`
 
 - **Code:**
+
 ```js
 // No comments
 const dutch_flag_sort = function(arr) {
@@ -851,6 +864,7 @@ Explanation: Both the quadruplets add up to the target.
   - Space: `O(n) - sorting`
 
 - **Code:**
+
 ```js
 // No Comments
 var fourSum = function(nums, target) {
@@ -940,6 +954,7 @@ var fourSum = function(nums, target) {
 ```
 
 - **Alternate Solution:**
+
 ```js
 // No comments
 var fourSum = function(arr, target) {
@@ -1157,3 +1172,129 @@ function validIndex(str, i){
 }
 ```
 
+### Problem Name (Difficulty)
+
+- **Prompt:** 
+<br>
+
+- **Example:**
+
+```js
+
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - 
+<br>
+
+- **Basic Pattern:**
+  1.
+ <br>
+
+- **Algorithm:**
+  1.
+<br>
+
+- **Big O:**
+  - Time: ``
+  - Space: ``
+
+- **Code:**
+
+```js
+// No Comments
+function shortest_window_sort(arr) {
+    
+    let lPtr = 0, rPtr = arr.length-1;
+
+    // 
+    let end = -1, start = 0;
+
+    let min = Infinity,
+        max = -Infinity;
+    
+    while(rPtr >= 0){
+
+        arr[lPtr] >= max ? max = arr[lPtr] : end = lPtr;
+        arr[rPtr] <= min ? min = arr[rPtr] : start = rPtr;
+
+        lPtr++;
+        rPtr--;
+    }
+    
+    return end - start + 1; 
+};
+
+// Comments
+function shortest_window_sort(arr) {
+    
+    // Create pointers at the beginning and the end of the array.
+    let lPtr = 0, rPtr = arr.length-1;
+
+    // Here we set the end and start values of the unsorted array
+    // we set end to be -1 incase the array is sorted, so that it counters the + 1 in the return statement
+    let end = -1, start = 0;
+
+    // Create min variable that is as BIG as possible
+    // Create a max variable that is as SMALL as possible
+    // THIS IS DONE SO THAT ANY VARIABLE THAT IS COMPARED TO THEM INITIALLY WILL BE SMALLER THAN THE MIN, OR LARGER THAN THE MAX
+    let min = Infinity,
+        max = -Infinity;
+    
+    // Here we are going to looping as long as the right pointer is greater than zero
+    while(rPtr >= 0){
+        
+        // We are going to first check to see if the value at the lPtr is larger/equal to the max value
+        // If so, we have found a new max, so we set max to be this value
+        // If not, we are going to set the end to be the lPtr
+        arr[lPtr] >= max ? max = arr[lPtr] : end = lPtr;
+
+        // We are going to then check to see if the value at the rPtr is smaller/equal to the min value
+        // If so, we have found a new min, so we set min to be this value
+        // If not, we are going to set the start to be the rPtr
+        arr[rPtr] <= min ? min = arr[rPtr] : start = rPtr;
+
+        // We then move the pointers towards each other
+        lPtr++;
+        rPtr--;
+    }
+    
+    // If the right pointer reaches 0, we return end minus start
+    return end - start+1; 
+};
+
+ ```
+
+- **Alternative:**
+
+```js
+var findUnsortedSubarray = function (arr) {
+
+  let start = null; 
+  let end = null;
+
+  let lPtr = 0;
+  let hPtr = arr.length - 1;
+
+  while(lPtr < hPtr){
+
+    for(let i = lPtr; i <= hPtr; i++){
+      if(start === null && arr[i] < arr[lPtr]){
+        start = lPtr;
+      }
+      if(end === null && arr[i] > arr[hPtr]){
+        end = hPtr;
+      } 
+    }
+
+    if(start !== null && end !== null) return end - start + 1; 
+    if(start === null) lPtr++;
+    if(end === null) hPtr--;
+  }
+
+  return arr[0] > arr[arr.length-1] ? arr.length : 0;
+};
+```
