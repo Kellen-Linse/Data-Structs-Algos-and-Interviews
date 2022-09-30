@@ -1,9 +1,15 @@
 # Two (Three) Pointers
 
+<hr>
+
 ## General Notes
 
-- The **pointers may start in different points, and move in different directions** depending on the problem you are trying to solve.
+- The **pointers may start in different points, move in different directions, start or restart at different points, they may stop when they meet or cross through and continue on** depending on the problem you are trying to solve.
 - Sometimes a **for loop** can be used to make the code more readable.
+- `Infinity` and `-Infinity` are good for starting comparisons where you are looking for mins (Infinity) and maxes (-Infinity).
+  - This is because no matter how large or small the number it will be less than Infinity or more than -Infinity, and your comparison can move in the same pattern from there.
+- Sometimes the trick is to do it in the opposite way you think of doing it
+  - Instead of searching for the first time you find an instance of some condition, try looking for the last.
 
 
 ## Problems
@@ -109,6 +115,8 @@ const pair_with_targetsum = function(arr, target_sum) {
 }
 ```
 
+<hr>
+
 ### Remove Duplicates (easy)
 
 - **Prompt:** Given an *array of sorted numbers*, **remove all duplicate number instances** from it **in-place**, such that each element appears only once. 
@@ -200,6 +208,8 @@ const remove_duplicates = function(arr) {
   return write;
 };
 ```
+
+<hr>
 
 ### Squaring a Sorted Array (easy)
 
@@ -306,6 +316,8 @@ const make_squares = function(arr) {
   return squareArr;
 };
 ```
+
+<hr>
 
 ### Triplet Sum to Zero (medium)
 
@@ -462,6 +474,8 @@ function twoSum(idx, inputArr, resArr){
 }
 ```
 
+<hr>
+
 ### Triplet Sum Close to Target (medium) 
 
 - **Prompt:** Given an **array** of **unsorted numbers** and a **target number**, *find a triplet in the array whose sum is as close to the target number as possible*, **return the sum** of the triplet. If there are *more than one such triplet, return the sum of the triplet with the smallest sum.*
@@ -599,6 +613,8 @@ const triplet_sum_close_to_target = function(arr, target) {
 }
 ```
 
+<hr>
+
 ### Triplets with Smaller Sum (medium)
 
 - **Prompt:** Given an **array** arr of **unsorted numbers** and a **target sum**, *count all triplets in it such that arr[i] + arr[j] + arr[k] < target, where i, j, and k are three different indices.* Write a function to **return the count** of such triplets.
@@ -705,6 +721,8 @@ const triplet_with_smaller_sum = function(arr, target) {
   return count;
 }
 ```
+
+<hr>
 
 ### Dutch National Flag Problem (medium)
 
@@ -822,6 +840,7 @@ function swap(arr, ptr1, ptr2){
 
 ```
 
+<hr>
 
 ### Quadruple Sum to Target (medium)#
 
@@ -1050,6 +1069,7 @@ function findPair(i, j, arr, resArr, target){
 }
 ```
 
+<hr>
 
 ### Comparing Strings containing Backspaces (medium)
 
@@ -1172,51 +1192,64 @@ function validIndex(str, i){
 }
 ```
 
-### Problem Name (Difficulty)
+<hr>
 
-- **Prompt:** 
+### Minimum Window Sort (medium)
+
+- **Prompt:** Given an array, find the length of the smallest subarray in it which when sorted will sort the whole array.
 <br>
 
 - **Example:**
 
 ```js
-
+Input: [1, 3, 2, 0, -1, 7, 10]
+Output: 5
+Explanation: We need to sort only the subarray [1, 3, 2, 0, -1] to make the whole array sorted
 ```
 <br>
 
 - **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - 
+  - *Pointers:* Four, two starting at the beginning and end of the input array, two to mark the start and end of the unsorted sub-array.
+  - *Variables* Two, one to hold the largest value seen by the lPtr, and one to hold the smallest value seen by the rPtr
+  - *Movement:* The lPtr will work right and the rPtr will work left, they will **NOT** stop until they reach the other side, they will cross each other.
+  - Instead of searching for the first instance of an unsorted value in the array, you need to search for the last, so, you start from the beginning looking for the end and start at the end looking for the beginning.
+  - This is one of those problems where you really must understand and think deeply about the properties of the data structure you are working with and the conditions put upon it (sorted in this case).
+    - E.g. A value in a sorted array will always be greater or equal to the value that came before it.
+  - Another important trick is the use of + and - Infinity, allowing for the variables to effectively not be set yet still perform properly in a comparison the first time around.
 <br>
 
 - **Basic Pattern:**
-  1.
+  1. Move lPtr right and rPtr left, lPtr looking for values not in ascending order, and the rPtr looking for values not in descending order.
+  2. Assign an e and start pointer respectively every time an unsorted value is found.
+  3. return end minus start plus one after each index is evaluated once.
  <br>
 
 - **Algorithm:**
-  1.
+  1. Create an lPtr and rPtr to evaluate the indices in ascending and descending order.
+  2. Create a start and end pointer to point to the beginning and end of the unsorted section, set end to -1.
+  3. Create a min variable set to Infinity and a max variable set to -Infinity.
+  4. Loop over each index in the array once.
+     1. If the value at the lPtr is greater than the max, set max to that value, if not set the end pointer to be equal to the lPtr (found unsorted value).
+     2. If the value at the rPtr is less than the min, set min to that value, if not set the start pointer to be equal to the rPtr (found unsorted value).
+     3. Increment lPtr, decrement rPtr.
+  5. Return the end pointer minus the start pointer, add one to the difference to find the length.
 <br>
 
 - **Big O:**
-  - Time: ``
-  - Space: ``
+  - Time: `O(n)`
+  - Space: `O(1)`
 
 - **Code:**
 
 ```js
 // No Comments
-function shortest_window_sort(arr) {
-    
+var findUnsortedSubarray = function(arr) {
+
     let lPtr = 0, rPtr = arr.length-1;
+    let start = 0,  end = -1;
+    let min = Infinity, max = -Infinity;
 
-    // 
-    let end = -1, start = 0;
-
-    let min = Infinity,
-        max = -Infinity;
-    
-    while(rPtr >= 0){
+    while(lPtr < arr.length){
 
         arr[lPtr] >= max ? max = arr[lPtr] : end = lPtr;
         arr[rPtr] <= min ? min = arr[rPtr] : start = rPtr;
@@ -1224,48 +1257,74 @@ function shortest_window_sort(arr) {
         lPtr++;
         rPtr--;
     }
-    
-    return end - start + 1; 
+
+    return end - start + 1;
 };
 
-// Comments
-function shortest_window_sort(arr) {
-    
-    // Create pointers at the beginning and the end of the array.
+//Comments
+
+var findUnsortedSubarray = function(arr) {
+    // Create pointers at each end of the array
     let lPtr = 0, rPtr = arr.length-1;
 
-    // Here we set the end and start values of the unsorted array
-    // we set end to be -1 incase the array is sorted, so that it counters the + 1 in the return statement
-    let end = -1, start = 0;
+    // Create pointers that will point to the beginning and end of the unsorted portion of the array
+    // End is set to -1, this will only come into play when the array is sorted and therefore the 
+    // length of the array is zero. Because of the way the return is set up with a +1, it will balance out to 0.
+    let start = 0,  end = -1;
 
-    // Create min variable that is as BIG as possible
-    // Create a max variable that is as SMALL as possible
-    // THIS IS DONE SO THAT ANY VARIABLE THAT IS COMPARED TO THEM INITIALLY WILL BE SMALLER THAN THE MIN, OR LARGER THAN THE MAX
-    let min = Infinity,
-        max = -Infinity;
-    
-    // Here we are going to looping as long as the right pointer is greater than zero
-    while(rPtr >= 0){
-        
-        // We are going to first check to see if the value at the lPtr is larger/equal to the max value
-        // If so, we have found a new max, so we set max to be this value
-        // If not, we are going to set the end to be the lPtr
-        arr[lPtr] >= max ? max = arr[lPtr] : end = lPtr;
+    // Create a min and max variable, 
+    // min will track the lowest value the rPtr has seen on it's way down the array.
+    // max will track the highest value the lPtr has seen on it's way up the array.
+    // We start the variables as +/- Infinity to maintain the pattern in the loop
+    // No matter what the first value for each, it will be larger or smaller respectively.
+     let min = Infinity, max = -Infinity;
 
-        // We are going to then check to see if the value at the rPtr is smaller/equal to the min value
-        // If so, we have found a new min, so we set min to be this value
-        // If not, we are going to set the start to be the rPtr
-        arr[rPtr] <= min ? min = arr[rPtr] : start = rPtr;
+    // Create a while loop that will run until the left or right pointer (pick one, they will move at the same rate) 
+    // reaches the opposite side. This could be done as a for loop as well, but it helps to 
+    // illustrate what is going on when it is a while loop imo.
+    while(lPtr < arr.length){
 
-        // We then move the pointers towards each other
+        // What we need to do is find the last time in the array that a value is out of order,
+        // Working up from the beginning for the end point, and 
+        // Working down from the end for the start point
+
+        // In a sorted array, as you iterate l to r (like the lPtr), 
+        // you should expect to continually find the next number to be equal to or greater than the last
+        // If this is the case set the max variable to that number.
+        // If you find a number that is less than the largest number you have seen, it means you have found 
+        // a number that is out of order.
+        // Each time you find an out of order number, set the end pointer to that index, as you continue
+        // If the numbers keeps increasing until the end, that portion of the array is sorted, therefore the
+        // last time you set the end pointer it will point to the end of the unsorted portion of the array.
+        arr[lPtr] >= max ? 
+            max = arr[lPtr] : 
+            end = lPtr;
+
+        // The rPtr does the exact opposite of the lPtr. It moves from the end of the array in descending order
+        // looking for values in the array that are out of order given that each value in a sorted array should be 
+        // less than the one previous. Each time we find one of these out of order values, 
+        // we will set the start pointer to be the current rPtr value. The last time we set this value will be the 
+        // start of the unsorted portion of the array. 
+        arr[rPtr] <= min ? 
+            min = arr[rPtr] : 
+            start = rPtr;
+
+
+        // For each time through the loop we will increment and decrement
+        // the lPtr and the rPtr, working them from one end of the array to the other.
         lPtr++;
         rPtr--;
     }
-    
-    // If the right pointer reaches 0, we return end minus start
-    return end - start+1; 
-};
 
+    // When we reach the end we will have the end and the start of the unsorted portion of the array
+    // but the problem wants to know the length of that sub portion, because arrays are zero indexed we need to add one 
+    // after we subtract the end value from the start to geth the length. 
+    // As mentioned above, if the array is fully sorted or empty, we want to return 0, as that is the length of the 
+    // unsorted portion of the array, in both of those cases end and start will not have been updated 
+    // You would expect for both end and start to be zero in this case, however, because we have to adjust 
+    // to find the length of the sub-array, we start the end at -1 to counter this and return zero
+    return end - start + 1;
+};
  ```
 
 - **Alternative:**
