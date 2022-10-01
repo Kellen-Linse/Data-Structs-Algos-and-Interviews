@@ -1,4 +1,7 @@
 
+
+<hr>
+
 ### Problem Name (Difficulty)
 
 - **Prompt:** 
@@ -14,6 +17,7 @@
 - **Comments:**
   - *Pointers:* 
   - *Movement:* 
+  - *Variables:*
   - 
 <br>
 

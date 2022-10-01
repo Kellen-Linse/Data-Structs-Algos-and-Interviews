@@ -21,7 +21,7 @@
   - Companies often provide candidates resources to get insights on the right knowledge areas and skills they are looking for. 
   - You can also request recruiters for information on a company’s interview process. 
 
-#### 2. Study Interview Experiences of OTher Candidates
+#### 2. Study Interview Experiences of Other Candidates
 
   - Check places like Leetcode's interview discussion section, glassdoor's interview section, and hired's discussion section to find real world interview experiences with a certain company.
 
@@ -51,12 +51,12 @@
 
   - Schedule breaks and **stick to them.**
   - If you’re having trouble with specific knowledge areas or skills, taking a break will help clear your mind. This can help you refocus, making it easier to work on difficult topics. 
-  - This means go for a walk or do some light chores, not indulgent breaks like video games.
+  - This means go for a walk or do some light chores, **not indulgent breaks like video games**.
   - Don’t waste your time if you find yourself stuck at any time during your preparation process. Move on to the next step and return to resolve the issue later. This will help you cover more ground and prevent you from getting bogged down by difficult topics.
 
 #### 6. Create a Vision Board
 
-  - Keep a constant reminder of your why.
+  - **Keep a constant reminder of your why**.
   - To stay enthused about your preparation process, write down what you aim to achieve at the end of it, why you decided to interview at a new company, and the benefits of landing a job offer from the company of your choice.
   - This will act as a constant reminder of your preparation objectives and keep you motivated to plough on through all challenges.
 
