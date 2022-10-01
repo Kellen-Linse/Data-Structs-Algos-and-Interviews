@@ -8,6 +8,9 @@
 - Sometimes a **for loop** can be used to make the code more readable.
 - `Infinity` and `-Infinity` are good for starting comparisons where you are looking for mins (Infinity) and maxes (-Infinity).
   - This is because no matter how large or small the number it will be less than Infinity or more than -Infinity, and your comparison can move in the same pattern from there.
+  - Using -Infinity helps when finding the largest value among negative numbers.
+  - When you are trying to find a max value, you want to start with the smallest number possible (-Infinity).
+  - When you are trying to find a min value, you want to start with the largest number possible (Infinity).
 - Sometimes the trick is to do it in the opposite way you think of doing it
   - Instead of searching for the first time you find an instance of some condition, try looking for the last.
 
@@ -842,7 +845,7 @@ function swap(arr, ptr1, ptr2){
 
 <hr>
 
-### Quadruple Sum to Target (medium)#
+### Quadruple Sum to Target (medium)
 
 - **Prompt:** Given an array of unsorted numbers and a target number, find all unique quadruplets in it, whose sum is equal to the target number.
 <br>
@@ -1119,6 +1122,7 @@ In "xyz##", the first '#' removes the character 'z' and the second '#' removes t
   - Space: `O(1)`
 
 - **Code:**
+
 ```js
 // No comments
 const backspace_compare = function(str1, str2) {
@@ -1190,6 +1194,7 @@ function validIndex(str, i){
   // If we have reached the beginning of our string we have nothing left to skip over
   return i < 0 ?  null : valid;
 }
+
 ```
 
 <hr>
@@ -1206,6 +1211,7 @@ Input: [1, 3, 2, 0, -1, 7, 10]
 Output: 5
 Explanation: We need to sort only the subarray [1, 3, 2, 0, -1] to make the whole array sorted
 ```
+
 <br>
 
 - **Comments:**
