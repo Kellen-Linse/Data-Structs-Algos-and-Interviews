@@ -255,3 +255,130 @@ const smallest_subarray_sum = function(s, arr) {
     return smLen === Infinity ? 0 : smLen;
 };
 ```
+
+<hr>
+
+### Longest Substring with maximum K Distinct Characters (medium)
+
+- **Prompt:** Given a string, find the length of the longest substring in it with no more than K distinct characters.
+<br>
+
+- **Example:**
+
+```js
+Input: String="araaci", K=2
+Output: 4
+Explanation: The longest substring with no more than '2' distinct characters is "araa".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one to point to the start and one to point to the end of the sliding window
+  - *Movement:* The starting pointer will move forward one index at a time through each iteration of the for loop and the end pointer will contract the window moving towards the start pointer while the number of distinct chars is more than k.
+  - *Variables:* Three, a hashmap to track the characters,a distChars var to count the number of distinct characters, and a maxLen var to track the largest window of distinct characters.
+  - This is a **dynamic** sliding window problem used in conjunction with a **hashmap**.
+<br>
+
+- **Basic Pattern:**
+  1. Track the number of distinct chars.
+  2. Expand or contract the sliding window depending on the relation between the input 'k' and that number.
+  3. When a larger window is found that contains distinct chars, set the maxLen var to the length of that window.
+  4. return the maximum length found.
+ <br>
+
+- **Algorithm:**
+  1. Create an object to hold the character count, charMap.
+  2. Create variables to count the number of distinct characters in the window, to track the largest window of distinct characters, and to point to the end of the sliding window.
+  3. Create a start variable within a for loop, starting at zero and running until it reaches the last index of the string, incrementing by one.
+     1. Check to see if the current char at the start index exists in the charMap,
+        1. If so, increment the value held at the key by that chars name, by one.
+        2. If not, 
+           1. create a key in the object with that chars name, then set it's value to one.
+           2. Increase the distinct character count by one. 
+     2. While the number of distinct chars is greater than k, 
+        1. decrease the count of that char in the char map by one.
+        2. Now check to see if the count at that character is zero, if it is,
+           1.  decrement the number of distinct characters by one.
+        3. Increment the end pointer by one.
+        4. If the current window between end and start minus one is larger than the largest known window, make that length the max.
+  4. If max length is never updated due to an empty string or some other edge case, return 0, else return the maximum length found.
+   
+<br>
+
+- **Big O:**
+  - Time: `O(n)`, technically O(2n)
+  - Space: `O(K + 1)`, we will be storing a maximum of `K+1` characters
+
+- **Code:**
+
+```js
+// No comments
+const longest_substring_with_k_distinct = function(str, k) {
+
+  let charMap = {}, // O(k + 1)
+      distChars = 0, 
+      maxLen = -Infinity,
+      end = 0; 
+
+  for(let start = 0; start < str.length; start++){ // O(n)t
+
+    if(charMap[str[start]]){
+      charMap[str[start]]++;
+    } else {
+      charMap[str[start]] = 1;
+      distChars++;
+    }
+
+    while(distChars > k){
+      charMap[str[end]]--;
+      if(charMap[str[end]] === 0) distChars--;
+      end++;
+    }
+
+    const curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen === -Infinity ? 0 : maxLen;
+};
+
+
+// Comments
+const longest_substring_with_k_distinct = function(str, k) {
+
+  let charMap = {}, // character count
+      distChars = 0, // distinct characters
+      maxLen = -Infinity, // Maximum length of sub-string
+      end = 0; // End of sliding window
+
+  for(let start = 0; start < str.length; start++){
+
+    // If the char at start exists in the char map increment it's count by one.
+    // If not, add it to the charMap, set it's count to one, and increase the distinct chars variable by one.
+    if(charMap[str[start]]){
+      charMap[str[start]]++;
+    } else {
+      charMap[str[start]] = 1;
+      distChars++;
+    }
+
+    // While the number of distinct chars is greater than k, 
+    // decrease the count of that char in the char map by one.
+    // now check to see if the count at that character is zero, if it is,
+    // decrement the number of distinct characters and then increment the end pointer.
+    while(distChars > k){
+      charMap[str[end]]--;
+      if(charMap[str[end]] === 0) distChars--;
+      end++;
+    }
+
+    // If the current window is larger than the largest known window, make that length the max
+    const curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // If max length is never updated due to an empty string or some othe edge case, return 0, 
+  // else return the max length
+  return maxLen === -Infinity ? 0 : maxLen;
+};
+```

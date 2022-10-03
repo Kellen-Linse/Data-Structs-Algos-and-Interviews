@@ -39,3 +39,5 @@
   - Example: 
     - `[-1, 3, -4, 0, 2].sort()` will return `[-1, -4, 0, 2, 3]`
     - `[[-1, 3, -4, 0, 2].sort((a, b) => a - b)` will return `[-4, -1, 0, 2, 3]`
+
+- Break problems down into their sub-parts. What variables will you need? What logic? What pointers? etc...
