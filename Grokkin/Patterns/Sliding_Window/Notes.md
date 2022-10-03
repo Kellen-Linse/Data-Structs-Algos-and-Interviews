@@ -382,3 +382,78 @@ const longest_substring_with_k_distinct = function(str, k) {
   return maxLen === -Infinity ? 0 : maxLen;
 };
 ```
+
+<hr>
+
+### Fruits into Baskets (medium)
+
+- **Note:** This question is essentially the last question with a 'realistic' scenario applied to it.
+
+- **Prompt:**
+
+
+ ```
+ You are visiting a farm to collect fruits. The farm has a single row of fruit trees. 
+ You will be have two baskets, and your goal is to pick as many fruits as possible to be placed in the given baskets.
+
+You will be given an array of characters where each character represents a fruit tree. The farm has following restrictions:
+
+Each basket can have only one type of fruit. There is no limit to how many fruit a basket can hold.
+You can start with any tree, but you can’t skip a tree once you have started.
+You will pick exactly one fruit from every tree until you cannot, 
+  - i.e., you will stop when you have to pick from a third fruit type.
+Write a function to return the maximum number of fruits in both baskets.
+ ```
+<br>
+
+- **Example:**
+
+```js
+Input: Fruit=['A', 'B', 'C', 'B', 'B', 'C']
+Output: 5
+Explanation: We can put 3 'B' in one basket and two 'C' in the other basket. 
+This can be done if we start with the second letter: ['B', 'C', 'B', 'B', 'C']
+```
+<br>
+
+- **Comments:**
+  - Notice the return value here: We are only being asked to return the final count, so some of that scenario is theoretical, we need not concern ourselves with returning what the actual start and end positions are and nor with anything else other than that final count.
+<br>
+
+- **Big O:**
+  - Time: `O(n)` technically, O(2n)
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// See code from problem above for comments
+const fruits_into_baskets = function(fruits) {
+  if(fruits.length <= 2) return fruits.length;
+  
+  let distFruitCount = 0,
+      maxFruitCount = 0,
+      end = 0, 
+      fruitMap = {};
+
+  for(let start = 0; start < fruits.length; start++){
+    if(fruitMap[fruits[start]]){
+      fruitMap[fruits[start]]++;
+    } else{
+      fruitMap[fruits[start]] = 1;
+      distFruitCount++;
+    }
+
+    while(distFruitCount > 2){
+      fruitMap[fruits[end]]--;
+      if(!fruitMap[fruits[end]]) distFruitCount--;
+      end++;
+    }
+
+    const currTotalFruits = start - end + 1;
+    maxFruitCount = maxFruitCount < currTotalFruits ? currTotalFruits : maxFruitCount;
+  }
+
+  return maxFruitCount;
+};
+```
