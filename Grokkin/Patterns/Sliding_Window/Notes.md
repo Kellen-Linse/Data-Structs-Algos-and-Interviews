@@ -457,3 +457,159 @@ const fruits_into_baskets = function(fruits) {
   return maxFruitCount;
 };
 ```
+
+<hr>
+
+### Longest Substring with Distinct Characters (medium)
+
+- **Prompt:** Given a string, find the length of the longest substring, which has all distinct characters.
+<br>
+
+- **Example:**
+
+```js
+Input: String="aabccbb"
+Output: 3
+Explanation: The longest substring with distinct characters is "abc".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one to track the start of the sub-string and one to track the end.
+  - *Movement:* The start pointer will iterate one index at a time, from left to right, the end pointer will jump to the the index of the repeated value plus one.
+  - *Variables:* Two, one to hold the length of the distinct char sub-string, one Map object to hold the distinct characters.
+<br>
+
+- **Basic Pattern:**
+  1. If the charMap has the char at the start index as a key, if the value at the key + 1 is greater than end, set end to that value + 1.
+  2. Set the charMap key of char at start pointer in the string to the start index.
+  3. Set max length to whatever is greater, the current window or the current max.
+  4. return the max length.
+ <br>
+
+- **Algorithm:**
+  1. Create a variable to track the max length of a distinct sub-string.
+  2. Create a pointer to point to the end of the sub-string.
+  3. Create a new Map object to hold the characters.
+  4. Iterate over the string, tracking a start variable beginning at zero.
+     1. If the char at the start pointer in the string is a key in the map, 
+        1. Set the end variable to be the greater of either itself -or- the value at that key plus one.
+     2. Set a key in the map with the key being the character in the string at the start pointer, and the value being the current start index.
+     3. Set the maxLen var to be the greater of itself -or- start - end + 1.
+  5. Return the maxLen variable.
+<br>
+
+- **Big O:**
+  - Time: `O(n)` 
+  - Space: `O(n)`
+
+- **Code:**
+
+```js
+// No comments
+var lengthOfLongestSubstring = function(s) {
+
+    const charMap = new Map();
+    let end = 0;
+    let maxLen = 0;
+    
+    for(let start = 0; start < s.length; start++) {
+        if(charMap.has(s[start])) end = Math.max(charMap.get(s[start]) + 1, end)
+        charMap.set(s[start], start);
+        maxLen = Math.max(start - end + 1, maxLen);
+    } 
+    
+    return maxLen;  
+};
+
+
+// Comments
+var lengthOfLongestSubstring = function(s) {
+    // keeps track of the most recent index of each letter.
+    const charMap = new Map();
+    // keeps track of the starting index of the current substring.
+    let end = 0;
+    // keeps track of the maximum substring length.
+    let maxLen = 0;
+    
+    for(let start = 0; start < s.length; start++) {
+        // if the current char was seen, move the end to (1 + the last index of this char)
+        // max prevents moving backward, 'end' can only move forward
+        if(charMap.has(s[start])) end = Math.max(charMap.get(s[start]) + 1, end)
+        charMap.set(s[start], start);
+        // maximum of the current substring length and maxLen
+        maxLen = Math.max(start - end + 1, maxLen);
+    } 
+    
+    return maxLen;  
+};
+
+```
+
+- **O(2n)t, O(n)s Solution**
+
+```js
+// No comments
+const non_repeat_substring = function(str) {
+  let maxLen = 0,
+      end = 0, 
+      charMap = {};
+
+  for(let start = 0; start < str.length; start++){
+
+    if(!charMap[str[start]]){
+      charMap[str[start]] = 1;
+    } else {
+      charMap[str[start]]++;
+
+      while(charMap[str[start]] > 1){
+        charMap[str[end]]--;
+        end++;
+      }
+    }
+
+    let curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen;
+};
+
+
+// Comments
+const non_repeat_substring = function(str) {
+
+  let maxLen = 0, // track maxLength of distinct chars sub-string
+      end = 0, // pointer to track the end of the sliding window
+      charMap = {}; // map to hold distinct chars
+
+  // Iterate over string, beginning at the first index
+  for(let start = 0; start < str.length; start++){
+
+    // Check to see if the char at the start index exists, and has a value of > 0, 
+    // if not, set it's value in the map to 1.
+    // If so, increment it's count by one, then, while it's value is greater than one,
+    // withing the charMap, decrement the value held by the key of the same char as the char in the string at the end pointer.
+    // then, increment the end pointer.
+    if(!charMap[str[start]]){
+      charMap[str[start]] = 1;
+    } else {
+      charMap[str[start]]++;
+      while(charMap[str[start]] > 1){
+        charMap[str[end]]--;
+        end++;
+      }
+    }
+
+    // Check to see if the current length of the sub-string of distinct values is 
+    // greater than the largest sub-string found up to this point,
+    // If so, set the maxLen var to be the current length.
+    let curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // Return the length of largest sub-string found
+  return maxLen;
+};
+
+```
