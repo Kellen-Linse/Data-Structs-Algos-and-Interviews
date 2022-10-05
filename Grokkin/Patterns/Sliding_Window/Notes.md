@@ -35,6 +35,7 @@
 <hr>
 
 - *Longest* or *Shortest* sub-array/ sub-string problems will **always have a maxLen or minLen variable respectively**
+- Don't use too large of an example when trying to work through your code. 
 
 ## Problems
 
@@ -731,6 +732,139 @@ const length_of_longest_substring = function(str, k){
   }
 
   // Return the largest sub-string found
+  return maxLen;
+};
+```
+
+
+
+<hr>
+
+### Longest Subarray with Ones after Replacement (medium)
+
+- **Prompt:** Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
+<br>
+
+- **Example:**
+
+```js
+Input: Array=[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], k=2
+Output: 6
+Explanation: Replace the '0' at index 5 and 8 to have the longest contiguous subarray of 1s having length 6.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one to track the left and right side of the sliding window.
+  - *Movement:* The sliding window will move one place to the right with each iteration of the for loop. The window will contract when the number of replaced zeros is greater than k.
+  - *Variables:* Two, one to track the number of ones within the window, and one to track the max length of the sub-array.
+  - This is the key part of solving problems in this way:
+
+```js
+
+    let curLen = r - l + 1;
+    let numReplacedZeros = curLen - onesCount; // <---- Instead of tracking the replacements, your tracking the correct values
+    // Then finding the incorrect values by subtracting the correct values from the sub-arrays length
+
+    if(numReplacedZeros > k){  // <--------------- Then shrinking the sub-arrays length if the conditions are exceeded
+      if(arr[l] === 1) onesCount--;
+      l++;
+      curLen--; // It is important that the length is properly decremented after the left pointer is moved forward.
+    }
+```
+<br>
+
+- **Basic Pattern:**
+  1. Create vars to track the largest sub-array, and the number of ones within the window.
+  2. Create a pointer to represent the left side of the sliding window.
+  3. Iterate over the array once, using a var to represent the right side of the sliding window.
+     1. If the value at r is 1, add it to the ones count, as it will be entering the window.
+     2. The current length minus the onesCount represents the number of 0's replaced with ones.
+     3. If that number is greater than k,
+        1. If the value at the l pointer is a 1, decrement the onesCount as that one will be leaving the window.
+        2. Increment the l pointer by one.
+        3. Decrement the current length by one.
+     4. Set that max
+ <br>
+
+- **Algorithm:**
+  1. See Commented Code ->>
+<br>
+
+- **Big O:**
+  - Time: `O(n)`
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// No comments
+const length_of_longest_substring = function(arr, k) {
+  let maxLen = 0, onesCount = 0;
+  let l = 0;
+
+  for(let r = 0; r < arr.length; r++){
+
+    if(arr[r] === 1) onesCount++;
+
+    // added for readability
+    let curLen = r - l + 1;
+    let numReplacedZeros = curLen - onesCount;
+
+    if(numReplacedZeros > k){
+      if(arr[l] === 1) onesCount--;
+      l++;
+      curLen--;
+    }
+
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+  return maxLen;
+};
+
+// Comments
+const length_of_longest_substring = function(arr, k) {
+
+  // Track the largest sub-array, and the number of ones within the window
+  let maxLen = 0, onesCount = 0;
+
+  // Pointer for the left side of the sliding window
+  let l = 0;
+
+  // Iterate over the array once, using r to represent the right side of the sliding window.
+  for(let r = 0; r < arr.length; r++){
+
+    // If the value at r is 1, add it to the ones count, as it will be entering the window.
+    if(arr[r] === 1) onesCount++;
+
+    // Find the current length, more for readability.
+    let curLen = r - l + 1;
+
+    // IMPORTANT: The current length minus the onesCount represents the number of 0's replaced with ones.
+    // Variable made for readability:
+    let numReplacedZeros = curLen - onesCount;
+
+    // If the number of replaced zeros is greater than k (representing the number of zeros we are allowed to skip).
+    if(numReplacedZeros > k){
+
+      // If the value at the l pointer is a 1, decrement the onesCount as that one will be leaving the window.
+      if(arr[l] === 1) onesCount--;
+
+      // Increment the l pointer by one
+      // This DOESN'T shrink the window, but it doesn't allow it to grow!
+      l++;
+
+      // Here we are decrementing the current length by one, 
+      // setting it to the size it was at the beginning of the loop.
+      curLen--;
+    }
+
+    // The last thing we will do within our for loop is check to see if the length of the sub-array is 
+    // larger than any we have seen. If it is we will set the surrent length to be the largest.
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // return the length of the longest sub-array.
   return maxLen;
 };
 ```
