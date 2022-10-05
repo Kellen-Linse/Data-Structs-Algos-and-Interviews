@@ -25,6 +25,7 @@
     - Problems where we need to find the **largest or smallest** sub-array that matches some condition.
     - **Ask under what condition do I need to expand? and under what condition do I need to contract??**
       - "Ok, I've expanded until I've met my condition, can I now contract and still meet that condition?"
+    - **Ask yourself under what condition the window should expand, and under what conditions it should contract.**
 <br>
 
 - If you are looking for a smallest sub-array, there will always be a base case of 1, if you find a sub-array then you can return early, as you cannot do better than a sub-array of length one.
@@ -635,18 +636,29 @@ Explanation: Replace the two 'c' with 'b' to have the longest repeating substrin
 <br>
 
 - **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - *Variables:*
-  - 
+  - *Pointers:* One pointer for the left (l) and one pointer for the right (r) side of the sliding window.
+  - *Movement:* The right pointer will constantly move to the right once per iteration, the left pointer will move to the right when the current length of the sub-string minus the largest count is higher than k.
+  - *Variables:* One variable to track the longest sub-string (maxLen), and one to track the count of the most repeated char (maxCount).
+  - This is a **Dynamic Sliding Window** problem.
+  - **Condition for Contracting:** The window will shrink when the current length of the sub-string minus the largest count is higher than k.
 <br>
 
 - **Basic Pattern:**
-  1.
+  1. Create variables to track **max length of substring**, and the **count of the largest repeated char**.
+  2. Create an object to track the count of each char within the sub-string.
+  3. Create pointers for the left and right side of the sliding window.
+  4. Using a for loop and the right pointer, incrementing by one each time through,
+     1. Set the char within the char count.
+     2. Set the max count if a new count has been found.
+     3. If the current length of the sub-string *minus* the highest repeated char is greater than k,
+        1. decrement the count at the left char, and the current length.
+        2. Increment the left pointer.
+     4. Set the maxLength if a new one has been found.
+  5. return the max length of the sub-string.
  <br>
 
 - **Algorithm:**
-  1.
+  1. See Commented Code ->>
 <br>
 
 - **Big O:**
@@ -660,18 +672,18 @@ Explanation: Replace the two 'c' with 'b' to have the longest repeating substrin
 const length_of_longest_substring = function(str, k){
   
   let maxLen = 0,       
-      maxFreq = 0,      
+      maxCount = 0,      
       l = 0,           
       charCount = {};  
 
   for(let r = 0; r < str.length; r++){
 
-    charCount[str[r]] = charCount[str[r]] ? charCount[str[r]] + 1 : 1;
-    maxFreq = maxFreq < charCount[str[r]] ? charCount[str[r]] : maxFreq;
+    charCount[str[r]] = charCount[str[r]] + 1 || 1;
+    maxCount = maxCount < charCount[str[r]] ? charCount[str[r]] : maxCount;
 
     let curLen = r - l + 1;
 
-    if(curLen - maxFreq > k){
+    if(curLen - maxCount > k){
       charCount[str[l]]--;
       l++;
       curLen--;
@@ -687,7 +699,7 @@ const length_of_longest_substring = function(str, k){
 const length_of_longest_substring = function(str, k){
   
   let maxLen = 0,       // The max length of a sub-string
-      maxFreq = 0,      // The highest count of a single character
+      maxCount = 0,      // The highest count of a single character
       l = 0,            // Points too the left side of the sub-string window
       charCount = {};   // Map to count the characters within the sub-string 
 
@@ -695,10 +707,10 @@ const length_of_longest_substring = function(str, k){
   for(let r = 0; r < str.length; r++){
 
     // Set the str[r] key of the charCount map
-    charCount[str[r]] = charCount[str[r]] ? charCount[str[r]] + 1 : 1;
+    charCount[str[r]] = charCount[str[r]] + 1 || 1;
 
     // Set maxFreq to the greater between the current maxFreq and the count at str[r] in the charCount map.
-    maxFreq = maxFreq < charCount[str[r]] ? charCount[str[r]] : maxFreq;
+    maxCount = maxCount < charCount[str[r]] ? charCount[str[r]] : maxCount;
 
     // Find the current length, this line for readability.
     let curLen = r - l + 1;
@@ -706,9 +718,11 @@ const length_of_longest_substring = function(str, k){
     // If the current length of the substring minus the highest count of a single character is greater than k
     // we are going to decrement the count of the char at the l pointer within the char count map,
     // the l pointer itself, and the current length, all by one.
-    if(curLen - maxFreq > k){
+    if(curLen - maxCount > k){
       charCount[str[l]]--;
       l++;
+
+      // Decrementing the sub-string here will always keep the maxLen smaller than if a non-skipped value is found.
       curLen--;
     }
 
