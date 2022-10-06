@@ -869,3 +869,159 @@ const length_of_longest_substring = function(arr, k) {
 };
 ```
 
+
+
+<hr>
+
+### Permutation in a String (medium)
+
+- **Prompt:** Given a string and a pattern, find out if the string contains any permutation of the pattern.
+<br>
+
+- **Example:**
+
+```js
+Input: String="oidbcaf", Pattern="abc"
+Output: true
+Explanation: The string contains "bca" which is a permutation of the given pattern.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one pointing to the right side of the sliding window and one pointing to the left side.
+  - *Movement:*  The right side will move one character at a time, expanding the sliding window as it goes. The left pointer will begin contracting after the sliding window has reached it's full length.
+  - *Variables:* One number to keep track of the correct characters within the sub-string. One object to hold the count of the numbers within the sub-string.
+  - **We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.**
+    - **If a new correct char is added the count will grow, if one leaves it will shrink, if the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.**
+<br>
+
+- **Basic Pattern:**
+  1. Make a map of the pattern.
+  2. IF the character at the the right pointer is in the map and it's count is higher than zero, increase the count of correct characters within the pattern, by one.
+     1. Either way, decrement the count for that character in the map by one (this count can go negative).
+  3. IF the current length of the window is greater than the pattern length, it's time to start shrinking the window.
+     1. IF the character at the the left pointer is in the map and it's count is higher than zero, decrease the count of correct characters within the pattern, by one.
+     2. Either way, increment the count for that character in the map by one.
+     3. Increment the l pointer by one (shrinking the window).
+     4. Decrement the current length by one (because the window shrunk).
+  4. Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string, and the sub-string is the same length as the pattern, we found a match, and can therefore return true.
+  5. If we get to the end of the for loop and no match has been found, we return false.
+ <br> 
+
+- **Algorithm:**
+  1. See Commented Code
+<br>
+
+- **Big O:**
+  - Time: `O(n + m)`, once over the pattern string to add it to the object, and once to find a permutation.
+  - Space: `O(m)`
+
+- **Code:**
+
+```js
+// No comments
+const find_permutation = function(str, pat) {
+
+  let pCount = 0, l = 0;
+  let pMap = createPatMap(pat);
+
+  for(let r = 0; r < str.length; r++){
+
+    if(str[r] in pMap){
+      if(pMap[str[r]] > 0) pCount++;
+      pMap[str[r]]--;      
+    }
+
+    let curLen = r - l + 1;
+
+    if(curLen > pat.length){
+      if(str[l] in pMap){
+        if(pMap[str[l]] >= 0) pCount--;
+        pMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
+
+    if(curLen === pat.length && curLen === pCount) return true;
+  }
+
+  return false;
+};
+
+
+function createPatMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+
+// Comments
+const find_permutation = function(str, pat) {
+
+  // Create a counter variable to count the chars that match the pattern chars within the window.
+  // Create a pointer for the left side of the side window.
+  let pCount = 0, l = 0;
+
+  // Create a map that represents the pattern permutations.
+  let pMap = createPatMap(pat);
+
+  // Iterate over the string tracking the right side of the sliding window.
+  for(let r = 0; r < str.length; r++){
+
+    // If the character at the right pointer exists in the pMap
+    if(str[r] in pMap){
+
+      // If the count at that char in the pMap is greater than zero, increment the pCount.
+      if(pMap[str[r]] > 0) pCount++;
+
+      // decrement the count at the character in the pMap
+      pMap[str[r]]--;      
+    }
+
+    // Find the current length, for readability
+    let curLen = r - l + 1;
+
+    // If the current length is greater than the length of the pattern
+    if(curLen > pat.length){
+
+      // If the char at the left pointer is in the map of chars 
+      if(str[l] in pMap){
+
+        // If the count at that char is greater than 0, decrement the pCount.
+        if(pMap[str[l]] >= 0) pCount--;
+
+        // Increment the count at that character in the pMap
+        pMap[str[l]]++;
+      }
+
+      // Increment the left pointer 
+      l++;
+
+      // Decrement the length now that the left pointer of the window has been incremented.
+      curLen--;
+    }
+
+    // If the current length is equal to the pattern length and
+    // the current length is equal to the pCount then we have a match.
+    if(curLen === pat.length && curLen === pCount) return true;
+  }
+
+  // If we haven't found the match, return false
+  return false;
+};
+
+
+
+// Make a map out of string, counting each characters occurance. 
+function createPatMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+```
+
