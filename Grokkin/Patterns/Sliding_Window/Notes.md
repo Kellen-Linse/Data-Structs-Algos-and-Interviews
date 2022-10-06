@@ -891,11 +891,15 @@ Explanation: The string contains "bca" which is a permutation of the given patte
   - *Pointers:* Two, one pointing to the right side of the sliding window and one pointing to the left side.
   - *Movement:*  The right side will move one character at a time, expanding the sliding window as it goes. The left pointer will begin contracting after the sliding window has reached it's full length.
   - *Variables:* One number to keep track of the correct characters within the sub-string. One object to hold the count of the numbers within the sub-string.
-  - **We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.**
-    - **If a new correct char is added the count will grow, if one leaves it will shrink, if the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.**
 <br>
 
 - **Basic Pattern:**
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+  - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+  - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.
+ <br> 
+
+- **Algorithm:**
   1. Make a map of the pattern.
   2. IF the character at the the right pointer is in the map and it's count is higher than zero, increase the count of correct characters within the pattern, by one.
      1. Either way, decrement the count for that character in the map by one (this count can go negative).
@@ -906,10 +910,6 @@ Explanation: The string contains "bca" which is a permutation of the given patte
      4. Decrement the current length by one (because the window shrunk).
   4. Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string, and the sub-string is the same length as the pattern, we found a match, and can therefore return true.
   5. If we get to the end of the for loop and no match has been found, we return false.
- <br> 
-
-- **Algorithm:**
-  1. See Commented Code
 <br>
 
 - **Big O:**
@@ -1018,6 +1018,161 @@ const find_permutation = function(str, pat) {
 // Make a map out of string, counting each characters occurance. 
 function createPatMap(str){
   let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+```
+
+
+
+<hr>
+
+### String Anagrams (Medium)
+
+- **Prompt:** Given a string and a pattern, find all anagrams of the pattern in the given string. Write a function to return a list of starting indices of the anagrams of the pattern in the given string.
+<br>
+
+- **Example:**
+
+```js
+Input: String="abbcabc", Pattern="abc"
+Output: [2, 3, 4]
+Explanation: The three anagrams of the pattern in the given string are "bca", "cab", and "abc".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two pointers, pointing to the left and right side of the sliding window.
+  - *Movement:* The right pointer will move one character at a time through the string, the left will follow the right once the window is one larger than the input pattern.
+  - *Variables:* One number to keep track of the correct characters within the sub-string. One object to hold the count of the numbers within the sub-string.
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+    - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+    - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.**
+<br>
+
+- **Basic Pattern:**
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+  - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+  - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we add the left pointer (the start of the anagram) to the results array.
+ <br>
+
+- **Algorithm:**
+  1. Make a map of the pattern.
+  2. IF the character at the the right pointer is in the map and it's count is higher than zero, increase the count of correct characters within the pattern, by one.
+     1. Either way, decrement the count for that character in the map by one (this count can go negative).
+  3. IF the current length of the window is greater than the pattern length, it's time to start shrinking the window.
+     1. IF the character at the the left pointer is in the map and it's count is higher than zero, decrease the count of correct characters within the pattern, by one.
+     2. Either way, increment the count for that character in the map by one.
+     3. Increment the l pointer by one (shrinking the window).
+     4. Decrement the current length by one (because the window shrunk).
+  4. Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string, and the sub-string is the same length as the pattern, we found an anagram, and can therefore add the left pointer to the return array, as it is the starting index of a valid anagram.
+  5. When we finish the for loop we return the return array.
+<br>
+
+- **Big O:**
+  - Time: `O(n + m)`
+  - Space: `(1)`
+
+- **Code:**
+
+```js
+// No comments
+const find_string_anagrams = function(str, pat) {
+  let returnArr = [],
+      charMap = {},
+      l = 0,
+      numCorrectChars = 0; 
+
+  charMap = buildCharMap(pat);
+
+  for(let r = 0; r < str.length; r++){
+    
+    if(str[r] in charMap){
+      if(charMap[str[r]] > 0) numCorrectChars++;
+      charMap[str[r]]--;
+    }
+
+    let curLen = r - l + 1; 
+
+    if(curLen > pat.length){
+      if(str[l] in charMap){
+        if(charMap[str[l]] >= 0) numCorrectChars--; // Got hung up right here missed the =
+        charMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
+
+    if(curLen === pat.length && curLen === numCorrectChars) returnArr.push(l);
+  }
+  return returnArr;
+};
+
+
+function buildCharMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+
+// Comments
+const find_string_anagrams = function(str, pat) {
+
+
+  let returnArr = [], // Will hold the starting indices of each anagram
+      charMap = {}, // Will hold the character count of the pattern
+      l = 0, // pointer for the left side of the sliding window.
+      numCorrectChars = 0; // Count the number of correct characters currently within the window.
+
+  charMap = buildCharMap(pat); // Build the charMap
+
+  for(let r = 0; r < str.length; r++){
+    
+    // Here we are acting on the character at the right pointer.
+    // If it a character in our map,
+    // We will check to see if the count at that character is greater than 0, if so, 
+    // the variable that holds number of correct characters currently in the sub-string will be increased by one.
+    // Either way, we will decrement the count at that character in the map by one.
+    if(str[r] in charMap){
+      if(charMap[str[r]] > 0) numCorrectChars++;
+      charMap[str[r]]--;
+    }
+
+    let curLen = r - l + 1; // Current length of sub-string, for readability
+
+    // If we have reached the point where the current length of the sub-string is greater than the length of the pattern,
+    // we need to shrink it to keep the length of the sub-string the same at the pattern.
+    // If the character at the left pointer is in the map, 
+    // if that characters count within the map is greater than or equal to zero, we will decrease the number of correct characters within the sub-string by one.
+    // This is because when we add one back to the count after this line, there will be one character remaining that is NOT within our sub-string.
+    // After that we will increase the count at this character within our map. 
+    // we will then increment the left pointer and then decrement the length of the sub-string as we have just shrunk it by one by moving the left pointer.
+    if(curLen > pat.length){
+      if(str[l] in charMap){
+        if(charMap[str[l]] >= 0) numCorrectChars--; // Got hung up right here missed the =
+        charMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
+
+    // Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string,
+    // and the sub-string is the same length as the pattern, we found a match, and can therefore push the starting index of the anagram (l) to our return array.
+    if(curLen === pat.length && curLen === numCorrectChars) returnArr.push(l);
+  }
+
+  // Once the loop is finished we will return our array holding the indices of all anagrams.
+  return returnArr;
+};
+
+
+function buildCharMap(str){
+  let map = {};
+  // Add character to map or increment that char if it exists in the map already.
   for(char of str){
     map[char] = map[char] + 1 || 1;
   }
