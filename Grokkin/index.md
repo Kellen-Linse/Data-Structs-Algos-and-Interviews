@@ -4,5 +4,5 @@
 
 ## Contents
 
-2. [**Pattern:** Sliding Window](Patterns/Sliding_Window/notes.md)
+2. [**Pattern:** Sliding Window2](Patterns/Sliding_Window/notes2.md)
 3. [**Pattern:** Two Pointers](Patterns/Two_Pointers/notes.md)
