@@ -1,61 +1,83 @@
-# Two (Three) Pointers
+# Pattern: Sliding Window 
 
 <hr>
 
 ## General Notes
 
-- The **pointers may start in different points, move in different directions, start or restart at different points, they may stop when they meet or cross through and continue on** depending on the problem you are trying to solve.
-- Sometimes a **for loop** can be used to make the code more readable.
-- `Infinity` and `-Infinity` are good for starting comparisons where you are looking for mins (Infinity) and maxes (-Infinity).
-  - This is because no matter how large or small the number it will be less than Infinity or more than -Infinity, and your comparison can move in the same pattern from there.
-  - Using -Infinity helps when finding the largest value among negative numbers.
-  - When you are trying to find a max value, you want to start with the smallest number possible (-Infinity).
-  - When you are trying to find a min value, you want to start with the largest number possible (Infinity).
-- Sometimes the trick is to do it in the opposite way you think of doing it
-  - Instead of searching for the first time you find an instance of some condition, try looking for the last.
+- Sliding windows allows us to avoid doing repeated calculations within a given window of an array or string.
+- The sliding window technique is often used when we are asked to **find or calculate something among all the *sub-arrays, sub-lists, or sub-strings* of a given size**.
+  - Example: `Given an array, find the average of each subarray of ‘K’ contiguous elements in it.`
+    - The brute force approach to this problem would result in an `O(n * K)` run time.
+    - The sliding window technique can be applied to this problem to reduce the run time to `O(n)`.
+- "Overlapping sub-arrays" or "contiguous sub-arrays"
+<br>
 
+- In looking for a more efficient solution, **first define the brute force approach, then find the inefficiencies.**
+    - This may give you a hint as to where improvements can be made.
+<br>
+
+- In some problems the size of the window is fixed, but in many problems, it is NOT fixed. 
+  - **Fixed Sized Sliding Window:**
+    - Problems where we need to "find the (some given condition) of each subarray of ‘K’ contiguous elements in it.
+    - Example: `Given an array, find the average of each subarray of ‘K’ contiguous elements in it.`
+  - **Dynamic Sized Sliding Window:**
+    - *We have to expand or shrink the window based on the problem constraints.*
+    - Problems where we need to find the **largest or smallest** sub-array that matches some condition.
+    - **Ask under what condition do I need to expand? and under what condition do I need to contract??**
+      - "Ok, I've expanded until I've met my condition, can I now contract and still meet that condition?"
+    - **Ask yourself under what condition the window should expand, and under what conditions it should contract.**
+<br>
+
+- If you are looking for a smallest sub-array, there will always be a base case of 1, if you find a sub-array then you can return early, as you cannot do better than a sub-array of length one.
+<br>
+
+- Don't forget when you are finding the length of a sub-array you need to account for arrays being **zero indexed**, that means **you need to add one** `(start - end + 1)` when subtracting the start from the end (assuming that the start is greater than the end).
+<hr>
+
+- *Longest* or *Shortest* sub-array/ sub-string problems will **always have a maxLen or minLen variable respectively**
+- Don't use too large of an example when trying to work through your code. 
 
 ## Problems
 
-### Pair with Target Sum - TwoSum - (easy)
 
-- **Prompt:** Given an *array of **sorted** numbers* and a *target sum*, find a pair in the array whose sum is equal to the given target. Write a function to return the indices of the two numbers (i.e. the pair) such that they add up to the given target.
+### Maximum Sum Subarray of Size K (easy)
+
+- **Prompt:** Given an *array of positive numbers* and a *positive number: **k***, find the maximum sum of any contiguous subarray of size ‘k’.
 <br>
 
 - **Example:**
 
 ```js
-Input: [1, 2, 3, 4, 6], target=6
-Output: [1, 3]
-Explanation: The numbers at index 1 and 3 add up to 6: 2+4=6
+Input: [2, 1, 5, 1, 3, 2], k=3 
+Output: 9
+Explanation: Subarray with maximum sum is [5, 1, 3].
 ```
 <br>
 
 - **Comments:**
-  - *Pointers:* Two, one starts at the beginning and the other at the end of the array.
-  - *Movement:* pointers work their way in towards target.
-  - This is a good example of a problem that must use a while loop.
+  - *Pointers:* Two, one pointer to point to the start of the sliding window, one to point to the end.
+  - *Movement:* The first pointer will move to the left, once the window size is reached, both pointers will increment, by one each loop, until the start value reaches the end of the array.
+  - *Variables:* Two, one to track the current sum of the window and one to track the max sum of any window. 
+  - This is a **Fixed Window** type of sliding window problem.
+  - This same technique can be used to find things like the largest/smallest sum, difference, product, average, etc.. of a given fixed size sub-array.
 <br>
 
 - **Basic Pattern:**
-  - Create and assign pointers
-  - Loop till pointers touch
-    - check if condition is met, return values if so
-    - move one pointer if not
-  - return a negative response if the value is not found
-  - <br>
-
-![twoSum](resources/twoSum.jpg)
+  1. build up a window
+  2. slide window across the array
+  3. if the value in the window is greater than the max value set the current value to the max value.
+ <br>
 
 - **Algorithm:**
-  1. Create pointers at both ends.
-  2. Create a loop that will run until the pointers meet.
-  3. Add the value at the two pointers.
-  4. If the added value (currentSum) matches the target, return the pointer values in an array.
-  5. If the currentSum does not match the target,
-     1. If the currentSum is greater than the target, decrement the right pointer.
-     2. Else, increment the left pointer.
-  6. If we reach this point, we have broken out of the loop and not found a matching value, so we will return `[-1, -1]` in this case as the prompt dictates.
+  1. Create variables to track the max sum and the current sum.
+  2. Create a pointer to track the end of the sliding window.
+  3. Create a for loop tracking the start variable, incrementing it by one each time until it hits the end of the loop.
+     1. add the current value at the start index to the current sum variable.
+     2. If the start variable is smaller than the length of the sub-array we have been asked to find,
+        1. subtract the value at the end pointer from the current sum variable.
+        2. increment the end variable.
+        3. if the value of the current sum is greater than the max sum, set the max sum to equal the current sum.
+  4. return the max sum variable.
 <br>
 
 - **Big O:**
@@ -66,705 +88,109 @@ Explanation: The numbers at index 1 and 3 add up to 6: 2+4=6
 
 ```js
 // No comments
-const pair_with_targetsum = function(arr, target_sum) {
-  let lPtr = 0;
-  let rPtr = arr.length - 1;
+const max_sub_array_of_size_k = function(k, arr) {
 
-  while(lPtr < rPtr){ // O(n)t
-    const currentSum = arr[lPtr] + arr[rPtr]; 
-    if(currentSum === target_sum) return [lPtr, rPtr];
-    if(currentSum > target_sum){
-      rPtr--;
-    } else {
-      lPtr++;
-    }
+  let maxSum = -Infinity;
+  let curSum = 0;
+  let end = 0;
+
+  for(let start = 0; start < arr.length; start++){ // O(n)
+    curSum += arr[start];
+
+    if(start >= k){
+      curSum -= arr[end];
+      end++;
+      maxSum = maxSum < curSum ? curSum : maxSum;
+    } 
   }
-  return [-1, -1];
-}
-
-// Comments
-const pair_with_targetsum = function(arr, target_sum) {
-
-  // Create two pointers 
-  // set them such that they will begin on either side of the array.
-  let lPtr = 0;
-  let rPtr = arr.length - 1;
-
-  // Here we create a loop that will run until the pointers touch,
-  // that means that one of the two pointers MUST move 
-  // every time through the loop.
-  while(lPtr < rPtr){ 
-    // Here we find the current condition we will be checking against.
-    // Creating a well named variable here will make your code more readable.
-    const currentSum = arr[lPtr] + arr[rPtr]; 
-
-    //Here we check if the value we are searching for has been found, returning if so.
-    if(currentSum === target_sum) return [lPtr, rPtr];
-
-    // If the value hasn't been found we will move one of the two pointers 
-    // in an attempt to get closer to our target
-    // because our array is sorted we know if the lPtr is incremented our sum will be 
-    // either the same or increase, the opposite if the rPtr is decremented.
-    if(currentSum > target_sum){
-      rPtr--;
-    } else {
-      lPtr++;
-    }
-  }
-
-  // If we have reached the end of the loop, no value has been
-  // found that meets the conditions
-  return [-1, -1];
-}
-```
-
-<hr>
-
-### Remove Duplicates (easy)
-
-- **Prompt:** Given an *array of sorted numbers*, **remove all duplicate number instances** from it **in-place**, such that each element appears only once. 
-  - Move all the unique elements at the beginning of the array and after moving **return the length of the subarray** that has no duplicate in it.
-<br>
-
-- **Example:**
-
-```js
-Input: [2, 3, 3, 3, 6, 9, 9]
-Output: 4
-Explanation: The first four elements after removing the duplicates will be [2, 3, 6, 9].
-```
-<br>
-
-- **Comments:**
-  - *Pointers:* both pointer start at the first (`arr[1]`) index of the array.
-  - *Movement:* the pointers will both more towards the end of the array at (most likely) different speeds.
-  - This is a good example of a problem that is simplified / made more readable by using a for loop.
-<br>
-
-
-- **Basic Pattern:**
-  1. Create a read an write variable starting at the same position.
-  2. Iterate over array.
-  3. When you find a value with your read variable that meets your condition
-  4. Copy that value into your write variable and move it up one position. 
-  5. Return the write variable, as it is equivalent to the length of the new sub-array you just made.
- <br>
-
- ![removeDups](resources/removeDups.jpg)
-
-- **Algorithm:**
-  1. Create variable to track where the next non duplicate value will be written to the array, set to 1;
-  2. Create for loop with variable to read the value at each position within the array.
-     1. Check if the value at read is not equal the the value one prior.
-        1. If the value is not equal, we have found our next non-duplicated number, and so we will
-        2. Set the value at our write variable to be the value at our read variable.
-        3. increment our write variable by one.
-  3. return our write variable, as it will be equal to the length of our non-duplicate sub-array.
-<br>
-
-- **Big O:**
-  - Time: `O(n)`
-  - Space: `O(1)`
-
-- **Code:**
-
-```js
-// No comments
-const remove_duplicates = function(arr) {
-  let write = 1;
-
-  for(let read = 1; read < arr.length; read++){ // O(n)t
-    if(arr[read] !== arr[read - 1]){
-      arr[write] = arr[read];
-      write++;
-    }
-  }
-
-  return write;
+  return maxSum;
 };
 
 // Comments
-const remove_duplicates = function(arr) {
-
-  // Here we are creating a pointer variable to keep track of where we will place 
-  // non-duplicated values. Because the array is sorted, the value at the zeroth index
-  // will always be in it's correct place, also because out condition is checking the value behind it in the array
-  // this variable will start at 1, so we don't get any out of bounds errors.
-  let write = 1;
-
-  // Here we are create a for loop with a 'read' variable, this variable will track the current index to evaluate.
-  for(let read = 1; read < arr.length; read++){
-
-    // We will check if the value at the read index is NOT a duplicate of the previous value, if true we have
-    // found a new value to place in our non-duplicate sub-array. 
-    if(arr[read] !== arr[read - 1]){
-      // When a value is found we will copy that value into the write index of our array, 
-      arr[write] = arr[read];
-      // then increment out write pointer.
-      write++;
-    }
-  }
-
-  // Once we have reached the end of our for loop, the value at write will be one more than the last
-  // index of our sub-array. Which will be equal to the number of elements in our new sub-array since 
-  // arrays are zero indexed.
-  return write;
-};
-```
-
-<hr>
-
-### Squaring a Sorted Array (easy)
-
-- **Prompt:** Given a **sorted array**, **create a new array** *containing squares of all the numbers of the input array* in the **sorted order**.
-<br>
-
-- **Example:**
-
-```js
-Input: [-2, -1, 0, 2, 3]
-Output: [0, 1, 4, 4, 9]
-```
-<br>
-
-- **Comments:**
-  - *Pointers:* Two, one beginning at each end.
-  - *Movement:* Both pointers towards each other, and the index of the loop moving in reverse order.
-  - The trick with this one is that **the square of a negative number is a positive**, so -3<sup>2</sup> and 3<sup>2</sup> are both equal to 9. **But -3 and 3 will be on the other ends of a sorted array**.
-    - Squaring `[-3, 0, 3]` in place will return `[9, 0, 9]` which is no longer sorted. We want the sorted array: `[0, 9, 9]` to be returned.
-  - *We will fill our new array in reverse order, working from largest to smallest. Because the largest square values will be at both ends if our input array has negative values in it.*
-<br>
-
-- **Basic Pattern:**
-  1. Create array
-  2. Create pointers
-  3. Loop, counting down
-  4. find the squares
-  5. add the larger of the two squares to the new array
-  6. decrement or increment the pointer which held the value which lead to the larger square, towards the other pointer.
- <br>
-
-- **Algorithm:**
-  1. Create new array to hold the squared values.
-  2. Create pointers and set them equal to both ends of the array.
-  3. Loop over our input array once **from beginning to end**.
-  4. Create two variables and set them equal to the square of the value at each pointer.
-  5. Copy to the new array the **greater** of the two squared values.
-  6. Increment or decrement the respective pointer, towards the other pointer.
-  7. Return the new array after the loop finishes.
-<br>
-
-- **Big O:**
-  - Time: `O(n)`
-  - Space: `O(n)` // building the return array
-
-- **Code:**
-
-```js
-// No comments
-const make_squares = function(arr) {
+const max_sub_array_of_size_k = function(k, arr) {
+  // Gaurd Clauses
+  if(!Array.isArray(arr) || arr.length < k) return null;
   
-  const squareArr = []; // O(n)s
-  let lPtr = 0;
-  let rPtr = arr.length - 1;
+  // Variables
+  let maxSum = -Infinity;
+  let curSum = 0;
 
-  for(let i = arr.length - 1; i >= 0; i--){ // O(n)t
-    let lVal = arr[lPtr]**2;
-    let rVal = arr[rPtr]**2;
+  // Pointer
+  let end = 0;
 
-    if(lVal > rVal){
-      squareArr[i] = lVal;
-      lPtr++;
-    } else {
-      squareArr[i] = rVal;
-      rPtr--;
+  // Logic
+
+  // Iterate over the array once 
+  for(let start = 0; start < arr.length; start++){
+
+    // Add the value at the start index to the current sum
+    curSum += arr[start];
+
+    // If the start pointer is greater than the size of the the contiguous sub-array, k
+    // Our window has been built, and we now need to remove the last value within the window.
+    // We subtract the value at the end pointer from the current sum, then increment the end pointer.
+    if(start >= k){
+      curSum -= arr[end];
+      end++;
+
+      // Set the maxSum to be the greater value between maxSum and current sum within the window
+      maxSum = maxSum < curSum ? curSum : maxSum;
     }
   }
 
-  return squareArr;
-};
-
-// Comments
-const make_squares = function(arr) {
-
-  // Here we create the arr that will hold our squared values
-   const squareArr = []; 
-
-  // Create two pointers 
-  // set them such that they will begin on either side of the array.
-  let lPtr = 0;
-  let rPtr = arr.length - 1;
-
-  // Create a for loop using the input array length and moving FROM END TO BEGINNING,
-  // because our output array will be the same length.
-  for(let i = arr.length - 1; i >= 0; i--){ 
-
-    // Here we are creating two variables that hold the square or the values at each pointer.
-    let lVal = arr[lPtr]**2;
-    let rVal = arr[rPtr]**2;
-
-    // Because we are creating a sorted array, and because we are working backwards, 
-    // we push the GREATER of the two values in our array.
-    // We then move our respective pointer towards the other.
-    if(lVal > rVal){
-      squareArr[i] = lVal;
-      lPtr++;
-    } else {
-      squareArr[i] = rVal;
-      rPtr--;
-    }
-  }
-
-  // After the loop we return our new array that has been filled with the squared values.
-  return squareArr;
+  // Return the maximum sum
+  return maxSum;
 };
 ```
 
+
 <hr>
 
-### Triplet Sum to Zero (medium)
+### Smallest Subarray With a Greater Sum (easy)
 
-- **Prompt:** Given an **array of unsorted numbers**, **find all unique triplets** in it that **add up to zero**.
+- **Prompt:** Given an array of positive integers and a number ‘S,’ find the length of the smallest contiguous subarray whose sum is greater than or equal to ‘S’. Return 0 if no such subarray exists.
 <br>
 
 - **Example:**
 
 ```js
-Input: [-3, 0, 1, 2, -1, 1, -2]
-Output: [-3, 1, 2], [-2, 0, 2], [-2, 1, 1], [-1, 0, 1]
-Explanation: There are four unique triplets whose sum is equal to zero.
-```
-<br>
-
-- **Comments:**
-  - *Pointers:* The first left to right, increasing order, then two pointers one at each end of the array past that first index.
-  - *Movement:* The first to iterate over the array, the two pointers moving towards each other.
-  - Avoiding duplicates is what makes this question more difficult.
-<br>
-
-- **Basic Pattern:**
-  1. Sort the input array
-  2. create array to hold results values
-  3. iterate up to end or zero in array
-  4. call twoSum algo for each element in the array
-  5. return the results array
- <br>
-
-- **Algorithm:**
-  1. Sort the input array
-  2. create array to hold results values
-  3. iterate up to end or zero in array
-  4. Check for duplicated value, if not, call twoSum
-     1. Create pointers at i+1 and last index
-     2. Define target as negation of the value currently at i
-     3. Create a loop that runs while the lower pointer is less than the higher pointer
-     4. Move one of two pointers accordingly if the sum of the value at the two pointers is more or less than the target
-     5. Or, if a match is found, create a new array with the values at i and each pointer, then push it to the results array
-        1. then increment the lower pointer and decrement the higher pointer so as to avoid duplicates
-        2. continue incrementing the lower pointer if it is a duplicate of the last value
-  5. return the results array
-<br>
-
-- **Big O:**
-  - Time: `O(n^2)`
-  - Space: `~O(n)` dependant on the sorting algo
-
-- **Code:**
-
-```js
-// No comments
-const search_triplets = function(arr) {  
-    if(arr.length < 3) return [];
-    arr.sort((a, b) => a - b);  
-    let resultsArr = [];
-    
-    for(let i = 0; i < arr.length && arr[i] <= 0; i++){
-        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr);
-    }
-    
-    return resultsArr;
-};
-
-
-function twoSum(idx, inputArr, resArr){
-    let lPtr = idx + 1;
-    let rPtr = inputArr.length - 1;
-    let target = -inputArr[idx];
-    
-    while(lPtr < rPtr){
-        const sum = inputArr[lPtr] + inputArr[rPtr];
-        
-        if(sum < target){           
-            lPtr++;  
-        } else if (sum > target){
-            rPtr--;
-        } else {
-            resArr.push([ inputArr[idx], inputArr[lPtr], inputArr[rPtr]]);
-            lPtr++;
-            rPtr--;
-            while(lPtr < rPtr && inputArr[lPtr] === inputArr[lPtr-1]){
-                lPtr++;
-            }
-        }      
-    }
-}
-
-// Comments
-const search_triplets = function(arr) {
-    // If there is less than 3 values within the array we do not have enough values to make a triplet.
-    if(arr.length < 3) return [];
-
-    // We first sort the array, this will allow us to then run a twoSum style algorithm later on
-    arr.sort((a, b) => a - b); // O(n log n)
-    
-    // Create an array that will store our triplet values to return 
-    let resultsArr = []; //O(n)s
-    
-    // We will iterate over our input array, until there is only three values left, or
-    // until the current value in the array is greater than or equal to zero ( arr[i] <= 0 ),
-    // this is because two larger numbers cannot add to a smaller number and all numbers
-    // in a sorted array after 0 are larger.
-    for(let i = 0; i < arr.length - 2 && arr[i] <= 0; i++){ // O(n)t
-        
-        // Here we are calling a twoSum algorithm to search for the pair of values that will add to i to make zero.
-        // We do not want duplicates within our array, so we will check before.
-        if(arr[i] !== arr[i-1]) twoSum(i, arr, resultsArr); // O(n)t
-    }
-    
-    // Once we have iterated over our array we return any triplets we have found.
-    return resultsArr;
-};
-
-// This function is essentially the "Pair with Target Sum" problem from above
-// Except we are storing any solutions we find and skipping over duplicated values within our array.
-function twoSum(idx, inputArr, resArr){
-
-    // Create pointers starting at one more than the current index of for loop in the search_triplets function 
-    // and one at the last index of the array.
-    let lPtr = idx + 1;
-    let rPtr = inputArr.length - 1;
-
-    // Here we define the target we are searching for
-    // the target is the negation of the current value at the i-th index of the input array in the search_triplets function, 
-    // we are searching for triplets that sum to 0, 0 = X + Y + Z is equal to -X = Y + Z, where X is the current value in the input array. 
-    let target = -inputArr[idx];
-    
-    while(lPtr < rPtr){ // O(n)t
-        // Here we create a sum variable for readability
-        const sum = inputArr[lPtr] + inputArr[rPtr];
-        
-        // We check the current sum against the target
-        // Moving the pointers that help make up the sum as needed
-        if(sum < target){           
-            lPtr++;  
-        } else if (sum > target){
-            rPtr--;
-        } else {
-            // When we have found a sum that matches our target, we add all the values into an array and
-            // push that array to our results array.
-            resArr.push([ inputArr[idx], inputArr[lPtr], inputArr[rPtr]]);
-
-            // Then, because we do not want duplicates, we must move both pointers from their current positions.
-            lPtr++;
-            rPtr--;
-
-            // We will continue moving the lPtr up as long as we find duplicate values at that pointer
-            while(lPtr < rPtr && inputArr[lPtr] === inputArr[lPtr-1]){
-                lPtr++;
-            }
-        }      
-    }
-}
-```
-
-<hr>
-
-### Triplet Sum Close to Target (medium) 
-
-- **Prompt:** Given an **array** of **unsorted numbers** and a **target number**, *find a triplet in the array whose sum is as close to the target number as possible*, **return the sum** of the triplet. If there are *more than one such triplet, return the sum of the triplet with the smallest sum.*
-<br>
-
-- **Example:**
-
-```js
-Input: [-2, 0, 1, 2], target=2
-Output: 1
-Explanation: The triplet [-2, 1, 2] has the closest sum to the target.
-```
-<br>
-
-- **Comments:**
-  - *Pointers:* One iterating over the array, two at each end of the remaining array after the first index
-  - *Movement:* The first moving left to right, increasing, the two moving towards each other looking for a target value
-  - You need to keep track of the closest, and the smallest sum, but when a new closest is found the smallest sum must be redefined!
-<br>
-
-- **Basic Pattern:**
-  1. Sort the input array
-  2. create variables to track the smallest sum and the closest sum to the target
-  3. Iterate over the array running a twoSum style algorithm to find the closest sum to the target
-  4. return the smallest sum
- <br>
-
-- **Algorithm:**
-  1. Sort the input array
-  2. create variables to track the smallest sum and the closest sum to the target
-  3. Iterate over the array running a twoSum style algorithm to find the closest sum to the target
-     1. Create pointers at one more than the current index and the last index
-     2. Loop while the left pointer is less than the right pointer
-        1. add the values at each pointer to find the current sum
-        2. find the absolute value (distance) of the target minus the current sum
-        3. if we have found a new closest
-           1. set the closest to the current distance 
-           2. set the smallest sum to be the the sum of the current indices
-        4. else if the distance is equal
-           1. check if the current sum is less than the saved sum, if so, set it to be the smallest sum.
-        5. move one of the pointers in the direction so as to bring the current sum closer to the target
-  4. return the smallest sum variable.
-<br>
-
-- **Big O:**
-  - Time: `O(n^2)`
-  - Space: `~O(n)` dependant on the sorting algo
-
-- **Code:**
-
-```js
-// No comments
-const triplet_sum_close_to_target = function(arr, target) {
-
-  arr.sort((a, b) => a - b); // O(n log n)
-
-  let smallest = null;
-  let closest = null;
-    
-  for(let i = 0; i < arr.length - 2; i++){ // O(n) -> O(n^2)
-    let lPtr = i + 1;
-    let rPtr = arr.length - 1;
-
-    while(lPtr < rPtr){ // O(n) 
-      const sum = arr[lPtr] + arr[rPtr] + arr[i];
-      let dist = Math.abs( target - sum );
-
-      if(!closest || dist < closest){
-        closest = dist;
-        smallest = sum;
-      } else if ( dist === closest ){
-          if(sum < smallest) smallest = sum;
-      }
-
-      if(sum < target){
-        lPtr++;
-      } else {
-        rPtr--;
-      }
-    }
-  }
-
-  return smallest;
-}
-
-// Comments
-const triplet_sum_close_to_target = function(arr, target) {
-
-  // Sorting helps use two pointer technique, lowering Big 0
-  arr.sort((a, b) => a - b);
-
-  // We need to track how close a sum is, and what the smallest sum of close values are.
-  let smallest = null;
-  let closest = null;
-    
-  for(let i = 0; i < arr.length - 2; i++){
-    
-    // create two pointers for twoSum
-    let lPtr = i + 1;
-    let rPtr = arr.length - 1;
-
-    while(lPtr < rPtr){
-      const sum = arr[lPtr] + arr[rPtr] + arr[i];
-
-      // Finding the absolute value tells us the distance from the target
-      // Because the values may be negative we need to use Math.absolute
-      let dist = Math.abs( target - sum );
-
-      // Check if the current distance is closer or equally as close
-      // If there is not currently a value saved in closest,
-      // or the current distance is closer than the closest,
-      // we have found a new closest.
-      if(!closest || dist < closest){
-
-        //set our tracker variables if we have a new closest
-        closest = dist;
-        smallest = sum;
-      } else if ( dist === closest ){
-          // If it is equally close, we need to save the smaller of the two sums
-          if(sum < smallest) smallest = sum;
-      }
-
-      // If we haven't found a value that is closer,
-      // move one of our pointers to try to get closer to the sum
-      if(sum < target){
-        lPtr++;
-      } else {
-        rPtr--;
-      }
-    }
-  }
-
-  // We return the sum of the triplet closest to to sum
-  return smallest;
-}
-```
-
-<hr>
-
-### Triplets with Smaller Sum (medium)
-
-- **Prompt:** Given an **array** arr of **unsorted numbers** and a **target sum**, *count all triplets in it such that arr[i] + arr[j] + arr[k] < target, where i, j, and k are three different indices.* Write a function to **return the count** of such triplets.
-<br>
-
-- **Example:**
-
-```js
-Input: [-1, 0, 2, 3], target=3 
+Input: [2, 1, 5, 2, 3, 2], S=7
 Output: 2
-Explanation: There are two triplets whose sum is less than the target: [-1, 0, 3], [-1, 0, 2]
+Explanation: The smallest subarray with a sum greater than or equal to ‘7’ is [5, 2].
 ```
 <br>
 
 - **Comments:**
-  - *Pointers:* One to evaluate each index of the array, two to search for all sums less than the target (twoSum style).
-  - *Movement:* The first left to right, the next to towards each other.
-  -  The trick with this problem is once you find a triplet that works, every value lower than the current rPtr will work for the current lPtr, so you can just subtract the rPtr from the lPtr to get the number of triplets to add to the count, then move on from that lPtr. 
+- - **This is a Dynamic Window type of sliding window problem.**
+  - *Pointers:* Two, one pointer to point to the start of the sliding window, one two point to the end.
+  - *Movement:* The start pointer will move to the left, then, once a window sum greater than the target value is reached, the window will be shrunk, moving the end pointer towards the start pointer.
+  - *Variables:* Two, one to track the current sum in the window, one to track the smallest length of sub-array where the sum is gt or et the target.
+  - This same technique can be used in problems where you must find the largest or smallest sub-array given some condition.
 <br>
 
 - **Basic Pattern:**
-  1. Create a count variable.
-  2. Sort the array.
-  3. Iterate over the array, running a twoSum style algo
-     1. Adding the number of triplet sums less than the target for any give index to the count.
-  4. Return the the count.
+  1. build up a window
+  2. slide window across the array
+  3. add the value at the start pointer to the current sum within the window
+  4. if the sum of the values in the window is greater or equal to the target value set the current value to the max value.
+  5. while the the sum of the values in the window is greater or equal to the target value
+     1. Find the length of the the window
+     2. if it is smaller than the smallest known window length, set it's length to be the smallest
+     3. subtract the value at the end pointer from the current sum
+     4. increment the end pointer
+  6. return the smallest length
  <br>
 
 - **Algorithm:**
-  1. Create a count variable.
-  2. Sort the array.
-  3. Iterate over the array, running a twoSum style algo
-     1. Creating pointer variables, one at one more than the index of the for loop, and one at the last index.
-     2. While the left pointer is less than the right,
-        1. Move the pointers such that they find the first value lower than the target
-        2. Then, subtract the right pointer from the left pointer, and add that value to the count.
-        3. Then increment the left pointer.
-  4. Return the count.
-<br>
-
-- **Big O:**
-  - Time: `O(n^2)`
-  - Space: `~O(n)` dependant on the sorting algo
-
-- **Code:**
-
-```js
-// No comments
-const triplet_with_smaller_sum = function(arr, target) {
-	let count = 0;
-
-	arr.sort((a, b) => a - b); // O(n log n)t - O(n)s
-
-	// O(n) -> O(n^2)
-	for(let i = 0; i < arr.length - 2; i++){
-		let lPtr = i + 1;
-		let rPtr = arr.length - 1;
-        
-		// O(n)
-		while(lPtr < rPtr){
-		    let sum = arr[i] + arr[lPtr] + arr[rPtr];
-
-            if(sum >= target){
-                rPtr--;
-            }else{
-              count += rPtr - lPtr;
-                lPtr++;
-            }
-        } 
-  }
-  return count;
-}
-
-// Comments
-const triplet_with_smaller_sum = function(arr, target) {
-
-  // Sort array, this will allow us to run twoSum style algo later on
-	arr.sort((a, b) => a - b); 
-
-  // Create a variable to track the number of triplets with a smaller sum
-  let count = 0;  
-	
-  // Evaluate each index in the array, until only two are left (not enough to make up a triplet)
-  // Run twoSum style algorithm starting at one passed the i-th index
-	for(let i = 0; i < arr.length - 2; i++){
-		let lPtr = i + 1;
-		let rPtr = arr.length - 1;
-        
-		
-		while(lPtr < rPtr){
-		    let sum = arr[i] + arr[lPtr] + arr[rPtr];
-
-            // We want to decrement the rPtr to make the sum value less for any value equal to or larger than our target.
-            if(sum >= target){
-              rPtr--;
-            }else{
-              // Once you find a triplet that works, every value lower than the current rPtr will work for a given lPtr as well
-              // So we can just add each of those to the count and be done with that lPtr
-              count += rPtr - lPtr;
-              lPtr++;
-            }
-        } 
-  }
-  return count;
-}
-```
-
-<hr>
-
-### Dutch National Flag Problem (medium)
-
-- **Prompt:** **Given an array containing 0s, 1s and 2s, sort the array in-place.** You should *treat numbers of the array as objects*, hence, we can’t count 0s, 1s, and 2s to recreate the array.
-<br>
-
-- **Example:**
-
-```js
-Input: [1, 0, 2, 1, 0]
-Output: [0, 0, 1, 1, 2]
-```
-<br>
-
-- **Comments:**
-  - *Pointers:* Three pointers, two on each end and one in the middle.
-  - *Movement:* The two on the end move in, while the pointer in the middle moves left to right starting in the same position as the lower pointer.
-  - The trick to this problem is knowing when to swap the variables and when to move the pointers.
-<br>
-
-- **Basic Pattern:**
-  1. Create pointers
-  2. Iterate once over array
-  3. Swap the values at the middle pointer and move the pointers accordingly
- <br>
-
-- **Algorithm:**
-  1. Create three pointers, one at each end of the array and one to traverse the array 
-  2. Loop while the traversing pointer is less than the right pointer
-     1. If the value at the traversing pointer is 0, 
-        1. swap the value with the value at left pointer
-        2. increment the left pointer
-        3. increment the traversing ptr
-     2. Else if the value at the traversing pointer is 2
-        1. swap the value at the traversing pointer with the value at the right pointer
-        2. decrement the right pointer (do NOTHING to the traversing pointer)
-     3. Else
-        1. increment the traversing pointer (this means we have found a 1, which belongs in the middle).
-  3. Return the input array
+  1. Create variables to track the smallest length of array that meets the condition, the current sum of the window, and to point to the end of the array.
+  2. Create a start to track the start of the window and loop while start is less than the array length
+  3. Add the value at the start pointer to the current sum.
+  4. Create a while loop that will run so long as the current sum is greater than or equal to the target.
+     1. Check to see if the sum in our window is greater than the target
+        1. If the current length of the window is less than the smallest known length set that length to be the smallest.
+     2. Subtract the value at the end index from the current sum.
+     3. increment the end pointer.
+  5. Finally, we return the smallest known length, if no length is found return 0.
 <br>
 
 - **Big O:**
@@ -775,591 +201,1132 @@ Output: [0, 0, 1, 1, 2]
 
 ```js
 // No comments
-const dutch_flag_sort = function(arr) {
+const smallest_subarray_sum = function(s, arr) {
+    if(!Array.isArray(arr)) return null;
 
+    let end = 0; 
+    let smLen = Infinity;
+    let curSum = 0; 
 
-  let low = 0;
-  let high = arr.length - 1;
-  let ptr = 0;
-
-	while(ptr <= high){ //O(n)
-		if(arr[ptr] === 0){
-			swap(arr, ptr, low);
-			low++;
-      ptr++;
-    } else if (arr[ptr] === 2){
-	    swap(arr, ptr, high);
-      high--;
-    } else {
-	    ptr++;
+    for(let start = 0; start < arr.length; start++){ // O(n), technically O(2n) with while loop
+        curSum += arr[start];
+        while(curSum >= s){
+            const curLen = start - end + 1;
+            if(curLen < smLen) smLen = curLen;
+            curSum -= arr[end];
+            end++;
+        }
     }
-  }
-  return arr;
-}
-
-
-function swap(arr, ptr1, ptr2){
-	[arr[ptr1], arr[ptr2]] = [arr[ptr2], arr[ptr1]]
-}
-
+    return smLen;
+};
 
 // Comments
-const dutch_flag_sort = function(arr) {
-	
-  // We are going to need three pointers for this problem
-  // One at the each end and one in between
-  let low = 0;
-  let high = arr.length - 1;
-	let ptr = 0;
+const smallest_subarray_sum = function(s, arr) {
+    if(!Array.isArray(arr)) return null
 
-  // We are going to move the middle ptr until it reaches the high pointer
-	while(ptr <= high){
+    // Pointer var
+    let end = 0; // end of sliding window
 
-    // If the value at the ptr var is 0, swap it with the value at the low pointer
-    // Then move both the low and ptr vars up one step
-		if(arr[ptr] === 0){
-			swap(arr, ptr, low);
-			low++;
-      ptr++;
-    // If the value at the ptr var is 2, swap it with the value at the high pointer
-    // The move the high pointer down one step, but leave the ptr var where it is
-    } else if (arr[ptr] === 2){
-	    swap(arr, ptr, high);
-      high--;
-    // If we have reached this part of the conditional we have found a 1, and will just move the ptr var up by one step
-    } else {
-	    ptr++;
+    // Tracker vars
+    let smLen = Infinity; // Smallest length
+    let curSum = 0; // current sum
+
+    // Logic
+    for(let start = 0; start < arr.length; start++){
+
+        // Add the value at the start pointer to the current sum
+        curSum += arr[start];
+
+        // So long as the current sum is greater than or equal to the target
+        while(curSum >= s){
+
+            // Here we are checking to see if the sum in our window is greater than the target 's'.
+
+            // find the current length of the window by subtracting the current window's start from it's end 
+            // then adding one to account for the array being zero indexed
+            const curLen = start - end + 1;
+            // If the current length is smaller than the smallest known length, set that to the smallest length
+            if(curLen < smLen) smLen = curLen;
+
+            // Here we are shrinking the window
+
+            // Subtract the value at the end pointer from the current sum
+            curSum -= arr[end];
+
+            // Increment the end pointer
+            end++;
+        }
     }
-  }
 
-  // Finally we will return the input array
-  return arr;
-}
-
-// Swap two values within an array
-function swap(arr, ptr1, ptr2){
-	[arr[ptr1], arr[ptr2]] = [arr[ptr2], arr[ptr1]]
-}
-
+    // Finally, we return the smallest known length, if no length is found return 0
+    return smLen === Infinity ? 0 : smLen;
+};
 ```
 
 <hr>
 
-### Quadruple Sum to Target (medium)
+### Longest Substring with maximum K Distinct Characters (medium)
 
-- **Prompt:** Given an array of unsorted numbers and a target number, find all unique quadruplets in it, whose sum is equal to the target number.
+- **Prompt:** Given a string, find the length of the longest substring in it with no more than K distinct characters.
 <br>
 
 - **Example:**
+
 ```js
-Input: [4, 1, 2, -1, 1, -3], target=1
-Output: [-3, -1, 1, 4], [-3, 1, 1, 2]
-Explanation: Both the quadruplets add up to the target.
+Input: String="araaci", K=2
+Output: 4
+Explanation: The longest substring with no more than '2' distinct characters is "araa".
 ```
 <br>
 
 - **Comments:**
-  - *Pointers:* 4 ptrs, two in a nested forloop and two acting as the pointers for twoSum style algo
-  - *Movement:* The two nested for loop pointers move left to right, and tw thw twoSum style pointers move in towards each other. 
-  - Again, with all nested non-duplicate xSum style problems, the thing to watch out for is duplicate values.
-  - **In this problem we just push past all non-duplicates every time after we find a new solution.**
+  - **This is a dynamic sliding window problem used in conjunction with a hashmap**.
+  - *Pointers:* Two, one to point to the start and one to point to the end of the sliding window
+  - *Movement:* The starting pointer will move forward one index at a time through each iteration of the for loop and the end pointer will contract the window moving towards the start pointer while the number of distinct chars is more than k.
+  - *Variables:* Three, a hashmap to track the characters,a distChars var to count the number of distinct characters, and a maxLen var to track the largest window of distinct characters.
 <br>
 
 - **Basic Pattern:**
-  1. threeSum with an extra for loop
+  1. Track the number of distinct chars.
+  2. Expand or contract the sliding window depending on the relation between the input 'k' and that number.
+  3. When a larger window is found that contains distinct chars, set the maxLen var to the length of that window.
+  4. return the maximum length found.
  <br>
 
 - **Algorithm:**
-  1. Sort input array
-  2. Create array to hold quadruplets
-  3. Create nested for loop
-  4. run twoSum style algo
-  5. if a sum is found that matches the target
-     1. push an array containing all pointers to the results array
-     2. **run a while loop for each of the pointers to skip over any of the duplicate values**
-     3. **Then increment the lPtr and decrement the rPtr once more**
-  6. return results array
+  1. Create an object to hold the character count, charMap.
+  2. Create variables to count the number of distinct characters in the window, to track the largest window of distinct characters, and to point to the end of the sliding window.
+  3. Create a start variable within a for loop, starting at zero and running until it reaches the last index of the string, incrementing by one.
+     1. Check to see if the current char at the start index exists in the charMap,
+        1. If so, increment the value held at the key by that chars name, by one.
+        2. If not, 
+           1. create a key in the object with that chars name, then set it's value to one.
+           2. Increase the distinct character count by one. 
+     2. While the number of distinct chars is greater than k, 
+        1. decrease the count of that char in the char map by one.
+        2. Now check to see if the count at that character is zero, if it is,
+           1.  decrement the number of distinct characters by one.
+        3. Increment the end pointer by one.
+        4. If the current window between end and start minus one is larger than the largest known window, make that length the max.
+  4. If max length is never updated due to an empty string or some other edge case, return 0, else return the maximum length found.
+   
 <br>
 
 - **Big O:**
-  - Time: `O(n^3)`
-  - Space: `O(n) - sorting`
+  - Time: `O(n)`, technically O(2n)
+  - Space: `O(K + 1)`, we will be storing a maximum of `K+1` characters
 
 - **Code:**
 
 ```js
-// No Comments
-var fourSum = function(nums, target) {
-    nums.sort((a,b) => a-b); // O(n)s
-    let result = [];
-
-    for (let i=0; i<nums.length - 3; i++) { // O(n^2)t
-        for (let j=i+1; j<nums.length - 2; j++) {
-
-            let lPtr = j+1, 
-            rPtr = nums.length - 1;
-
-            while (lPtr < rPtr) { // O(n)t
-                let sum = nums[i] + nums[j] + nums[lPtr] + nums[rPtr];
-
-                if (sum > target){
-                  rPtr--;
-                }
-                else if(sum < target){
-                  lPtr++;
-                }  
-                else {
-                    result.push([nums[i], nums[j], nums[lPtr], nums[rPtr]]);
-                    while (nums[i] === nums[i+1]) i++;
-                    while (nums[j] === nums[j+1]) j++;
-                    while (nums[lPtr] === nums[lPtr+1]) lPtr++;
-                    while (nums[rPtr] === nums[rPtr-1]) rPtr--;
-                    lPtr++; rPtr--;
-                }   
-            }
-        }
-        
-    }
-    return result;
-};
-
-//Comments
-var fourSum = function(nums, target) {
-
-    // Sort input array
-    nums.sort((a,b) => a-b); //O(n)s
-    // Create an array to hold the quadruplets whose sum match the target
-    let result = [];
-
-    // Create a nested for loop - O(n^2)t
-    for (let i=0; i<nums.length - 3; i++) {
-        for (let j=i+1; j<nums.length - 2; j++) {
-
-            // twoSum Style algo - O(n)t
-            // Create pointers
-            let lPtr = j+1, 
-                rPtr = nums.length - 1;
-
-            while (lPtr < rPtr) {
-
-                // Find current sum
-                let sum = nums[i] + nums[j] + nums[lPtr] + nums[rPtr];
-
-                // Move sum towards target
-                if (sum > target){
-                  rPtr--;
-                }
-                else if(sum < target){
-                  lPtr++;
-                }
-                // If a match is found
-                else {
-                    // Push current values to the results array as a quadruplet
-                    result.push([nums[i], nums[j], nums[lPtr], nums[rPtr]]);
-                    
-                    //Increment i, j, lPtr and decrement rPtr while there are duplicate values
-                    while (nums[i] === nums[i+1]) i++;
-                    while (nums[j] === nums[j+1]) j++;
-                    while (nums[lPtr] === nums[lPtr+1]) lPtr++;
-                    while (nums[rPtr] === nums[rPtr-1]) rPtr--;
-
-                    // Increment and decrement once more to avoid duplicates
-                    lPtr++; rPtr--;
-                }   
-            }
-        }
-    }
-
-    // Return results array
-    return result;
-};
-```
-
-- **Alternate Solution:**
-
-```js
 // No comments
-var fourSum = function(arr, target) {
-    
-  let resultsArr = [];
-	arr.sort((a, b) => a - b);
+const longest_substring_with_k_distinct = function(str, k) {
 
-	for(let i=0; i < arr.length-3 ; i++){ // O(n)
-		if (arr[i] === arr[i - 1]) continue; 
+  let charMap = {}, // O(k + 1)
+      distChars = 0, 
+      maxLen = 0,
+      end = 0; 
 
-		for(let j = i+1; j < arr.length-2; j++){ // O(n)
-            if (j > i + 1 && arr[j] === arr[j - 1]) continue;           
-            findPair(i, j, arr, resultsArr, target); // O(n)
-      }
+  for(let start = 0; start < str.length; start++){ // O(n)t
+
+    if(charMap[str[start]]){
+      charMap[str[start]]++;
+    } else {
+      charMap[str[start]] = 1;
+      distChars++;
     }
-	return resultsArr;
-}
 
-function findPair(i, j, arr, resArr, target){
-    let lPtr = j+1;
-    let rPtr = arr.length-1;
-    
-    while(lPtr < rPtr){
-        const sum = arr[i] + arr[j] + arr[lPtr] + arr[rPtr];
-        
-        if(sum < target){
-            lPtr++;
-        } else if (sum > target){
-            rPtr--;
-        } else {
-            resArr.push([arr[i], arr[j], arr[lPtr], arr[rPtr]]);
-            lPtr++;
-            rPtr--;
-            while(lPtr < rPtr && arr[lPtr] === arr[lPtr-1]){
-                lPtr++;
-            }
-        }
+    while(distChars > k){
+      charMap[str[end]]--;
+      if(charMap[str[end]] === 0) distChars--;
+      end++;
     }
-}
+
+    const curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen;
+};
+
 
 // Comments
-var fourSum = function(arr, target) {
-    
-    // Create an array to store the quadruplets that add to the target 
-    let resultsArr = [];
-	
-    // Sort the array O(n log n)t
-	arr.sort((a, b) => a - b);
-    
-    // Iterate over the array until you can make one final triplet
-	for(let i=0; i < arr.length-3 ; i++){ // O(n)
-        
-        // If you find a duplicate skip to the next i value
-		if (arr[i] === arr[i - 1]) continue; 
-        
-        // Starting at one more than i, iterate over the array
-		for(let j = i+1; j < arr.length-2; j++){
-            
-            // If j is at least one more than i and is a duplicate, skip to next j value
-            if (j > i + 1 && arr[j] === arr[j - 1]) continue;
-            
-            findPair(i, j, arr, resultsArr, target);
-      }
-    }
-	return resultsArr;
-}
+const longest_substring_with_k_distinct = function(str, k) {
 
-// twoSum style algo, making sure there are no duplicate values
-// and pushing any found values to the resultsArr
-function findPair(i, j, arr, resArr, target){
-    let lPtr = j+1;
-    let rPtr = arr.length-1;
-    
-    while(lPtr < rPtr){
-        const sum = arr[i] + arr[j] + arr[lPtr] + arr[rPtr];
-        
-        if(sum < target){
-            lPtr++;
-        } else if (sum > target){
-            rPtr--;
-        } else {
-            // Push the quadruplet to the results array
-            resArr.push([arr[i], arr[j], arr[lPtr], arr[rPtr]]);
-            // move on from both indices to avoid duplicates
-            lPtr++;
-            rPtr--;
-            // keep incrementing the lPtr if it holds the same value as the last lPtr
-            while(lPtr < rPtr && arr[lPtr] === arr[lPtr-1]){
-                lPtr++;
-            }
-        }
+  let charMap = {}, // character count
+      distChars = 0, // distinct characters
+      maxLen = 0, // Maximum length of sub-string
+      end = 0; // End of sliding window
+
+  for(let start = 0; start < str.length; start++){
+
+    // If the char at start exists in the char map increment it's count by one.
+    // If not, add it to the charMap, set it's count to one, and increase the distinct chars variable by one.
+    if(charMap[str[start]]){
+      charMap[str[start]]++;
+    } else {
+      charMap[str[start]] = 1;
+      distChars++;
     }
-}
+
+    // While the number of distinct chars is greater than k, 
+    // decrease the count of that char in the char map by one.
+    // now check to see if the count at that character is zero, if it is,
+    // decrement the number of distinct characters and then increment the end pointer.
+    while(distChars > k){
+      charMap[str[end]]--;
+      if(charMap[str[end]] === 0) distChars--;
+      end++;
+    }
+
+    // If the current window is larger than the largest known window, make that length the max
+    const curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen;
+};
 ```
 
 <hr>
 
-### Comparing Strings containing Backspaces (medium)
+### Fruits into Baskets (medium)
 
-- **Prompt:** Given two strings containing backspaces (identified by the character ‘#’), check if the two strings are equal.
+- **Note:** This question is essentially the last question with a 'realistic' scenario applied to it.
+
+- **Prompt:**
+
+
+ ```
+ You are visiting a farm to collect fruits. The farm has a single row of fruit trees. 
+ You will be have two baskets, and your goal is to pick as many fruits as possible to be placed in the given baskets.
+
+You will be given an array of characters where each character represents a fruit tree. The farm has following restrictions:
+
+Each basket can have only one type of fruit. There is no limit to how many fruit a basket can hold.
+You can start with any tree, but you can’t skip a tree once you have started.
+You will pick exactly one fruit from every tree until you cannot, 
+  - i.e., you will stop when you have to pick from a third fruit type.
+Write a function to return the maximum number of fruits in both baskets.
+ ```
 <br>
 
 - **Example:**
+
 ```js
-Input: str1="xp#", str2="xyz##"
-Output: true
-Explanation: After applying backspaces the strings become "x" and "x" respectively.
-In "xyz##", the first '#' removes the character 'z' and the second '#' removes the character 'y'.
+Input: Fruit=['A', 'B', 'C', 'B', 'B', 'C']
+Output: 5
+Explanation: We can put 3 'B' in one basket and two 'C' in the other basket. 
+This can be done if we start with the second letter: ['B', 'C', 'B', 'B', 'C']
 ```
 <br>
 
 - **Comments:**
-  - *Pointers:* Two main pointers, two secondary pointers used to find the next valid index.
-  - *Movement:*  All moving right to left in decreasing order.
+  - Notice the return value here: We are only being asked to return the final count, so some of that scenario is theoretical, we need not concern ourselves with returning what the actual start and end positions are and nor with anything else other than that final count.
+<br>
+
+- **Big O:**
+  - Time: `O(n)` technically, O(2n)
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// See code from problem above for comments
+const fruits_into_baskets = function(fruits) {
+  if(fruits.length <= 2) return fruits.length;
+  
+  let distFruitCount = 0,
+      maxFruitCount = 0,
+      end = 0, 
+      fruitMap = {};
+
+  for(let start = 0; start < fruits.length; start++){
+    if(fruitMap[fruits[start]]){
+      fruitMap[fruits[start]]++;
+    } else{
+      fruitMap[fruits[start]] = 1;
+      distFruitCount++;
+    }
+
+    while(distFruitCount > 2){
+      fruitMap[fruits[end]]--;
+      if(!fruitMap[fruits[end]]) distFruitCount--;
+      end++;
+    }
+
+    const currTotalFruits = start - end + 1;
+    maxFruitCount = maxFruitCount < currTotalFruits ? currTotalFruits : maxFruitCount;
+  }
+
+  return maxFruitCount;
+};
+```
+
+<hr>
+
+### Longest Substring with Distinct Characters (medium)
+
+- **Prompt:** Given a string, find the length of the longest substring, which has all distinct characters.
+<br>
+
+- **Example:**
+
+```js
+Input: String="aabccbb"
+Output: 3
+Explanation: The longest substring with distinct characters is "abc".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one to track the start of the sub-string and one to track the end.
+  - *Movement:* The start pointer will iterate one index at a time, from left to right, the end pointer will jump to the the index of the repeated value plus one.
+  - *Variables:* Two, one to hold the length of the distinct char sub-string, one Map object to hold the distinct characters.
 <br>
 
 - **Basic Pattern:**
-  1. Create two pointers at the last index of each string
-  2. . Starting at that index find the next valid index
-  3. Check if there is a next valid index, if not return false
-  4. Check if the valid indices match, if not return false
-  5. check if we have reached the last indices, it they match, return true
-  6. If we get here and we haven't returned, set the indices to the next elements to be evaluated
+  1. If the charMap has the char at the start index as a key, if the value at the key + 1 is greater than end, set end to that value + 1.
+  2. Set the charMap key of char at start pointer in the string to the start index.
+  3. Set max length to whatever is greater, the current window or the current max.
+  4. return the max length.
  <br>
 
 - **Algorithm:**
-  1. Create two pointers at the last index of each string
-  2. Starting at that index create a while loop that will run while neither index has reached the end of it's respective string
-  3. find the next valid index for each string and set to new pointers
-     1. create a variable to track the next valid index, set it to the current index
-     2. while the value of the current string at that index is a '#'
-        1. set the valid index to the current valid index minus two
-        2. decrement the current index by one
-     3. If the current index is less than zero, return null, else return the valid index
-  4. Check if there is a next valid index, if not return false
-  5. Check if the valid indices match, if not return false
-  6. check if we have reached the last indices, it they match, return true
-  7. If we get here and we haven't returned, set the indices to the next elements to be evaluated
+  1. Create a variable to track the max length of a distinct sub-string.
+  2. Create a pointer to point to the end of the sub-string.
+  3. Create a new Map object to hold the characters.
+  4. Iterate over the string, tracking a start variable beginning at zero.
+     1. If the char at the start pointer in the string is a key in the map, 
+        1. Set the end variable to be the greater of either itself -or- the value at that key plus one.
+     2. Set a key in the map with the key being the character in the string at the start pointer, and the value being the current start index.
+     3. Set the maxLen var to be the greater of itself -or- start - end + 1.
+  5. Return the maxLen variable.
+<br>
+
+- **Big O:**
+  - Time: `O(n)` 
+  - Space: `O(n)`
+
+- **Code:**
+
+```js
+// No comments
+var lengthOfLongestSubstring = function(s) {
+
+    const charMap = new Map();
+    let end = 0;
+    let maxLen = 0;
+    
+    for(let start = 0; start < s.length; start++) {
+        if(charMap.has(s[start])) end = Math.max(charMap.get(s[start]) + 1, end)
+        charMap.set(s[start], start);
+        maxLen = Math.max(start - end + 1, maxLen);
+    } 
+    
+    return maxLen;  
+};
+
+
+// Comments
+var lengthOfLongestSubstring = function(s) {
+    // keeps track of the most recent index of each letter.
+    const charMap = new Map();
+    // keeps track of the starting index of the current substring.
+    let end = 0;
+    // keeps track of the maximum substring length.
+    let maxLen = 0;
+    
+    for(let start = 0; start < s.length; start++) {
+        // if the current char was seen, move the end to the greater of (1 + the last index of this char) or itself.
+        // max prevents moving backward, 'end' can only move forward
+        if(charMap.has(s[start])) end = Math.max(charMap.get(s[start]) + 1, end)
+        // Set the key or s[start] in the map to be the current index of the start var
+        charMap.set(s[start], start);
+        // maximum of the current substring length and maxLen
+        maxLen = Math.max(start - end + 1, maxLen);
+    } 
+    
+    return maxLen;  
+};
+
+```
+
+- **O(2n)t, O(n)s Solution**
+
+```js
+// No comments
+const non_repeat_substring = function(str) {
+  let maxLen = 0,
+      end = 0, 
+      charMap = {};
+
+  for(let start = 0; start < str.length; start++){
+
+    if(!charMap[str[start]]){
+      charMap[str[start]] = 1;
+    } else {
+      charMap[str[start]]++;
+
+      while(charMap[str[start]] > 1){
+        charMap[str[end]]--;
+        end++;
+      }
+    }
+
+    let curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen;
+};
+
+
+// Comments
+const non_repeat_substring = function(str) {
+
+  let maxLen = 0, // track maxLength of distinct chars sub-string
+      end = 0, // pointer to track the end of the sliding window
+      charMap = {}; // map to hold distinct chars
+
+  // Iterate over string, beginning at the first index
+  for(let start = 0; start < str.length; start++){
+
+    // Check to see if the char at the start index exists, and has a value of > 0, 
+    // if not, set it's value in the map to 1.
+    // If so, increment it's count by one, then, while it's value is greater than one,
+    // withing the charMap, decrement the value held by the key of the same char as the char in the string at the end pointer.
+    // then, increment the end pointer.
+    if(!charMap[str[start]]){
+      charMap[str[start]] = 1;
+    } else {
+      charMap[str[start]]++;
+      while(charMap[str[start]] > 1){
+        charMap[str[end]]--;
+        end++;
+      }
+    }
+
+    // Check to see if the current length of the sub-string of distinct values is 
+    // greater than the largest sub-string found up to this point,
+    // If so, set the maxLen var to be the current length.
+    let curLen = start - end + 1;
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // Return the length of largest sub-string found
+  return maxLen;
+};
+
+```
+
+
+### Longest Substring with Same Letters after Replacement (hard)
+
+- **Prompt:** Given a **string with lowercase letters only**, if **you are allowed to replace no more than k letters with any letter**, *find the length of the longest substring having the same letters after replacement.*
+<br>
+
+- **Example:**
+
+```js
+Input: String="aabccbb", k=2
+Output: 5
+Explanation: Replace the two 'c' with 'b' to have the longest repeating substring "bbbbb".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* One pointer for the left (l) and one pointer for the right (r) side of the sliding window.
+  - *Movement:* The right pointer will constantly move to the right once per iteration, the left pointer will move to the right when the current length of the sub-string minus the largest count is higher than k.
+  - *Variables:* One variable to track the longest sub-string (maxLen), and one to track the count of the most repeated char (maxCount).
+  - This is a **Dynamic Sliding Window** problem.
+  - **Condition for Contracting:** The window will shrink when the current length of the sub-string minus the largest count is higher than k.
+<br>
+
+- **Basic Pattern:**
+  1. Create variables to track **max length of substring**, and the **count of the largest repeated char**.
+  2. Create an object to track the count of each char within the sub-string.
+  3. Create pointers for the left and right side of the sliding window.
+  4. Using a for loop and the right pointer, incrementing by one each time through,
+     1. Set the char within the char count.
+     2. Set the max count if a new count has been found.
+     3. If the current length of the sub-string *minus* the highest repeated char is greater than k,
+        1. decrement the count at the left char, and the current length.
+        2. Increment the left pointer.
+     4. Set the maxLength if a new one has been found.
+  5. return the max length of the sub-string.
+ <br>
+
+- **Algorithm:**
+  1. See Commented Code ->>
+<br>
+
+- **Big O:**
+  - Time: `O(n)`
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// No comments
+const length_of_longest_substring = function(str, k){
+  
+  let maxLen = 0,       
+      maxCount = 0,      
+      l = 0,           
+      charCount = {};  
+
+  for(let r = 0; r < str.length; r++){
+
+    charCount[str[r]] = charCount[str[r]] + 1 || 1;
+    maxCount = maxCount < charCount[str[r]] ? charCount[str[r]] : maxCount;
+
+    let curLen = r - l + 1;
+
+    if(curLen - maxCount > k){
+      charCount[str[l]]--;
+      l++;
+      curLen--;
+    }
+
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  return maxLen;
+};
+
+// Comments
+const length_of_longest_substring = function(str, k){
+  
+  let maxLen = 0,       // The max length of a sub-string
+      maxCount = 0,      // The highest count of a single character
+      l = 0,            // Points too the left side of the sub-string window
+      charCount = {};   // Map to count the characters within the sub-string 
+
+  // Iterate over the string starting at the beginning, growing the right side of the sub-string window as we go.
+  for(let r = 0; r < str.length; r++){
+
+    // Set the str[r] key of the charCount map
+    charCount[str[r]] = charCount[str[r]] + 1 || 1;
+
+    // Set maxFreq to the greater between the current maxFreq and the count at str[r] in the charCount map.
+    maxCount = maxCount < charCount[str[r]] ? charCount[str[r]] : maxCount;
+
+    // Find the current length, this line for readability.
+    let curLen = r - l + 1;
+
+    // If the current length of the substring minus the highest count of a single character is greater than k
+    // we are going to decrement the count of the char at the l pointer within the char count map,
+    // the l pointer itself, and the current length, all by one.
+    if(curLen - maxCount > k){
+      charCount[str[l]]--;
+      l++;
+
+      // Decrementing the sub-string here will always keep the maxLen smaller than if a non-skipped value is found.
+      curLen--;
+    }
+
+    // If the length of the sub-string is greater than the max, set that value to be the max
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // Return the largest sub-string found
+  return maxLen;
+};
+```
+
+
+
+<hr>
+
+### Longest Subarray with Ones after Replacement (medium)
+
+- **Prompt:** Given an array containing 0s and 1s, if you are allowed to replace no more than ‘k’ 0s with 1s, find the length of the longest contiguous subarray having all 1s.
+<br>
+
+- **Example:**
+
+```js
+Input: Array=[0, 1, 1, 0, 0, 0, 1, 1, 0, 1, 1], k=2
+Output: 6
+Explanation: Replace the '0' at index 5 and 8 to have the longest contiguous subarray of 1s having length 6.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one to track the left and right side of the sliding window.
+  - *Movement:* The sliding window will move one place to the right with each iteration of the for loop. The window will contract when the number of replaced zeros is greater than k.
+  - *Variables:* Two, one to track the number of ones within the window, and one to track the max length of the sub-array.
+  - This is the key part of solving problems in this way:
+
+```js
+
+    let curLen = r - l + 1;
+    let numReplacedZeros = curLen - onesCount; // <---- Instead of tracking the replacements, your tracking the correct values
+    // Then finding the incorrect values by subtracting the correct values from the sub-arrays length
+
+    if(numReplacedZeros > k){  // <--------------- Then shrinking the sub-arrays length if the conditions are exceeded
+      if(arr[l] === 1) onesCount--;
+      l++;
+      curLen--; // It is important that the length is properly decremented after the left pointer is moved forward.
+    }
+```
+<br>
+
+- **Basic Pattern:**
+  1. Create vars to track the largest sub-array, and the number of ones within the window.
+  2. Create a pointer to represent the left side of the sliding window.
+  3. Iterate over the array once, using a var to represent the right side of the sliding window.
+     1. If the value at r is 1, add it to the ones count, as it will be entering the window.
+     2. The current length minus the onesCount represents the number of 0's replaced with ones.
+     3. If that number is greater than k,
+        1. If the value at the l pointer is a 1, decrement the onesCount as that one will be leaving the window.
+        2. Increment the l pointer by one.
+        3. Decrement the current length by one.
+     4. Set that max
+ <br>
+
+- **Algorithm:**
+  1. See Commented Code ->>
+<br>
+
+- **Big O:**
+  - Time: `O(n)`
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// No comments
+const length_of_longest_substring = function(arr, k) {
+  let maxLen = 0, onesCount = 0;
+  let l = 0;
+
+  for(let r = 0; r < arr.length; r++){
+
+    if(arr[r] === 1) onesCount++;
+
+    // added for readability
+    let curLen = r - l + 1;
+    let numReplacedZeros = curLen - onesCount;
+
+    if(numReplacedZeros > k){
+      if(arr[l] === 1) onesCount--;
+      l++;
+      curLen--;
+    }
+
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+  return maxLen;
+};
+
+// Comments
+const length_of_longest_substring = function(arr, k) {
+
+  // Track the largest sub-array, and the number of ones within the window
+  let maxLen = 0, onesCount = 0;
+
+  // Pointer for the left side of the sliding window
+  let l = 0;
+
+  // Iterate over the array once, using r to represent the right side of the sliding window.
+  for(let r = 0; r < arr.length; r++){
+
+    // If the value at r is 1, add it to the ones count, as it will be entering the window.
+    if(arr[r] === 1) onesCount++;
+
+    // Find the current length, more for readability.
+    let curLen = r - l + 1;
+
+    // IMPORTANT: The current length minus the onesCount represents the number of 0's replaced with ones.
+    // Variable made for readability:
+    let numReplacedZeros = curLen - onesCount;
+
+    // If the number of replaced zeros is greater than k (representing the number of zeros we are allowed to skip).
+    if(numReplacedZeros > k){
+
+      // If the value at the l pointer is a 1, decrement the onesCount as that one will be leaving the window.
+      if(arr[l] === 1) onesCount--;
+
+      // Increment the l pointer by one
+      // This DOESN'T shrink the window, but it doesn't allow it to grow!
+      l++;
+
+      // Here we are decrementing the current length by one, 
+      // setting it to the size it was at the beginning of the loop.
+      curLen--;
+    }
+
+    // The last thing we will do within our for loop is check to see if the length of the sub-array is 
+    // larger than any we have seen. If it is we will set the surrent length to be the largest.
+    maxLen = maxLen < curLen ? curLen : maxLen;
+  }
+
+  // return the length of the longest sub-array.
+  return maxLen;
+};
+```
+
+
+
+<hr>
+
+### Permutation in a String (medium)
+
+- **Prompt:** Given a string and a pattern, find out if the string contains any permutation of the pattern.
+<br>
+
+- **Example:**
+
+```js
+Input: String="oidbcaf", Pattern="abc"
+Output: true
+Explanation: The string contains "bca" which is a permutation of the given pattern.
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two, one pointing to the right side of the sliding window and one pointing to the left side.
+  - *Movement:*  The right side will move one character at a time, expanding the sliding window as it goes. The left pointer will begin contracting after the sliding window has reached it's full length.
+  - *Variables:* One number to keep track of the correct characters within the sub-string. One object to hold the count of the numbers within the sub-string.
+<br>
+
+- **Basic Pattern:**
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+  - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+  - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.
+ <br> 
+
+- **Algorithm:**
+  1. Make a map of the pattern.
+  2. IF the character at the the right pointer is in the map and it's count is higher than zero, increase the count of correct characters within the pattern, by one.
+     1. Either way, decrement the count for that character in the map by one (this count can go negative).
+  3. IF the current length of the window is greater than the pattern length, it's time to start shrinking the window.
+     1. IF the character at the the left pointer is in the map and it's count is higher than zero, decrease the count of correct characters within the pattern, by one.
+     2. Either way, increment the count for that character in the map by one.
+     3. Increment the l pointer by one (shrinking the window).
+     4. Decrement the current length by one (because the window shrunk).
+  4. Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string, and the sub-string is the same length as the pattern, we found a match, and can therefore return true.
+  5. If we get to the end of the for loop and no match has been found, we return false.
+<br>
+
+- **Big O:**
+  - Time: `O(n + m)`, once over the pattern string to add it to the object, and once to find a permutation.
+  - Space: `O(m)`
+
+- **Code:**
+
+```js
+// No comments
+const find_permutation = function(str, pat) {
+
+  let pCount = 0, l = 0;
+  let pMap = createPatMap(pat);
+
+  for(let r = 0; r < str.length; r++){
+
+    if(str[r] in pMap){
+      if(pMap[str[r]] > 0) pCount++;
+      pMap[str[r]]--;      
+    }
+
+    let curLen = r - l + 1;
+
+    if(curLen > pat.length){
+      if(str[l] in pMap){
+        if(pMap[str[l]] >= 0) pCount--;
+        pMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
+
+    if(curLen === pat.length && curLen === pCount) return true;
+  }
+
+  return false;
+};
+
+
+function createPatMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+
+// Comments
+const find_permutation = function(str, pat) {
+
+  // Create a counter variable to count the chars that match the pattern chars within the window.
+  // Create a pointer for the left side of the side window.
+  let pCount = 0, l = 0;
+
+  // Create a map that represents the pattern permutations.
+  let pMap = createPatMap(pat);
+
+  // Iterate over the string tracking the right side of the sliding window.
+  for(let r = 0; r < str.length; r++){
+
+    // If the character at the right pointer exists in the pMap
+    if(str[r] in pMap){
+
+      // If the count at that char in the pMap is greater than zero, increment the pCount.
+      if(pMap[str[r]] > 0) pCount++;
+
+      // decrement the count at the character in the pMap
+      pMap[str[r]]--;      
+    }
+
+    // Find the current length, for readability
+    let curLen = r - l + 1;
+
+    // If the current length is greater than the length of the pattern
+    if(curLen > pat.length){
+
+      // If the char at the left pointer is in the map of chars 
+      if(str[l] in pMap){
+
+        // If the count at that char is greater than 0, decrement the pCount.
+        if(pMap[str[l]] >= 0) pCount--;
+
+        // Increment the count at that character in the pMap
+        pMap[str[l]]++;
+      }
+
+      // Increment the left pointer 
+      l++;
+
+      // Decrement the length now that the left pointer of the window has been incremented.
+      curLen--;
+    }
+
+    // If the current length is equal to the pattern length and
+    // the current length is equal to the pCount then we have a match.
+    if(curLen === pat.length && curLen === pCount) return true;
+  }
+
+  // If we haven't found the match, return false
+  return false;
+};
+
+
+
+// Make a map out of string, counting each characters occurance. 
+function createPatMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
+  }
+  return map;
+}
+```
+
+
+
+<hr>
+
+### String Anagrams (Medium)
+
+- **Prompt:** Given a string and a pattern, find all anagrams of the pattern in the given string. Write a function to return a list of starting indices of the anagrams of the pattern in the given string.
+<br>
+
+- **Example:**
+
+```js
+Input: String="abbcabc", Pattern="abc"
+Output: [2, 3, 4]
+Explanation: The three anagrams of the pattern in the given string are "bca", "cab", and "abc".
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* Two pointers, pointing to the left and right side of the sliding window.
+  - *Movement:* The right pointer will move one character at a time through the string, the left will follow the right once the window is one larger than the input pattern.
+  - *Variables:* One number to keep track of the correct characters within the sub-string. One object to hold the count of the numbers within the sub-string.
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+    - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+    - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we have found a match.**
+<br>
+
+- **Basic Pattern:**
+  - We are counting the correct characters within the sub-string, adding from the r pointer and subtracting from the l pointer as we go.
+  - If a new correct char is added in the sub-string window the count will grow, if one leaves it will shrink.
+  - If the count of correct characters is equal to the length of the sub-string and the sub-string is the same length as the pattern, we add the left pointer (the start of the anagram) to the results array.
+ <br>
+
+- **Algorithm:**
+  1. Make a map of the pattern.
+  2. IF the character at the the right pointer is in the map and it's count is higher than zero, increase the count of correct characters within the pattern, by one.
+     1. Either way, decrement the count for that character in the map by one (this count can go negative).
+  3. IF the current length of the window is greater than the pattern length, it's time to start shrinking the window.
+     1. IF the character at the the left pointer is in the map and it's count is higher than zero, decrease the count of correct characters within the pattern, by one.
+     2. Either way, increment the count for that character in the map by one.
+     3. Increment the l pointer by one (shrinking the window).
+     4. Decrement the current length by one (because the window shrunk).
+  4. Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string, and the sub-string is the same length as the pattern, we found an anagram, and can therefore add the left pointer to the return array, as it is the starting index of a valid anagram.
+  5. When we finish the for loop we return the return array.
 <br>
 
 - **Big O:**
   - Time: `O(n + m)`
-  - Space: `O(1)`
+  - Space: `(1)`
 
 - **Code:**
 
 ```js
 // No comments
-const backspace_compare = function(str1, str2) {
+const find_string_anagrams = function(str, pat) {
+  let returnArr = [],
+      charMap = {},
+      l = 0,
+      numCorrectChars = 0; 
 
-  let idx1 = str1.length;
-  let idx2 = str2.length;
+  charMap = buildCharMap(pat);
 
-  while(idx1 >= 0 && idx2 >= 0){
-    let vIdx1 = validIndex(str1, idx1);
-    let vIdx2 = validIndex(str2, idx2);
+  for(let r = 0; r < str.length; r++){
+    
+    if(str[r] in charMap){
+      if(charMap[str[r]] > 0) numCorrectChars++;
+      charMap[str[r]]--;
+    }
 
-    if(vIdx1 === null || vIdx2 === null) return false;
-    if(str1[vIdx1] !== str2[vIdx2]) return false;
-    if(vIdx1 === 0 && vIdx2 === 0) return true;
+    let curLen = r - l + 1; 
 
-    idx1 = --vIdx1;
-    idx2 = --vIdx2;
+    if(curLen > pat.length){
+      if(str[l] in charMap){
+        if(charMap[str[l]] >= 0) numCorrectChars--; // Got hung up right here missed the =
+        charMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
+
+    if(curLen === pat.length && curLen === numCorrectChars) returnArr.push(l);
   }
-}
+  return returnArr;
+};
 
-function validIndex(str, i){
-  let valid = i;
 
-  while(str[i] === '#'){
-    valid-=2;
-    i--;
+function buildCharMap(str){
+  let map = {};
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
   }
-
-  return i < 0 ?  null : valid;
+  return map;
 }
 
 // Comments
-const backspace_compare = function(str1, str2) {
+const find_string_anagrams = function(str, pat) {
 
-  // Current index for evaluation
-  let idx1 = str1.length;
-  let idx2 = str2.length;
 
-  while(idx1 >= 0 && idx2 >= 0){
+  let returnArr = [], // Will hold the starting indices of each anagram to return at the end of the function.
+      charMap = {}, // Will hold the character count of the pattern string.
+      l = 0, // pointer for the left side of the sliding window.
+      numCorrectChars = 0; // Count the number of correct characters currently within the window.
 
-    // valid index after backspaces
-    let vIdx1 = validIndex(str1, idx1);
-    let vIdx2 = validIndex(str2, idx2);
+  charMap = buildCharMap(pat); // Build the charMap
 
-    // If null, we have backspaced out of the string
-    if(vIdx1 === null || vIdx2 === null) return false;
+  for(let r = 0; r < str.length; r++){
+    
+    // Here we are acting on the character at the right pointer.
+    // If it a character in our map,
+    // We will check to see if the count at that character is greater than 0, if so, 
+    // the variable that holds number of correct characters currently in the sub-string will be increased by one.
+    // Either way, we will decrement the count at that character in the map by one.
+    if(str[r] in charMap){
+      if(charMap[str[r]] > 0) numCorrectChars++;
+      charMap[str[r]]--;
+    }
 
-    // If the values at each valid index don't match, our strings don't match
-    if(str1[vIdx1] !== str2[vIdx2]) return false;
+    let curLen = r - l + 1; // Current length of sub-string, for readability
 
-    // If we have reached the last indices at the same time and our values match, return true
-    if(vIdx1 === 0 && vIdx2 === 0) return true;
+    // If we have reached the point where the current length of the sub-string is greater than the length of the pattern,
+    // we need to shrink it to keep the length of the sub-string the same at the pattern.
+    // If the character at the left pointer is in the map, 
+    // if that characters count within the map is greater than or equal to zero, we will decrease the number of correct characters within the sub-string by one.
+    // This is because when we add one back to the count after this line, there will be one character remaining that is NOT within our sub-string.
+    // After that we will increase the count at this character within our map. 
+    // we will then increment the left pointer and then decrement the length of the sub-string as we have just shrunk it by one by moving the left pointer.
+    if(curLen > pat.length){
+      if(str[l] in charMap){
+        if(charMap[str[l]] >= 0) numCorrectChars--; // Got hung up right here missed the =
+        charMap[str[l]]++;
+      }
+      l++;
+      curLen--;
+    }
 
-    // If we reach here we have a valid string so far, continue to verify at next unknown index
-    idx1 = --vIdx1;
-    idx2 = --vIdx2;
+    // Once we have moved the window forward and made out changes, if the count of correct characters is the same as the length of the sub-string,
+    // and the sub-string is the same length as the pattern, we found a match, and can therefore push the starting index of the anagram (l) to our return array.
+    if(curLen === pat.length && curLen === numCorrectChars) returnArr.push(l);
   }
-}
 
-function validIndex(str, i){
-  let valid = i; // track the next valid index;
+  // Once the loop is finished we will return our array holding the indices of all anagrams.
+  return returnArr;
+};
 
-  // For each backspace the next potentially valid index grows by two ( one for the #, one for the deleted valid char)
-  while(str[i] === '#'){
-    valid-=2;
-    i--;
+
+function buildCharMap(str){
+  let map = {};
+  // Add character to map or increment that char if it exists in the map already.
+  for(char of str){
+    map[char] = map[char] + 1 || 1;
   }
-
-  // If we have reached the beginning of our string we have nothing left to skip over
-  return i < 0 ?  null : valid;
+  return map;
 }
-
 ```
+
+
 
 <hr>
 
-### Minimum Window Sort (medium)
+### Words Concatenation (hard)
 
-- **Prompt:** Given an array, find the length of the smallest subarray in it which when sorted will sort the whole array.
+- **Prompt:** Given a string and a list of words, *find all the starting indices of substrings in the given string that are a concatenation of all the given words exactly once without any overlapping of words*. **It is given that all words are of the same length.**
+
+
 <br>
 
 - **Example:**
 
 ```js
-Input: [1, 3, 2, 0, -1, 7, 10]
-Output: 5
-Explanation: We need to sort only the subarray [1, 3, 2, 0, -1] to make the whole array sorted
+Input: String="catcatfoxfox", Words=["cat", "fox"]
+Output: [3]
+Explanation: The only substring containing both the words is "catfox".
 ```
-
 <br>
 
 - **Comments:**
-  - *Pointers:* Four, two starting at the beginning and end of the input array, two to mark the start and end of the unsorted sub-array.
-  - *Variables* Two, one to hold the largest value seen by the lPtr, and one to hold the smallest value seen by the rPtr
-  - *Movement:* The lPtr will work right and the rPtr will work left, they will **NOT** stop until they reach the other side, they will cross each other.
-  - Instead of searching for the first instance of an unsorted value in the array, you need to search for the last, so, you start from the beginning looking for the end and start at the end looking for the beginning.
-  - This is one of those problems where you really must understand and think deeply about the properties of the data structure you are working with and the conditions put upon it (sorted in this case).
-    - E.g. A value in a sorted array will always be greater or equal to the value that came before it.
-  - Another important trick is the use of + and - Infinity, allowing for the variables to effectively not be set yet still perform properly in a comparison the first time around.
+  - *Pointers:* Two, one to track the starting index and one to track the variables in the sub-string to make the second word map.
+  - *Movement:* Both pointers will move left to right, the sub-string pointer will restart at the starting index pointer each iteration.
+  - *Variables:* This problem requires TWO maps, one make that tracks the frequency of the words in the array, and one that holds the words of the current sub-string and how often they appear.
+  - Once the two maps are create they are compared against each other to determine if they hold the same words and at the same frequencies.
 <br>
 
 - **Basic Pattern:**
-  1. Move lPtr right and rPtr left, lPtr looking for values not in ascending order, and the rPtr looking for values not in descending order.
-  2. Assign an e and start pointer respectively every time an unsorted value is found.
-  3. return end minus start plus one after each index is evaluated once.
+  1. Build frequency map of words in the words array.
+  2. Run check on each index to see if that index is the beginning of a word concatenation.
+  3. Push the starting indices that return true to the results array.
  <br>
 
 - **Algorithm:**
-  1. Create an lPtr and rPtr to evaluate the indices in ascending and descending order.
-  2. Create a start and end pointer to point to the beginning and end of the unsorted section, set end to -1.
-  3. Create a min variable set to Infinity and a max variable set to -Infinity.
-  4. Loop over each index in the array once.
-     1. If the value at the lPtr is greater than the max, set max to that value, if not set the end pointer to be equal to the lPtr (found unsorted value).
-     2. If the value at the rPtr is less than the min, set min to that value, if not set the start pointer to be equal to the rPtr (found unsorted value).
-     3. Increment lPtr, decrement rPtr.
-  5. Return the end pointer minus the start pointer, add one to the difference to find the length.
+  1. Build frequency map of words in the words array.
+  2. Run check on each index to see if that index is the beginning of a word concatenation.
+     1. Start by building a word map out of the characters between the current index and the concatenated string length
+     2. Make words out of each set of characters that are of length wordLen and add them to the map
+        1. If that word isn't in the frequency map, return false
+     3. Iterate over the words in the frequency map to verify that the current word is in the newly mad map, and that it exists the same number of times.
+        1. If not return false.
+     4. If you react the end of that loop, your current sub-string is a valid concatenation of all of the words.
+  3. If check returns true, push the starting index to the results array.
 <br>
 
 - **Big O:**
-  - Time: `O(n)`
-  - Space: `O(1)`
+  - Time: `O(n * m * ccLen)`
+  - Space: `O(m)`
 
 - **Code:**
 
 ```js
-// No Comments
-var findUnsortedSubarray = function(arr) {
+// No comments
+var findSubstring = function(str, words) {
+  let fMap = {}, 
+      wordLen = words[0].length,
+      concatLen = wordLen * words.length,
+      resArr = [];
 
-    let lPtr = 0, rPtr = arr.length-1;
-    let start = 0,  end = -1;
-    let min = Infinity, max = -Infinity;
-
-    while(lPtr < arr.length){
-
-        arr[lPtr] >= max ? max = arr[lPtr] : end = lPtr;
-        arr[rPtr] <= min ? min = arr[rPtr] : start = rPtr;
-
-        lPtr++;
-        rPtr--;
-    }
-
-    return end - start + 1;
-};
-
-//Comments
-
-var findUnsortedSubarray = function(arr) {
-    // Create pointers at each end of the array
-    let lPtr = 0, rPtr = arr.length-1;
-
-    // Create pointers that will point to the beginning and end of the unsorted portion of the array
-    // End is set to -1, this will only come into play when the array is sorted and therefore the 
-    // length of the array is zero. Because of the way the return is set up with a +1, it will balance out to 0.
-    let start = 0,  end = -1;
-
-    // Create a min and max variable, 
-    // min will track the lowest value the rPtr has seen on it's way down the array.
-    // max will track the highest value the lPtr has seen on it's way up the array.
-    // We start the variables as +/- Infinity to maintain the pattern in the loop
-    // No matter what the first value for each, it will be larger or smaller respectively.
-     let min = Infinity, max = -Infinity;
-
-    // Create a while loop that will run until the left or right pointer (pick one, they will move at the same rate) 
-    // reaches the opposite side. This could be done as a for loop as well, but it helps to 
-    // illustrate what is going on when it is a while loop imo.
-    while(lPtr < arr.length){
-
-        // What we need to do is find the last time in the array that a value is out of order,
-        // Working up from the beginning for the end point, and 
-        // Working down from the end for the start point
-
-        // In a sorted array, as you iterate l to r (like the lPtr), 
-        // you should expect to continually find the next number to be equal to or greater than the last
-        // If this is the case set the max variable to that number.
-        // If you find a number that is less than the largest number you have seen, it means you have found 
-        // a number that is out of order.
-        // Each time you find an out of order number, set the end pointer to that index, as you continue
-        // If the numbers keeps increasing until the end, that portion of the array is sorted, therefore the
-        // last time you set the end pointer it will point to the end of the unsorted portion of the array.
-        arr[lPtr] >= max ? 
-            max = arr[lPtr] : 
-            end = lPtr;
-
-        // The rPtr does the exact opposite of the lPtr. It moves from the end of the array in descending order
-        // looking for values in the array that are out of order given that each value in a sorted array should be 
-        // less than the one previous. Each time we find one of these out of order values, 
-        // we will set the start pointer to be the current rPtr value. The last time we set this value will be the 
-        // start of the unsorted portion of the array. 
-        arr[rPtr] <= min ? 
-            min = arr[rPtr] : 
-            start = rPtr;
-
-
-        // For each time through the loop we will increment and decrement
-        // the lPtr and the rPtr, working them from one end of the array to the other.
-        lPtr++;
-        rPtr--;
-    }
-
-    // When we reach the end we will have the end and the start of the unsorted portion of the array
-    // but the problem wants to know the length of that sub portion, because arrays are zero indexed we need to add one 
-    // after we subtract the end value from the start to geth the length. 
-    // As mentioned above, if the array is fully sorted or empty, we want to return 0, as that is the length of the 
-    // unsorted portion of the array, in both of those cases end and start will not have been updated 
-    // You would expect for both end and start to be zero in this case, however, because we have to adjust 
-    // to find the length of the sub-array, we start the end at -1 to counter this and return zero
-    return end - start + 1;
-};
- ```
-
-- **Alternative:**
-
-```js
-var findUnsortedSubarray = function (arr) {
-
-  let start = null; 
-  let end = null;
-
-  let lPtr = 0;
-  let hPtr = arr.length - 1;
-
-  while(lPtr < hPtr){
-
-    for(let i = lPtr; i <= hPtr; i++){
-      if(start === null && arr[i] < arr[lPtr]){
-        start = lPtr;
-      }
-      if(end === null && arr[i] > arr[hPtr]){
-        end = hPtr;
-      } 
-    }
-
-    if(start !== null && end !== null) return end - start + 1; 
-    if(start === null) lPtr++;
-    if(end === null) hPtr--;
+  for(let word of words){               // O(m)
+    fMap[word] = fMap[word] + 1 || 1;
   }
 
-  return arr[0] > arr[arr.length-1] ? arr.length : 0;
+  for(let i = 0; i < str.length - concatLen + 1; i++){             // O(n)
+    if( check(i, str, fMap, wordLen, concatLen) ) resArr.push(i);
+  }
+
+  return resArr;
 };
+
+
+function check(idx, str, fMap, wLen, ccLen){
+  let wordMap = {},
+      tempWord = "";
+
+  for(let i = idx; i < idx + ccLen; i++){   // O(ccLen)
+    tempWord += str[i];
+
+    if(tempWord.length === wLen){
+      if(!(tempWord in fMap)) return false;
+      wordMap[tempWord] = wordMap[tempWord] + 1 || 1;
+      tempWord = "";
+    }
+  }
+
+  for(let word in fMap){                            //O(m)
+    if(fMap[word] !== wordMap[word]) return false;
+  }
+  
+  return true;
+}
+
+
+// Comments
+var findSubstring = function(str, words) {
+  let fMap = {}, // Map to hold the frequency of the words in our array
+      wordLen = words[0].length,
+      concatLen = wordLen * words.length,
+      resArr = []; // Array to hold the indices of the correct sub-strings.
+
+  // Built frequency map of words in the words array
+  for(let word of words){
+    fMap[word] = fMap[word] + 1 || 1;
+  }
+
+  // Run check on each index to see if that index is the beginning of a word concatenation.
+  // Push the starting indices that return true to the results array.
+  for(let i = 0; i < str.length - concatLen + 1; i++){
+    if( check(i, str, fMap, wordLen, concatLen) ) resArr.push(i);
+  }
+
+  // Return the results array.
+  return resArr;
+};
+
+
+function check(idx, str, fMap, wLen, ccLen){
+  let wordMap = {},
+      tempWord = "";
+
+  // Build up our wordMap
+  for(let i = idx; i < idx + ccLen; i++){
+
+    // Build up a word
+    tempWord += str[i];
+
+    // Once we have a temp word that is the same length as the words in the given array.
+    if(tempWord.length === wLen){
+      
+      // First check to see if exists in our frequency map, if not return false.
+      if(!(tempWord in fMap)) return false;
+
+      // If so add its count to our new wordMap;
+      wordMap[tempWord] = wordMap[tempWord] + 1 || 1;
+
+
+      // reset the tempWord so we can use it again.
+      tempWord = "";
+    }
+  }
+
+  // Check to see that the value of every word in our frequency map is equal to that word in our word map.
+  for(let word in fMap){
+    if(fMap[word] !== wordMap[word]) return false;
+  }
+  
+  // If we get this far we have found a sub-string that is a concatenation of our words array.
+  return true;
+}
+
 ```
