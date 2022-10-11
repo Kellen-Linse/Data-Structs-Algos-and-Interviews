@@ -18,6 +18,8 @@
       - "Ok, I've expanded until I've met my condition, can I now contract and still meet that condition?"
 <hr>
 
+- **Hash maps are often used in conjuction with sliding window problems. They are often used as frequency problems, and on harder problems you may even need to make use of more than one.**
+
 - Some common terms you may see:
   - "Overlapping sub-arrays" or "contiguous sub-arrays"
 <hr>
@@ -31,3 +33,18 @@
 - Don't use too large of an example when trying to work through your code, it will cause you to slow down really fast.
   - but also make sure your example is dynamic enough to cover most cases.
 
+<hr>
+
+## Side Notes:
+
+- **Remeber the `in` operator can be used to check for the existance of a key in an object.**
+  - Ex:
+
+```js
+const someObject = {
+  isAnObject: true, 
+}
+
+if(isAnObjectProperty in someObject){ console.log('yep') }; // Will console.log 'yep'
+if(someOtherProperty in someObject){ console.log('yep') }; // Will NOT console.log 'yep'
+```
