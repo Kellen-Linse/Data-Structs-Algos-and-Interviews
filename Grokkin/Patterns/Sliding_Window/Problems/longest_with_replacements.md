@@ -1,6 +1,8 @@
 # Longest Substring with Same Letters after Replacement (hard)
 
 - **Prompt:** Given a **string with lowercase letters only**, if **you are allowed to replace no more than k letters with any letter**, *find the length of the longest substring having the same letters after replacement.*
+
+
 <br>
 
 - **Example:**
@@ -10,6 +12,8 @@ Input: String="aabccbb", k=2
 Output: 5
 Explanation: Replace the two 'c' with 'b' to have the longest repeating substring "bbbbb".
 ```
+
+
 <br>
 
 - **Big O:**
@@ -114,11 +118,3 @@ const length_of_longest_substring = function(str, k){
         2. Increment the left pointer.
      4. Set the maxLength if a new one has been found.
   5. return the max length of the sub-string.
-
-
- <br>
-
-- **Algorithm:**
-  1. See Commented Code ->>
-<br>
-

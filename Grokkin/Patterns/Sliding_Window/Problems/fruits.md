@@ -2,6 +2,8 @@
 
 - **Note:** This question is essentially the 'Longest Substring with maximum K Distinct Characters' question with a 'realistic' scenario applied to it.
 
+<br>
+
 - **Prompt:**
 
 ``` 

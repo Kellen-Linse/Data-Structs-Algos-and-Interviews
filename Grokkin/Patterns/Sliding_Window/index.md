@@ -11,3 +11,7 @@
 5. [Longest Substring with Distinct Characters (medium)](Problems/longest_sub_with_dist_chars.md)
 6. [Longest Substring with Same Letters after Replacement (hard)](./Problems/longest_with_replacements.md)
 7. [Longest Subarray with Ones after Replacement (medium)](./Problems/Longest_with_ones.md)
+8. [Permutation in a String (medium)](./Problems/perms_in_string.md)
+9. [String Anagrams (Medium)](Problems/string_anagrams.md)
+10. [Smallest Window containing Substring (hard)](./Problems/smallest_containing_sub.md)
+11. [Words Concatenation (hard)](./Problems/word_concat.md)

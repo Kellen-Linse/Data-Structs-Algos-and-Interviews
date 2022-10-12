@@ -2,6 +2,7 @@
 
 - **Prompt:** Given an **array of positive integers** and a number ‘S,’ find the **length** of the **smallest contiguous subarray** whose *sum is greater than or equal to ‘S’*. 
   - Return 0 if no such subarray exists.
+
 <br>
 
 - **Example:**
@@ -92,6 +93,7 @@ const smallest_subarray_sum = function(s, arr) {
   - *Movement:* The R pointer will move to the left by one each iteration, adding the values at each index to a variable (curSum), then, once the curSum greater than the target (s) is reached, the window will shrink while the curSum is greater than the target, moving the L pointer towards the R pointer, and subtracting the value at L at each iteration.
   - *Variables:* Two, one to track the current sum (curSum) in the window, one to track the smallest length (smLen) of the sub-array where the sum is gt or et the target.
   - This same technique can be used in problems where you must find the largest or smallest sub-array given some condition.
+
 <br>
 
 - **Basic Pattern:**
@@ -104,7 +106,8 @@ const smallest_subarray_sum = function(s, arr) {
      3. subtract the value at the L pointer from the current sum
      4. increment the L pointer
   5. return the smallest length
- <br>
+
+<br>
 
 - **Algorithm:**
   1. Create variables to track the smallest length of array that meets the condition, the current sum of the values within the window, and one to point to the L of the array.
@@ -116,5 +119,4 @@ const smallest_subarray_sum = function(s, arr) {
      2. Subtract the value at the L index from the current sum.
      3. increment the L pointer.
   5. Finally, we return the smallest known length, if no length is found return 0.
-<br>
 

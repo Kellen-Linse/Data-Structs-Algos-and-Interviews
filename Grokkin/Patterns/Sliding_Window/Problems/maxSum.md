@@ -1,6 +1,7 @@
 # Maximum Sum Subarray of Size K (easy)
 
 - **Prompt:** Given an *array of positive numbers* and a *positive number: **k***, find the maximum sum of any contiguous subarray of size ‘k’.
+
 <br>
 
 - **Example:**
@@ -10,6 +11,7 @@ Input: [2, 1, 5, 1, 3, 2], k=3
 Output: 9
 Explanation: Subarray with maximum sum is [5, 1, 3].
 ```
+
 <br>
 
 - **Brute Force:** A basic brute force solution will be to calculate the sum of all ‘k’ sized subarrays of the given array to find the subarray with the highest sum.
@@ -109,5 +111,5 @@ const max_sub_array_of_size_k = function(k, arr) {
         2. increment the end variable.
         3. if the value of the current sum is greater than the max sum, set the max sum to equal the current sum.
   4. return the max sum variable.
-<br>
+
 

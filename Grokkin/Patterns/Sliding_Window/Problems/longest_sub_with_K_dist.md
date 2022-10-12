@@ -1,6 +1,7 @@
 # Longest Substring with maximum K Distinct Characters (medium)
 
 - **Prompt:** Given a **string**, find the **length of the longest substring** in it with *no more than K distinct characters*.
+
 <br>
 
 - **Example:**
@@ -15,6 +16,8 @@ Explanation: The longest substring with no more than '2' distinct characters is 
 - **Big O:**
   - Time: `O(n)`, technically O(2n)
   - Space: `O(K)`, we will be storing a maximum of `K+1` characters
+
+<br>
 
 - **Code:**
 
@@ -95,6 +98,7 @@ const longest_substring_with_k_distinct = function(str, k) {
   - *Pointers:* Two, one to point to the right side (R) of the sliding window and one to point to the left side (L) of the sliding window
   - *Movement:* The R pointer will move forward one index at a time through each iteration of the for loop and the L pointer will contract the window moving towards the R pointer while the number of distinct chars is more than k, subtracting the char at L from the char map and checking the count of distinct chars on each iteration.
   - *Variables:* Three, a hashmap to track the characters,a distChars var to count the number of distinct characters, and a maxLen var to track the largest window of distinct characters.
+
 <br>
 
 - **Basic Pattern:**
@@ -102,6 +106,7 @@ const longest_substring_with_k_distinct = function(str, k) {
   2. Expand the window by one each loop and contract the sliding window depending on the relation between the input 'k' and the number of distinct chars in the window.
   3. When a larger window is found that contains distinct chars, set the maxLen var to the length of that window.
   4. return the maximum length found.
+
  <br>
 
 - **Algorithm:**
@@ -120,6 +125,5 @@ const longest_substring_with_k_distinct = function(str, k) {
         3. Increment the L pointer by one.
         4. If the length of the current sub-window is larger than the largest known window, make that length the max.
   4. If max length is never updated due to an empty string or some other edge case, return 0, else return the maximum length found.
-   
-<br>
+
 

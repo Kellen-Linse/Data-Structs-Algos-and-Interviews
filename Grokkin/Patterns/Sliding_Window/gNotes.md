@@ -48,3 +48,21 @@ const someObject = {
 if(isAnObjectProperty in someObject){ console.log('yep') }; // Will console.log 'yep'
 if(someOtherProperty in someObject){ console.log('yep') }; // Will NOT console.log 'yep'
 ```
+
+<br>
+
+- Function hoisting works within within function definitions
+  - Not sure it's a good idea... just fyi
+  - Ex:
+
+```js
+const test = function(){
+    printName("Mya");
+
+    function printName(str){
+        console.log(str);
+    }
+}
+
+test(); // logs "Mya" to the console.
+```

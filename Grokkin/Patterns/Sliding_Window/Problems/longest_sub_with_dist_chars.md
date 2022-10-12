@@ -1,6 +1,8 @@
 # Longest Substring with Distinct Characters (medium)
 
 - **Prompt:** Given a **string**, find the **length of the longest substring**, which has **all distinct characters**.
+
+
 <br>
 
 - **Example:**
@@ -114,6 +116,7 @@ const non_repeat_substring = function(str) {
   - *Movement:* The R pointer will iterate one index at a time, from left to right, when R encounters a repeated value, the L pointer will jump to the the index of the repeated value plus one.
   - *Variables:* Two, one to hold the length of the longest distinct char sub-string seen so far, and one Map object to track in a char has been seen and if it has the last index at which it was seen.
   - The trick with getting the algo down to O(n) time as opposed to O(2n) is to store the char in the char map and set it's value to be the last index it was seen at, and to jump the L pointer forward to one plus the last time the repeated value was seen.
+
 <br>
 
 - **Basic Pattern:**
@@ -122,7 +125,8 @@ const non_repeat_substring = function(str) {
   3. The value at that char in the charMap will be set to the current R index.
   4. Set max length to whatever is greater, the current window or the current max.
   5. return the max length.
- <br>
+
+<br>
 
 - **Algorithm:**
   1. Create a variable to track the max length of a distinct sub-string.
@@ -134,4 +138,3 @@ const non_repeat_substring = function(str) {
      2. Set a key in the map with the key being the character in the string at the R pointer, and the value being the current R index.
      3. Set the maxLen var to be the greater of itself -or- R - L + 1.
   5. Return the maxLen variable.
-<br>
