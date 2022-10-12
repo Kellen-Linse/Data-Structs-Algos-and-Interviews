@@ -1,15 +1,28 @@
 
+# Problem Name (Difficulty)
 
-<hr>
-
-### Problem Name (Difficulty)
-
-- **Prompt:** 
+> **Prompt:** 
 <br>
 
 - **Example:**
 
 ```js
+
+```
+
+<br>
+
+- **Big O:**
+  - Time: ``
+  - Space: ``
+
+- **Code:**
+
+```js
+// No comments
+
+
+// Comments
 
 ```
 <br>
@@ -27,19 +40,5 @@
 
 - **Algorithm:**
   1.
-<br>
 
-- **Big O:**
-  - Time: ``
-  - Space: ``
-
-- **Code:**
-
-```js
-// No comments
-
-
-// Comments
-
-```
 
