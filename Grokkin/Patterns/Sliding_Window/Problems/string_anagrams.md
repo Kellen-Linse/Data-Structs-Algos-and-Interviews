@@ -1,7 +1,7 @@
 # String Anagrams (Medium)
 
-- **Prompt:** Given a **string and a pattern**, *find all anagrams of the pattern in the given string*. 
-  - Write a function to **return a list of starting indices** of the *anagrams of the pattern in the given string*.
+> **Prompt:** Given a **string and a pattern**, *find all anagrams of the pattern in the given string*. 
+>  - Write a function to **return a list of starting indices** of the *anagrams of the pattern in the given string*.
 
 <br>
 

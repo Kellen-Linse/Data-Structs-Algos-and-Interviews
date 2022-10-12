@@ -1,6 +1,6 @@
 # Longest Substring with Distinct Characters (medium)
 
-- **Prompt:** Given a **string**, find the **length of the longest substring**, which has **all distinct characters**.
+> **Prompt:** Given a **string**, find the **length of the longest substring**, which has **all distinct characters**.
 
 
 <br>

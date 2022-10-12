@@ -1,6 +1,6 @@
 # Permutation in a String (medium)
 
-- **Prompt:** Given a **string and a pattern,** find out if the string contains any **permutation** of the pattern.
+> **Prompt:** Given a **string and a pattern,** find out if the string contains any **permutation** of the pattern.
 
 <br>
 

@@ -1,7 +1,7 @@
 # Smallest Subarray With a Greater Sum (easy)
 
-- **Prompt:** Given an **array of positive integers** and a number ‘S,’ find the **length** of the **smallest contiguous subarray** whose *sum is greater than or equal to ‘S’*. 
-  - Return 0 if no such subarray exists.
+> **Prompt:** Given an **array of positive integers** and a number ‘S,’ find the **length** of the **smallest contiguous subarray** whose *sum is greater than or equal to ‘S’*. 
+>  - **Return 0 if no such subarray exists.**
 
 <br>
 
