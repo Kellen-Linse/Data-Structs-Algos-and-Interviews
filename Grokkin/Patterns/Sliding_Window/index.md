@@ -8,4 +8,6 @@
 2. [Smallest Subarray With a Greater Sum (easy)](./Problems/Smallest_Sub.md)
 3. [Longest Substring with maximum K Distinct Characters (medium)](./Problems/longest_sub_with_K_dist.md)
 4. [Fruits into Baskets (medium)](Problems/fruits.md)
-5. []
+5. [Longest Substring with Distinct Characters (medium)](Problems/longest_sub_with_dist_chars.md)
+6. [Longest Substring with Same Letters after Replacement (hard)](./Problems/longest_with_replacements.md)
+7. [Longest Subarray with Ones after Replacement (medium)](./Problems/Longest_with_ones.md)
