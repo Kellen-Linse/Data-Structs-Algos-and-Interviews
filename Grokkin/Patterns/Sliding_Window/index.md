@@ -1,4 +1,4 @@
-# Sliding Window
+# Sliding Window Technique
 
 ## [General Notes](./gNotes.md)
 
