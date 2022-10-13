@@ -5,4 +5,4 @@
 ## Contents
 
 2. [**Pattern:** Sliding Window](./Patterns/Sliding_Window/index.md)
-3. [**Pattern:** Two Pointers](Patterns/Two_Pointers/notes.md)
+3. [**Pattern:** Two Pointers](Patterns/Two_Pointers/index.md)
