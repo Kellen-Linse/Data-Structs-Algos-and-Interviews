@@ -75,8 +75,10 @@ const pair_with_targetsum = function(arr, targetSum) {
 ```
 
 - **Comments:**
+  - This is a **Two Pointer** only problem.
   - *Pointers:* Two, one starts at the beginning and the other at the end of the array.
   - *Movement:* pointers work their way in towards each other.
+  - *Variables:* No extra variables outside of pointers.
   - This is a good example of a problem that **must** use a while loop.
 
 <br>
