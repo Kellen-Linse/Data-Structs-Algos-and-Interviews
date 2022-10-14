@@ -11,3 +11,6 @@
 5. [Triplet Sum Close to Target (medium)](Problems/trips_to_target.md)
 6. [Triplets with Smaller Sum (medium)](Problems/trips_w_smaller.md)
 7. [Dutch National Flag Problem (medium)](Problems/dutch_flag.md)
+8. [Quadruple Sum to Target (medium)](Problems/quads_to_target.md)
+9. [Comparing Strings containing Backspaces (medium)](./Problems/strings_with_backspaces.md)
+10. [Minimum Window Sort (medium)](./Problems/min_window_sort.md)
