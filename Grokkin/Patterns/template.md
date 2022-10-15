@@ -2,6 +2,7 @@
 # Problem Name (Difficulty)
 
 > **Prompt:** 
+
 <br>
 
 - **Example:**
@@ -31,12 +32,14 @@
   - *Pointers:* 
   - *Movement:* 
   - *Variables:*
-  - 
+
+
 <br>
 
 - **Basic Pattern:**
-  1.
- <br>
+  1. 
+
+<br>
 
 - **Algorithm:**
   1.
