@@ -1,5 +1,5 @@
 # Fast and Slow Pointers
-
+-Delete
 <hr>
 
 ## General Notes
