@@ -46,15 +46,18 @@ class SinglyLinkedList{
   }
 
   // Adds a new node to the list (append)
-  // O(1)
-  push(val){
+  push(val){ // O(1)
+
+  //Create a new node using the given value
     let newNode = new Node(val);
 
+    // If the list is empty
     if(!this.head){
       // In JS objects are passed by reference, so each the tail and the head are pointing to the same node object.
       this.head = newNode;
       this.tail = newNode;
-    } else {
+    } 
+    else {
       this.tail.next = newNode; // Set the current nodes next property to point to the new node
       this.tail = newNode;      // Set the tail property of the linked list to be the new node
     }
@@ -83,11 +86,14 @@ let list = new SinglyLinkedList();
   - Else, set the next property on the tail to be the new node and the tail property on the list to be the newly created node.
 - Increment the count by one.
 
-## 112-113: Popping and Solution:
+## 112-113: Popping:
 
 - **Popping:** removing a node from the end of a linked list.
 <br>
+
 > To update the tail we have to start at the beginning and go through the entire list and find the second to last item in the list and make that the new tail. 
+
+<br>
 
 ### Traversing a Linked List:
 
