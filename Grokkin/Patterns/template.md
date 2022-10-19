@@ -1,5 +1,5 @@
 
-# Problem Name (Difficulty)
+### Problem Name (Difficulty)
 
 > **Prompt:** 
 

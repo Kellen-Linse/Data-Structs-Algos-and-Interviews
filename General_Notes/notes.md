@@ -41,3 +41,8 @@
     - `[[-1, 3, -4, 0, 2].sort((a, b) => a - b)` will return `[-4, -1, 0, 2, 3]`
 
 - Break problems down into their sub-parts. What variables will you need? What logic? What pointers? etc...
+
+10/18/22
+
+- Difference between Objects, Maps, and Sets in JS
+  - https://osgoodgunawan.medium.com/map-vs-set-vs-object-in-javascript-7345b455afcd#:~:text=The%20difference%20between%20Map%20and%20Set,the%20keys%20to%20the%20value.
