@@ -10,16 +10,16 @@
 
 4/18/22
 
-- One of the things you are judged on in a coding interview is how well you can ask clarifying questions. So don't hesitate to ask if you need something clarified. 
+- One of the things you are judged on in a coding interview is how well you can ask clarifying questions. So don't hesitate to ask if you need something clarified.
 
 4/19/22
 
 - **If you are solving an algorithm that has to do with comparing two arrays that contain the same amount of values, be sure to start by checking to see if they are the same length!**
 
-4/20/22 
+4/20/22
 
 - Don't confuse Big O of 2n and Big O of n^2, they are very different things. 2 passes of n vs 2 passes for each in n
-- When considering solutions for a problem, start at the best time complexity, then work backwards until you find a solution, then try to apply that solution to see if you can find a better solution. 
+- When considering solutions for a problem, start at the best time complexity, then work backwards until you find a solution, then try to apply that solution to see if you can find a better solution.
 
 5/22/22
 
@@ -36,7 +36,8 @@
 9/25/22
 
 - **ALWAYS ALWAYS use a comparison function with Array.sort() it will return some screwy answers if you don't!**
-  - Example: 
+
+  - Example:
     - `[-1, 3, -4, 0, 2].sort()` will return `[-1, -4, 0, 2, 3]`
     - `[[-1, 3, -4, 0, 2].sort((a, b) => a - b)` will return `[-4, -1, 0, 2, 3]`
 

@@ -6,6 +6,7 @@
 
 - The Fast & Slow pointer technique is a pointer algorithm that uses two pointers which move through an array (or linked list) at different speeds. This approach is quite useful when dealing with cyclic linked list or arrays.
 
+- Keywords to look for: **cycle**
 
 
 ## Problems
@@ -354,3 +355,203 @@ const find_cycle_start = function(head){
   return head;
 };
 ```
+
+<br>
+
+### Happy Number (medium)
+
+> **Prompt:** Write an algorithm to determine if a number n is a **'happy number'**.
+>   - Starting with any positive integer, *replace the number by the sum of the squares of its digits*.
+>   - Repeat the process until the **number equals 1 (where it will stay)**, or it **loops endlessly in a cycle** WHICH DOES NOT INCLUDE 1.
+>   - Those numbers for which this process ends in 1 are happy.
+
+<br>
+
+- **Example:**
+
+```js
+
+// Explanation 1:
+Input: n = 19
+Output: true
+Explanation:
+12 + 92 = 82
+82 + 22 = 68
+62 + 82 = 100
+12 + 02 + 02 = 1
+
+//Explanation 2:
+Input: n = 2
+Output: false
+```
+
+<br>
+
+- **Big O:**
+  - Time: **`O(logN)`**
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+/**
+ * @param {number} n
+ * @return {boolean}
+ */
+
+// No comments
+
+
+var isHappy = function(num){
+  let slow = num,
+      fast = num;
+  
+  while(true){
+    slow = squaredSum(slow);
+    fast = squaredSum(squaredSum(fast));
+    if(fast === 1) return true;
+    if(slow === fast) return false;
+    }
+}
+
+
+function squaredSum(num){
+  let squaredSum = 0;
+
+  while(num > 0){
+    const singleDigit = num % 10;
+    num = (num - singleDigit) / 10;
+    squaredSum += singleDigit ** 2;
+  }
+
+  return squaredSum;
+}
+
+// Comments
+
+var isHappy = function(num){
+
+  // Here we are creating two "pointers" that are going to move through possibly solutions at different rates, the slow, one solution at a time and the fast through two at a time.
+  let slow = num,
+      fast = num;
+  
+  // We are going to loop until one of two conditions are two, we will ALWAYS meet one of those conditions.
+  while(true){
+    slow = squaredSum(slow); // Here the slow is checking one squared sum at a time.
+    fast = squaredSum(squaredSum(fast)); // Here fast is checking the squared sum of the squared sum.
+    if(fast === 1) return true; // If a 1 is found we have found a happy number.
+    if(slow === fast) return false; // If the fast and slow are the same that means we entered a cycle, and therefore the number is not a happy number.
+    }
+}
+
+
+function squaredSum(num){
+
+  // Create a variable to hold our squared sum as we add together the square of each digit.
+  let squaredSum = 0;
+
+  while(num > 0){
+
+    // Find the current last digit by taking the number modus 10. E.g. 23 % 10 === 3
+    const singleDigit = num % 10;
+    
+    // Subtract the last digit from the number, then devide by 10. E.g. 23 - 3 = 20, 20/10 = 2;
+    num = (num - singleDigit) / 10;
+
+    // Add the square of the single digit to the total sum.
+    squaredSum += singleDigit ** 2;
+  }
+
+  return squaredSum;
+}
+```
+
+<br>
+
+- **Comments:**
+  - *Pointers:* Not so much pointers, you will be using two variables that will act as a "fast and slow pointers," but will actually just hold the results of calling the helper function. The "slow" pointer will hold the results of running the function once, and the "fast" will hold the results of calling the helper function on the results of calling the helper function. (It helps to look at the code for this one).
+  - *Movement:* In attempting to find if a number is "happy", the results of looking will create a cycle or just repeat 1 over and over again. If there is a loop calling the function twice over on itself will produce the same results as calling the function once, just twice as fast, and jumping passed one of the results. Eventually, if you are in a loop, the fast and slow pointers will move around until they are the same number, this is what we are looking for.
+  - *Variables:* No vars in main function, there is one extra var used in the helper function to track the squared sum.
+  - This is an **implicit LinkedList** problem. Implicit meaning we don't have actual linked nodes and pointers, but the data does still form a LinkedList structure. The starting number is the head "node" of the list, and all the other numbers in the chain are nodes. 
+
+
+<br>
+
+- **Basic Pattern:**
+  1. Create two variables that will track the fast and slow values.
+  2. Create a infinite loop
+     1. Set slow equal to the sum of it's values squared.
+     2. Set fast equal to the sum of it's values squared, then those values squared and summed.
+     3. If the value of fast is equal to one, the number is happy, return true.
+     4. If the value of fast is equal to the value of slow, the number is not happy, return false.
+
+  - Find Squared Sum:
+    1. Create a variable to hold the squared sum.
+    2. Loop while the number (variable holding the input number originally) is greater than 0.
+       1. Find and store the current right most digit by taking the number modus 10.
+       2. Set the number to be equal to itself stubtracted by that right most digit, and then divide by 10.
+       3. Add the square of the right most digit to the squaredSum variable.
+    3. Return the squared sum.
+<br>
+
+#### **Alternate Solutions**: Using Hashmap and While Loop
+
+```js
+const find_happy_number = function(num) {
+
+  let numSet = new Set();
+  
+  while( num !== 1 && !numSet.has(num)){
+    numSet.add(num);
+    num = digitsToSquaredSum(num);
+  }
+
+  return num === 1;
+};
+
+
+function digitsToSquaredSum(num){
+  let squaredSum = 0;
+
+  while(num > 0){
+    const singleDigit = num % 10;
+    num = (num - singleDigit) / 10;
+    squaredSum += singleDigit ** 2;
+  }
+  return squaredSum;
+}
+```
+
+<br> 
+
+#### **Alternate Solution:** Using Hashmap and Recursion
+
+```js
+const find_happy_number = function(num) {
+
+  let numSet = new Set();
+  
+  function happyChecker(sum){
+    if(sum === 1) return true;
+    if(numSet.has(sum)) return false;
+    numSet.add(sum);   
+    const squaredSum = digitsToSquaredSum(sum);
+    return happyChecker(squaredSum);
+  }
+
+  return happyChecker(num);
+};
+
+
+function digitsToSquaredSum(num){
+  let squaredSum = 0;
+
+  while(num > 0){
+    const singleDigit = num % 10;
+    num = (num - singleDigit) / 10;
+    squaredSum += singleDigit ** 2;
+  }
+  return squaredSum;
+}
+```
+
