@@ -46,4 +46,12 @@
 10/18/22
 
 - Difference between Objects, Maps, and Sets in JS
+
   - https://osgoodgunawan.medium.com/map-vs-set-vs-object-in-javascript-7345b455afcd#:~:text=The%20difference%20between%20Map%20and%20Set,the%20keys%20to%20the%20value.
+
+
+10/19/22 
+
+<br> 
+
+- ![jsbs](./resources/js_bs.JPG)
