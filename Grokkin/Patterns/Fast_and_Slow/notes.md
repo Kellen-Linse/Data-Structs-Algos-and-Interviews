@@ -936,3 +936,158 @@ function reverse(node){
   5. Once out of the while loop, we need to check if there still exists a node at our curr pointer,
      1. If so, we will point it's next pointer to null as it is the last node it our list.
   6. We are modifying the list in place, so we do not return anything.
+
+<br> 
+
+### Cycle in a Circular Array (Medium)
+
+> **Prompt:** 
+> We are given an array containing positive and negative numbers. Suppose the array contains a number ‘M’ at a particular index. Now, if ‘M’ is positive we will move forward ‘M’ indices and if ‘M’ is negative move backwards ‘M’ indices. You should assume that the array is circular which means two things:
+> 
+> - 1. If, while moving forward, we reach the end of the array, we will jump to the first element to continue the movement.
+> - 2. If, while moving backward, we reach the beginning of the array, we will jump to the last element to continue the movement.
+> 
+> Write a method to determine if the array has a cycle. The cycle should have more than one element and should follow one direction which means the cycle should not contain both forward and backward movements.
+
+
+<br>
+
+- **Example:**
+
+```js
+Input: [1, 2, -1, 2, 2]
+Output: true
+Explanation: The array has a cycle among indices: 0 -> 1 -> 3 -> 0
+```
+
+<br>
+
+- **Big O:**
+  - Time: `O(N^2)`
+  - Space: `O(1)`
+
+- **Code:**
+
+```js
+// No comments
+const circular_array_loop_exists = function(arr) {
+
+  for (i = 0; i < arr.length; i++) {
+    let pos = arr[i] >= 0; 
+    let slow = i,
+        fast = i;
+
+    while (true) {
+      slow = find_next_index(arr, pos, slow);
+      fast = find_next_index(arr, pos, fast);
+      if (fast !== -1) fast = find_next_index(arr, pos, fast);
+
+      if (slow === -1 || fast === -1 || slow === fast) break;
+    }
+    
+    if (slow === fast && slow !== -1 ) return true;
+  }
+  return false;
+}
+
+function find_next_index(arr, pos, currIdx) {
+
+  let curSign = arr[currIdx] >= 0;
+
+  if (pos !== curSign) return -1; 
+  
+  let nextIdx = (currIdx + arr[currIdx]) % arr.length;
+  if (nextIdx < 0) nextIdx += arr.length; 
+  if (nextIdx === currIdx) nextIdx = -1;
+
+  return nextIdx;
+}
+
+// Comments
+const circular_array_loop_exists = function(arr) {
+
+  // Iterate over the array
+  for (i = 0; i < arr.length; i++) {
+
+    // Check whether the current value is positive or negative
+    let pos = arr[i] >= 0; 
+
+    // Create fast and slow pointers that will move through the array starting at the current index.
+    let slow = i,
+        fast = i;
+
+    // As we move through the array,
+    // if slow or fast becomes '-1' this means we can't find cycle for this number
+    while (true) {
+
+      // move one step for slow pointer
+      slow = find_next_index(arr, pos, slow);
+
+      // move one step for fast pointer
+      fast = find_next_index(arr, pos, fast);
+
+      // move another step for the fast pointer
+      if (fast !== -1) fast = find_next_index(arr, pos, fast);
+      
+      // If we have found a reason to break early or we have completed a cycle, exit the loop
+      // This line encompases all conditions possible, so one option will be hit to leave the loop eventually.
+      if (slow === -1 || fast === -1 || slow === fast) break;
+    }
+
+    // If when we exit the loop, slow is equal to fast, 
+    // (and it is not because they are both equal to -1)*
+    // *slow and fast counld be used enterchangably here
+    // return true as we have found a cycle.
+    if (slow === fast && slow !== -1 ) {
+      return true;
+    }
+  }
+  
+  // If we reach the end of the array and we have not found a cycle, return false.
+  return false;
+}
+
+// Here we are finding the next valid, or return -1.
+// -1 will never be a valid index, so we return it if we find a non-cycle
+function find_next_index(arr, pos, currIdx) {
+
+  // Check the sign of the value at the current index.
+  let curSign = arr[currIdx] >= 0;
+
+  // If the sign of the current value is not the same as the sign of the first value we started with, 
+  // we have found a switch in direction, so we return -1;
+  if (pos !== curSign) return -1; 
+  
+  // Find the next index: add current index and the value at that index, 
+  // then take the modulo of that value and the length of the array.
+  // If the sum if the first value is negative, the value at nextIndex will be negative
+  let nextIdx = (currIdx + arr[currIdx]) % arr.length;
+
+  // If the nextIdx is negative we need to wrap around 
+  if (nextIdx < 0) nextIdx += arr.length; 
+
+  // one element cycle, return -1
+  if (nextIdx === currIdx) nextIdx = -1;
+  
+  // return the next valid index if we get to this point.
+  return nextIdx;
+}
+```
+<br>
+
+- **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - *Variables:*
+
+
+<br>
+
+- **Basic Pattern:**
+  1. 
+
+<br>
+
+- **Algorithm:**
+  1.
+
