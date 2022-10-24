@@ -1031,7 +1031,7 @@ const circular_array_loop_exists = function (arr) {
 
     // If when we exit the loop, slow is equal to fast,
     // (and it is not because they are both equal to -1)*
-    // *slow and fast counld be used enterchangably here
+    // *slow and fast could be used interchangeably here
     // return true as we have found a cycle.
     if (slow === fast && slow !== -1) {
       return true;
@@ -1071,14 +1071,25 @@ function findNext(arr, pos, currIdx) {
 <br>
 
 - **Comments:**
-  - _Pointers:_
-  - _Movement:_
-  - _Variables:_
+  - This problem is tricky, it requires a lot of thought towards the different conditions that the problem can run into.
+  - Making use of a secondary function to find the next index makes this problem more manageable.
+  - The trick with the secondary function is to also check whether the next index is valid and return -1 if an invalid index is found. 
+    - -1 will never be a valid index, so it is a safe return value to indicate an invalid index has been found.
+  - This problem makes use of an infinite loop, containing conditions that will eventually always be reached, at that point we will make use of the `break` keyword to exit the loop.
+  - If when we exit the loop, slow is equal to fast, we need to check that it is not the case that they are equal because they are both invalid.
+  - We need to account for any of the values being greater than the amount remaining in the array, and for the case that it is even greater than the length of the array, we can use the modulo operator.
+    - `let nextIdx = (currIdx + arr[currIdx]) % arr.length;`
+  - We also need to account for if the potential cycle is moving in the negative direction: 
+    - `if (nextIdx < 0) nextIdx += arr.length;`
 
 <br>
 
 - **Basic Pattern:**
-  1.
+  1. Iterate over the array one index at a time.
+  2. For each index create a fast and slow pointer starting at the current index.
+  3. Loop over the array, find the next index for each the slow and the fast pointers.
+  4. Check if the next indices are valid, invalid, or a cycle has been found.
+  5. If a cycle has been found return true. If we reach the end of the array, return false. 
 
 <br>
 
