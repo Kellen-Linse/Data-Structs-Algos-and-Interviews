@@ -6,4 +6,4 @@
 
 1. [**Pattern:** Sliding Window](./Patterns/Sliding_Window/index.md)
 2. [**Pattern:** Two Pointers](Patterns/Two_Pointers/index.md)
-3. [**Pattern:** Fast and Slow](Patterns/Fast_and_Slow/notes.md)
+3. [**Pattern:** Fast and Slow](Patterns/Fast_and_Slow/index.md)
