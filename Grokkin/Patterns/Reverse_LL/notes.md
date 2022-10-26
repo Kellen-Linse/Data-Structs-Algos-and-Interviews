@@ -300,14 +300,12 @@ function reverse(start, end){
 
 ### **Example:**
 
-```js
-
-```
+![revSub](resources/revSub.jpg)
 
 <br>
 
 ### **Big O:**
-  - Time: `O(n)`
+  - Time: `O(n)` 
   - Space: `O(1)`
 
 <br>
@@ -364,7 +362,7 @@ const reverse_every_k_elements = function(head, k){
   
   // Run while there are more sub-groups left
   while(start){
-    // find the end, k nodes away.  
+    // find the end of the first sub-group, k nodes away.  
     let end = findEnd(start, k); 
 
     // Save the current head of the sub-group.
@@ -375,7 +373,7 @@ const reverse_every_k_elements = function(head, k){
     [newSubHead, start] = reverse(start, end); 
 
     // Here we are connecting the new last node in the section to 
-    // what will be the first node in the next section once it is reverse.
+    // what will be the first node in the next section once it is reversed.
     // If there are no more sub-sections left this will return null.
     prevHead.next = findEnd(start, k); 
 
@@ -430,17 +428,20 @@ function reverse(start, end){
 <br>
 
 ### **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - *Variables:*
+  - The trick with this problem is keeping track of where the reversed sections point. 
+    - If we keep track of the previous head (which is now the tail of a reversed section),
+    - we can point it towards the next sections end ( which will become the next sections start).
+  - This is another problem where drawing out the steps will help you see the solution.
 
 
 <br>
 
 ### **Basic Pattern:**
-  1. 
-
-<br>
-
-### **Algorithm:**
-  1.
+  1. While the start node is not null.
+  2. Give the current start find the end, k nodes away.
+  3. Save a reference to the current start node.
+  4. Reverse the string from start to end, returning the head of the reversed section and the next start node.
+  5. Set the original start node's next pointer to point to the last node in the next section 
+     1. (this will end up being the first node in the reversed section)
+  6. After the first section is reversed, set the head of the reversed section to be the head of the list.
+  7. Return the list.
