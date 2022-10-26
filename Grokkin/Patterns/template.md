@@ -1,11 +1,11 @@
 
-### Problem Name (Difficulty)
+## Problem Name (Difficulty)
 
 > **Prompt:** 
 
 <br>
 
-- **Example:**
+### **Example:**
 
 ```js
 
@@ -13,11 +13,13 @@
 
 <br>
 
-- **Big O:**
+### **Big O:**
   - Time: ``
   - Space: ``
 
-- **Code:**
+<br>
+
+### **Code:**
 
 ```js
 // No comments
@@ -28,7 +30,7 @@
 ```
 <br>
 
-- **Comments:**
+### **Comments:**
   - *Pointers:* 
   - *Movement:* 
   - *Variables:*
@@ -36,12 +38,12 @@
 
 <br>
 
-- **Basic Pattern:**
+### **Basic Pattern:**
   1. 
 
 <br>
 
-- **Algorithm:**
+### **Algorithm:**
   1.
 
 
