@@ -27,7 +27,8 @@ These are notes specific to Javascript as a language that may come in handy duri
 <br>
 
 #### Array:
-  - 
+
+![Built in Array Methods](resources/JS_Array.jpg)
 
 ---
 
