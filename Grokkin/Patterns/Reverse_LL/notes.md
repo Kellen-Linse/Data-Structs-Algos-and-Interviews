@@ -10,7 +10,9 @@
 
 <hr>
 
-## Problem Name (Difficulty)
+## Reverse a LinkedList (easy)
+
+- **This problem is the foundation for most reverse LL problems**
 
 > **Prompt:** Given the head of a Singly LinkedList, reverse the LinkedList. Write a function to return the new head of the reversed LinkedList.
 
