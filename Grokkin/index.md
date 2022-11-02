@@ -7,3 +7,4 @@
 1. [**Pattern:** Sliding Window](./Patterns/Sliding_Window/index.md)
 2. [**Pattern:** Two Pointers](Patterns/Two_Pointers/index.md)
 3. [**Pattern:** Fast and Slow](Patterns/Fast_and_Slow/index.md)
+4. [**Pattern:** Reverse a Linked List in Place](Patterns/Reverse_LL/index.md)
