@@ -1,5 +1,5 @@
 # Two (plus) Pointer Problems: General Notes
-<hr>
+
 <br>
 
 ## Notes:
