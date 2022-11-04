@@ -8,3 +8,4 @@
 2. [**Pattern:** Two Pointers](Patterns/Two_Pointers/index.md)
 3. [**Pattern:** Fast and Slow](Patterns/Fast_and_Slow/index.md)
 4. [**Pattern:** Reverse a Linked List in Place](Patterns/Reverse_LL/index.md)
+5. [**Pattern:** Cyclic Sort](Patterns/Cyclic_Sort/index.md)
