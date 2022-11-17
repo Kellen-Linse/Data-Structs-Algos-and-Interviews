@@ -6,6 +6,7 @@
 
 - **The merge intervals pattern deals with problems involving overlapping intervals.** 
 - **The most common problems solved using this pattern are scheduling problems.**
+- "Mutually exclusive intervals" == "Non-overlapping intervals"
 
 <br>
 
@@ -132,13 +133,39 @@ const merge = function(intervals) {
 
   return merged;
 };
+
+const merge = function(intervals) {
+  intervals.sort((a, b) => a.start - b.start); // sort the input array
+  let merged =[intervals[0]]; // create new output array and add first interval
+
+
+  for(let i = 1; i < intervals.length; i++){
+    let interval = intervals[i]; // current interval
+    let mLastIndex = merged.length - 1; // index of last interval in output array
+
+    // Merge the last interval in the output array with the current interval if they overlap
+    // if they don't, add the current interval to the output array.
+    if(merged[mLastIndex].end > interval.start){ // <-- merge condition
+
+      // When we are merging we need to account for the last interval in the putput array
+      // completely overlapping the current inteveral, so we check which end point is greater.
+      merged[mLastIndex].end = Math.max(merged[mLastIndex].end, interval.end);
+    } else {
+      // If it is not overlapping, we add it to the output array and it will become the 
+      // new last interval in the output array.
+      merged.push(interval);
+    }
+  }
+
+  // We return the output array containing out merged intervals.
+  return merged;
+};
 ```
 <br>
 
 ### **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - *Variables:*
+  - We must **sort the input array** in order to lower the run time.
+  - It helps to draw the problem out to visualize where and what you will be merging.
 
 
 <br>
@@ -147,7 +174,7 @@ const merge = function(intervals) {
   1. Sort input array by start value.
   2. Create output array, holding the first interval from the input array.
   3. Iterate over the input array.
-     1. If we meet the condition to merge, (the end of the last interval overlaps the start of the current interval).
+     1. If the end of the last interval overlaps the start of the current interval.
         1. We merge by making the end value of the last interval in the output array the larger of the two values between it's value and the end value of the current (i) interval in the input array.
      2. If no merge, push the current (i) interval onto the output array.
   4. Return the output array.
@@ -193,5 +220,178 @@ var merge = function(intervals) {
 
     // Return the output array.
     return m;
+};
+```
+
+## Insert Interval (medium)
+
+> **Prompt:** Given a list of non-overlapping intervals sorted by their start time, **insert a given interval at the correct position and merge all necessary intervals** to produce a list that has only mutually exclusive intervals.
+
+<br>
+
+### **Example:**
+
+```js
+
+```
+
+<br>
+
+### **Big O:**
+  - Time: ``
+  - Space: ``
+
+<br>
+
+### **Code:**
+
+```js
+// No comments
+const insert = function(intervals, newInterval) {
+  let lowerArray = [], 
+      upperArray = [];
+
+  for(const interval of intervals){
+    if(interval.end < newInterval.start)       lowerArray.push(interval);
+    else if (interval.start > newInterval.end) upperArray.push(interval);
+    else{
+      newInterval.start = Math.min(newInterval.start, interval.start);
+      newInterval.end = Math.max(newInterval.end, interval.end);
+    }
+  }
+
+  return [...lowerArray, newInterval, ...upperArray];
+};
+
+// Comments
+const insert = function(intervals, newInterval) {
+  let lowerArray = [], 
+      upperArray = [];
+
+  for(const interval of intervals){
+    if(interval.end < newInterval.start)       lowerArray.push(interval);
+    else if (interval.start > newInterval.end) upperArray.push(interval);
+    else{
+      newInterval.start = Math.min(newInterval.start, interval.start);
+      newInterval.end = Math.max(newInterval.end, interval.end);
+    }
+  }
+
+  return [...lowerArray, newInterval, ...upperArray];
+};
+
+
+// Alternate Solution
+const insert = function(intervals, newInterval) {
+    let res = [];
+
+    let start = 0;
+    let end = 1;
+
+    let i = 0;
+    
+    // while there is no intersection between curr interval and the newInterval
+    while (i < intervals.length && intervals[i].end < newInterval.start) {
+        res.push(intervals[i]);
+        i++;
+    }
+    
+    // While there is an intersection between curr interval and the newInterval
+    while (i < intervals.length && intervals[i].start <= newInterval.end) {
+        newInterval.start = Math.min(newInterval.start, intervals[i].start);
+        newInterval.end = Math.max(newInterval.end, intervals[i].end);
+        i++;
+    }
+    
+    // push the newly combined interval
+    res.push(newInterval);
+    
+    // push any remaining leftover intervals that do not interset with the newInterval
+    while (i < intervals.length) {
+        res.push(intervals[i]);
+        i++;
+    }
+
+    return res;
+};
+```
+<br>
+
+### **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - *Variables:*
+
+
+<br>
+
+### **Basic Pattern:**
+  1. 
+
+<br>
+
+### **Algorithm:**
+  1.
+
+### **Leetcode Format:**
+
+```js
+var insert = function (intervals, newInterval) {
+  let [newStart, newEnd] = newInterval;
+  let left = [];
+  let right = [];
+  
+  for (const interval of intervals) {
+    const [currStart, currEnd] = interval;
+	
+	// current interval is smaller than newInterval
+    if (currEnd < newStart) left.push(interval);
+	
+	// current interval is larger than newInterval
+    else if (currStart > newEnd) right.push(interval);
+	
+	// there is a overlap
+    else {
+      newStart = Math.min(newStart, currStart);
+      newEnd = Math.max(newEnd, currEnd);
+    }
+  }
+  
+  return [...left, [newStart, newEnd], ...right]; 
+};
+
+// Alternate Solution
+const insert = (intervals, newInterval) => {
+  
+    let res = [];
+
+    let start = 0;
+    let end = 1;
+
+    let i = 0;
+    
+    // while there is no intersection between curr interval and the newInterval
+    while (i < intervals.length && intervals[i][end] < newInterval[start]) {
+        res.push(intervals[i]);
+        i++;
+    }
+    
+    // While there is an intersection between curr interval and the newInterval
+    while (i < intervals.length && intervals[i][start] <= newInterval[end]) {
+        newInterval[start] = Math.min(newInterval[start], intervals[i][start]);
+        newInterval[end] = Math.max(newInterval[end], intervals[i][end]);
+        i++;
+    }
+    
+    // push the newly combined interval
+    res.push(newInterval);
+    
+    // push any remaining leftover intervals that do not interset with the newInterval
+    while (i < intervals.length) {
+        res.push(intervals[i]);
+        i++;
+    }
+
+    return res;
 };
 ```
