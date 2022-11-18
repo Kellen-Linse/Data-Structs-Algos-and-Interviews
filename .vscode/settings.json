@@ -1,4 +1,11 @@
 {
-  "cSpell.words": ["Abiguity", "bigocheatsheet", "concat", "FAANG", "Neetcode"],
+  "cSpell.words": [
+    "Abiguity",
+    "appts",
+    "bigocheatsheet",
+    "concat",
+    "FAANG",
+    "Neetcode"
+  ],
   "cSpell.ignoreWords": ["Glassdoor", "Ksub", "cleanNsort", "ctci", "ould"]
 }
