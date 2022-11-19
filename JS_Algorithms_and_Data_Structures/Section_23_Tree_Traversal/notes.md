@@ -24,7 +24,8 @@
 ---
 ## 173: Breadth First Search Intro (BFS):
 
-  - Visit all nodes on the same level before working our way down.
+  - **Visit all nodes on the same level before working our way down.**
+  - Visit every sibling node BEFORE any child nodes.
     - First across, then down.
  
   ![BFS](../resources\breadth_first.JPG)
@@ -40,16 +41,16 @@
     - If there is a right property on the node dequeued:
       - add it to the queue.
   - Return the variable that stores the values.
+
 <br>
+
 - Can think of the queue as a "to-do" list.
 
 ## 174: Breadth First Search Solution:
 
 ```js
-class Binary Search Tree{
-  ...
-  BFS(){
-    let node  = this.root; // Set our root node to our node
+
+  BFS(node){
     let data  = [];        //This will hold our data to return
     let queue = [];        //This will keep track of the nodes in our tree
 
@@ -63,7 +64,7 @@ class Binary Search Tree{
     }
     return data; // return the data in our array
   }
-}
+
 ``` 
 
 --- 

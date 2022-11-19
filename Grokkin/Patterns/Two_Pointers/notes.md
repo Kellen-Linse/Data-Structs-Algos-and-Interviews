@@ -1,4 +1,4 @@
-# Two (Three) Pointers
+# Two (Plus) Pointers
 
 <hr>
 
