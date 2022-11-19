@@ -592,7 +592,7 @@ var intervalIntersection = function(arr1, arr2) {
 };
 ```
 
-Conflicting Appointments (easy)
+## Conflicting Appointments (easy)
 
 > **Prompt:** Given an array of intervals representing ‘N’ appointments, **find out if a person can attend all the appointments**.
 
