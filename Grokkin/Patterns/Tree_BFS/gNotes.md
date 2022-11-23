@@ -8,6 +8,9 @@
   
 <br>
 
+- Often used in shortest path type questions.
+- BFS searches the **Closest Nodes to the Parent** first.
+
 - **It is always important to understand how the nodes are shaped!**
   - Sometimes it is `this.val`, sometimes `this.value`
     - Also note what happens if a property is left undefined like: 
@@ -24,7 +27,7 @@
 
 <br>
 
-- Example of BFS from Colt Steele JS_DSA course.
+### Example of BFS from Colt Steele JS_DSA course.
 
 ```js
 
@@ -46,7 +49,7 @@
 
 ``` 
 
-- Example of doing some work level by level.
+### Example of doing some work level by level.
 
 ```js
 const traverse = function(root) {
@@ -77,4 +80,19 @@ const traverse = function(root) {
 
   return results;
 };
+```
+
+### Example of Recursive BFS
+
+```js
+function recursiveBFS(queue, list){
+  if(!queue.length) return list;
+
+  let node = queue.shift();
+  list.push(node.value);
+  if(node.left) queue.push(node.left);
+  if(node.right) queue.push(node.right);
+
+  return recursiveBFS(queue, list);
+}
 ```

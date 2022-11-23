@@ -68,9 +68,9 @@
 ``` 
 
 --- 
-## 175: Depth First **preOrder** Intro (DFS):
+## 175: Depth First **PreOrder** Intro (DFS):
 
-#### All Depth First Searches traverse vertically, down to the end of the tree before visiting sibling nodes.
+#### All Depth First Searches traverse **vertically**, down to the end of the tree before visiting any sibling nodes.
   - First down, then across.
 
 #### Binary Tree Searches can be broken down into three main steps:
@@ -78,33 +78,39 @@
   - Explore the left side.
   - Explore the right side.
 
-#### *Changing the order above will change the output of our search.*
+### *Changing the order above will change the output of our search.*
 
-### preOrder:
+<br> 
+
+### PreOrder:
 
   > We look at the node, THEN we explore all children.
 
-  - BST: We visit the node, THEN look at the left and the right.
 
   - **Order:**
-    1. Visit the node.
+    1. **Visit the node.**
     2. Explore the left side.
     3. Explore the right side.
 
 ![DFS-pre](../resources/DFS-preOrder.JPG)
 
+<br> 
+
 ### Steps (recursively):
 
-- Create a variable to store the values of nodes visited
-- Store the root of the BST in a variable called current
-- Write a helper function which accepts a node
+- Create a variable to store the values of nodes visited.
+- Store the root of the BST in a variable called current.
+- Write a helper function which accepts a node:
   - **Push the value of the node to the variable that stores the values**
-  - if the node has a **left property:**
-    - call the helper function with the left property of the node
-  - if the node has a **right property:**
-    - call the helper function with the right property of the node
-- Invoke the helper function with the current variable
-- Return the array of values
+  - If the node has a **left property**:
+    - call the helper function passing in the left child property of the node.
+  - If the node has a **right property**:
+    - call the helper function passing in the right child property of the node.
+- Invoke the helper function with the current variable.
+- Return the array of values.
+
+<br>
+
 
 ## 176: Depth First preOrder Solution:
 
@@ -112,84 +118,105 @@
 class Binary Search Tree{
   ...
   preOrder_DFS(){
-    let data    = [];     // The array that will hold our return data
+    // The array that will hold our return data.
+    let data = [];     
 
-    function traverse(node){    // Create a helper function to traverse
-      data.push(node.value);                // Push the value in the argument node into our return value array    
-      if(node.left)  traverse(node.left);   // Check if there is a left node, if so,  call the traverse function recursively, passing node.left in
-      if(node.right) traverse(node.right);  // Check if there is a right node, if so,  call the traverse function recursively, passing node.right in
+    // Create a helper function to traverse.
+    function traverse(node){    
+      // Push the value in the argument node into our return value array    
+      data.push(node.value);   
+      
+      //Check if there is a left and/or right node. If so, call the traverse function recursively, passing in the respective node.
+      if(node.left)  traverse(node.left);   
+      if(node.right) traverse(node.right);
     }
+    
+    // Call the traverse function, passing in the root node of the BST.
+    traverse(this.root);
 
-    traverse(this.root); // Call the traverse function, passing in the root node of the BST
-    return data;         // Return the data in our array
+    // Return the data in our array.
+    return data;         
   }
 }
 ```
+<br>
 
 ---
-## 177: Depth First **postOrder** Intro (DFS):
+## 177: Depth First **PostOrder** Intro (DFS):
 
-### postOrder:
+<br>
+
+### PostOrder:
+<br>
 
   > We explore all the children, THEN we look at the node.
-
-  - BST: We look at the left and the right, THEN visit the node.
 
   - **Order:**
     1. Explore the left side.
     2. Explore the right side.
-    3. Visit the node.
+    3. **Visit the node.**
 
 ![DFS-post](../resources/DFS-postOrder.JPG)
 
+<br>
+
 ### Steps (recursively):
 
-- Create a variable to store the values of nodes visited
-- Store the root of the BST in a variable called current
+- Create a variable to store the values of nodes visited.
+- Store the root of the BST in a variable called current.
 - Write a helper function which accepts a node
-  - if the node has a **left property:**
-    - call the helper function with the left property of the node
-  - if the node has a **right property:**
-    - call the helper function with the right property of the node
-  - **Push the value of the node to the variable that stores the values**
-- Invoke the helper function with the current variable
-- Return the array of values
+  - If the node has a **left property:**
+    - Call the helper function passing in the left child property of the node.
+  - If the node has a **right property:**
+    - Call the helper function passing in the right child property of the node.
+  - **Push the value of the node to the variable that stores the values.**
+- Invoke the helper function with the current variable.
+- Return the array of values.
 
 ---
-## 178: Depth First **postOrder** Solution:
+## 178: Depth First **PostOrder** Solution:
 
 ```js
 class Binary Search Tree{
   ...
   postOrder_DFS(){
-    let data    = [];     // The array that will hold our return data
+    // The array that will hold our return data.
+    let data = [];     
 
-    function traverse(node){    // Create a helper function to traverse
-      if(node.left)  traverse(node.left);   // Check if there is a left node, if so,  call the traverse function recursively, passing node.left in
-      if(node.right) traverse(node.right);  // Check if there is a right node, if so,  call the traverse function recursively, passing node.right in
-      data.push(node.value);                // Push the value in the argument node into our return value array    
+    // Create a helper function to traverse.
+    function traverse(node){    
+
+      //Check if there is a left and/or right node. If so, call the traverse function recursively, passing in the respective node.
+      if(node.left)  traverse(node.left);   
+      if(node.right) traverse(node.right);
+
+      // Push the value in the argument node into our return value array.
+      data.push(node.value);                
     }
+    
+    // Call the traverse function, passing in the root node of the BST.
+    traverse(this.root);
 
-    traverse(this.root); // Call the traverse function, passing in the root node of the BST
-    return data;         // Return the data in our array
+    // Return the data in our array.
+    return data;         
   }
 }
 ```
 
-## 179: Depth First **inOrder** Intro (DFS):
+## 179: Depth First **InOrder** Intro (DFS):
 
-### inOrder:
+### InOrder:
 
-  > We explore the entire left side, THEN we look at the node, THEN we explore the entire right side.
-
-  - BST: We look at the left, THEN visit the node, THEN the right.
+  > We explore the entire left side, we then look at the node, we then explore the entire right side.
 
   - **Order:**
     1. Explore the left side.
-    2. Visit the node.
+    2. **Visit the node.**
     3. Explore the right side.
 
 ![DFS-in](../resources/DFS-inOrder.JPG)
+
+<br>
 
 ### Steps (recursively):
 
@@ -211,16 +238,16 @@ class Binary Search Tree{
 class Binary Search Tree{
   ...
   inOrder_DFS(){
-    let data    = [];     // The array that will hold our return data
+    let data = [];  
 
-    function traverse(node){    // Create a helper function to traverse
-      if(node.left)  traverse(node.left);   // Check if there is a left node, if so,  call the traverse function recursively, passing node.left in
-      data.push(node.value);                // Push the value in the argument node into our return value array    
-      if(node.right) traverse(node.right);  // Check if there is a right node, if so,  call the traverse function recursively, passing node.right in
+    function traverse(node){
+      if(node.left)  traverse(node.left);  
+      data.push(node.value);   
+      if(node.right) traverse(node.right);
     }
 
-    traverse(this.root); // Call the traverse function, passing in the root node of the BST
-    return data;         // Return the data in our array
+    traverse(this.root);
+    return data;
   }
 }
 ```
@@ -253,10 +280,10 @@ class Binary Search Tree{
 
   ### Not any *REALLY* good answers, most of the time it is just because it is good to know.
 
-  #### inOrder:
+  #### InOrder:
 
   - Will return the data we get back in order, left to right.
 
-  #### preOrder:
+  #### PreOrder:
 
   - Good for flattening the tree out, or export it so that it can easily be reconstructed.
