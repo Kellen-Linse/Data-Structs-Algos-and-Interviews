@@ -408,3 +408,103 @@ const find_path = function(root, seq) {
      5. Add the number in the temp variable back to the front of the sequence.
   4. Call the inner function passing in the root node of the give tree.
   5. Return the pathFound variable.
+
+<br>
+
+## Problem Name (Difficulty)
+
+> **Prompt:** 
+
+<br>
+
+### **Example:**
+
+```js
+
+```
+
+<br>
+
+### **Big O:**
+  - Time: ``
+  - Space: ``
+
+<br>
+
+### **Code:**
+
+```js
+// No comments
+var pathSum = function(root, s) {
+  if(!root) return 0;
+  let pathCount = 0;
+  const pfMap = {};
+
+  const pathCheck = (node, prevSum) => {
+    if(!node) return;
+    const runningSum = prevSum + node.val;
+    
+    if(runningSum === s) pathCount++;
+    pathCount += pfMap[runningSum - s] || 0;
+    pfMap[runningSum] =  pfMap[runningSum]+1 || 1;
+
+    pathCheck(node.left, runningSum);
+    pathCheck(node.right, runningSum);
+    pfMap[runningSum] = pfMap[runningSum] - 1;
+  }
+  
+  return pathCount;
+};
+
+// Comments
+var pathSum = function(root, s) {
+  if(!root) return 0;
+  let pathCount = 0;
+  const pfMap = {};
+
+  const pathCheck = (node, prevSum) => {
+    if(!node) return
+
+    // Calculate the running sum, adding the current nodes value to the previous sum.
+    const runningSum = prevSum + node.val;
+
+    // if the running sum is equal to our target, increment out pathCount.
+    if(runningSum === s) pathCount++;
+
+    // Here we are checking if we have a key in our map that is equal to the current 
+    // running sum minus the target (s). If find a key that means there is a running sum in the current path which, if 
+    // eliminated at that point will produce a valid path from the subsequent node to the current node.
+    // If there is more than one such point, the map will reflect that and all points will be added to the count.
+    // If there is no such key, nothing will be added to the count.
+    pathCount += pfMap[runningSum - s] || 0;
+
+    // Here we are setting the running sum in our map. Incrementing if it exists, 
+    // or setting it to one if it doesn't.
+    pfMap[runningSum] =  pfMap[runningSum]+1 || 1;
+
+    // Evaluate the left and right child nodes, passing in the current running sum.
+    pathCheck(node.left, runningSum);
+    pathCheck(node.right, runningSum);
+
+    // Remove the current running sum value from the pfMap.
+    pfMap[runningSum] = pfMap[runningSum] - 1;
+  }
+  
+  // Call pathCheck starting at the root with a previous sum of zero.
+  pathCheck(root, 0);
+  
+  return pathCount;
+};
+```
+<br>
+
+### **Comments:**
+  - *Pointers:* 
+  - *Movement:* 
+  - *Variables:*
+
+
+<br>
+
+### **Basic Pattern:**
+  1. 
