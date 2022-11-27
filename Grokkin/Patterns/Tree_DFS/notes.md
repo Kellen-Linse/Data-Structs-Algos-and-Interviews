@@ -411,23 +411,25 @@ const find_path = function(root, seq) {
 
 <br>
 
-## Problem Name (Difficulty)
+## Count Paths for a Sum (medium)
 
-> **Prompt:** 
+<br>
+
+> **Prompt:** Given a binary tree and a number ‘S’, **find all paths in the tree such that the sum of all the node values of each path equals ‘S’**. 
+>   - Please note that the paths can start or end at any node but all paths must follow direction from parent to child (top to bottom).
 
 <br>
 
 ### **Example:**
 
-```js
-
-```
+![all sums](./Resources/dfs-all-path-sums.JPG)
 
 <br>
 
 ### **Big O:**
-  - Time: ``
-  - Space: ``
+  - Time: `O(n)` 
+    - Reduced from `O(n^2) where each node must be examined as the root.
+  - Space: `O(n)`
 
 <br>
 
@@ -435,7 +437,7 @@ const find_path = function(root, seq) {
 
 ```js
 // No comments
-var pathSum = function(root, s) {
+var pathSum = function(root, target) {
   if(!root) return 0;
   let pathCount = 0;
   const pfMap = {};
@@ -443,9 +445,9 @@ var pathSum = function(root, s) {
   const pathCheck = (node, prevSum) => {
     if(!node) return;
     const runningSum = prevSum + node.val;
-    
+
     if(runningSum === s) pathCount++;
-    pathCount += pfMap[runningSum - s] || 0;
+    pathCount += pfMap[runningSum - target] || 0;
     pfMap[runningSum] =  pfMap[runningSum]+1 || 1;
 
     pathCheck(node.left, runningSum);
@@ -456,8 +458,41 @@ var pathSum = function(root, s) {
   return pathCount;
 };
 
-// Comments
-var pathSum = function(root, s) {
+// Light Comments
+
+const count_paths = function(root, target) {
+  if(!root) return 0;
+  let pathCount = 0;
+  const pfMap = {}; // Map of previous sums in current path
+
+  const pathCheck = (node, sum) => {
+    if(!node) return
+    const curSum = sum + node.value;
+
+    // Count path if we have a match
+    if(curSum === s) pathCount++;
+
+    // Increment the count by as many paths as are in the map for curSum - target
+    pathCount += pfMap[curSum - target] || 0;
+
+    // Add or increment the curSum key in the map.
+    pfMap[curSum] = pfMap[curSum]+1 || 1;
+
+    // Navigate
+    pathCheck(node.left, curSum);
+    pathCheck(node.right, curSum);
+
+    // Remove current sum from previous sums map
+    pfMap[curSum] = pfMap[curSum] - 1;
+  }
+
+  // Call pathCheck starting at root
+  pathCheck(root, 0);
+  return pathCount;
+};
+
+// Heavy Comments
+var pathSum = function(root, target) {
   if(!root) return 0;
   let pathCount = 0;
   const pfMap = {};
@@ -476,7 +511,7 @@ var pathSum = function(root, s) {
     // eliminated at that point will produce a valid path from the subsequent node to the current node.
     // If there is more than one such point, the map will reflect that and all points will be added to the count.
     // If there is no such key, nothing will be added to the count.
-    pathCount += pfMap[runningSum - s] || 0;
+    pathCount += pfMap[runningSum - target] || 0;
 
     // Here we are setting the running sum in our map. Incrementing if it exists, 
     // or setting it to one if it doesn't.
@@ -499,12 +534,190 @@ var pathSum = function(root, s) {
 <br>
 
 ### **Comments:**
-  - *Pointers:* 
-  - *Movement:* 
-  - *Variables:*
+  - This "prefix sum" concept used in the solution was quite tricky to grasp, [watch this video for a good explanation](https://www.youtube.com/watch?v=uZzvivFkgtM)
+  - The trick with this problem is that you need to use a map to hold all the running sums at each node within the current path.
+    - For any given node in a path, we can check the previous sums, if we find a previous sum that, if we take away that sum, we are left with the target, the we have found a match.
+    - We calculate the previous sum to search for by subtracting the running sum from the target.
+      - `pathCount += pfMap[runningSum - target] || 0;`
+      - As an example, if we have a running sum of 18, and we have a target of 8, we need to see if we have previously seen a running sum of 10.
+        - If we have a running sum of 10 in our map, that means if we were to take all the nodes AFTER the node were we had a running sum of 10, they would sum to the target.
+    - **The video does a better job of explaining this.**
 
 
 <br>
 
 ### **Basic Pattern:**
-  1. 
+  1. In an outer fn, create a variable to count the number of paths, and an object or map to hold the previous sums in the current path.
+  2. In an inner fn, accept a root node and a previous sum
+     1. Calculate the current running sum (curSum) by adding the previous sum and the value at the passed in node.
+     2. If the curSum matches the target, add one to our count.
+     3. Calculate the sum which, if removed would allow the rest of the nodes to add to the target. If we find this sum in our previous sum map, then all nodes after this node will sum to the target, and we have therefore found a valid path.
+     4. Search map for this sum, if we find it, add the current value at that key plus one, to the count.
+     5. Add or increment the curSum key in the map.
+     6. Navigate the left and right nodes by calling the inner fn recursively, passing in the current sum.
+     7. Remove the current sum from the map after all nodes have been explored.
+  3. Call the inner fn, passing in the root node and 0 for the previous sum.
+  4. Return the count.
+
+<br>
+
+## Tree Diameter (medium)
+
+> **Prompt:** Given a binary tree, **find the length of its diameter.** 
+>   - The diameter of a tree is the number of nodes on the longest path between any two leaf nodes. The diameter of a tree may or may not pass through the root.
+>   - **NOTE:** This questions is defining the diameter by the number of nodes, but leetcode defines the diameter as the number of connections/edges. As always, BE SURE TO READ THE QUESTION CAREFULLY!
+
+<br>
+
+### **Example:**
+
+![diameter](./Resources/dfs-diameter.JPG)
+
+<br>
+
+### **Big O:**
+  - Time: `O(n)`
+  - Space: `O(n)`
+
+<br>
+
+### **Code:**
+
+```js
+// No comments
+var diameterOfBinaryTree = function(root) {
+    let diameter = 0;
+    
+    function dfs(node) {
+        if (!node) return 0;
+        
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+        
+        // update diameter at every node
+        diameter = Math.max(diameter, left + right);
+
+        // update the largest number of edge so far
+        return 1 + Math.max(left, right);
+    }
+
+    dfs(root);
+    
+    return diameter + 1;
+};
+
+// Comments
+var diameterOfBinaryTree = function(root) {
+    let diameter = 0; // Track the largest diameter
+    
+    function dfs(node) {
+        if (!node) return 0; // Base case
+        
+        // post order traversal
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+        
+        // update diameter at every node
+        diameter = Math.max(diameter, left + right);
+
+        // update the largest number of edge so far
+        return 1 + Math.max(left, right);
+    }
+
+    // Call inner fn
+    dfs(root);
+    
+    // The diameter will hold the greatest number of edges, 
+    // the number of nodes for a given number of edges is edges + 1;
+    return diameter + 1;
+};
+```
+<br>
+
+### **Comments:**
+  - This problem works from the bottom up, we get all the way to a bottom node, start at zero, and moving up the path, check for the largest diameter, and returning the greater of the left and right nodes each time we evaluate a node.
+  - READ THE PROBLEM CAREFULLY, the number of edges in a path will always be one less than the number of nodes, this problem may ask for either.
+
+<br>
+
+### **Basic Pattern:**
+  1. Track largest diameter
+  2. Post order traversal
+  3. Update diameter at each node
+  4. Update the largest number of edges
+  5. Return largest number of edges plus one.
+
+<br>
+
+### **Basic Pattern:**
+  1. Create an outer fn which takes in the root node of a tree.
+     1. Create a diameter variable to track the largest diameter.
+     2. Create an inner fn which takes a node.
+        1. If the node passed in is null, return 0 (base case).
+        2. Create a left and right variable and set them equal to the return value of calling the inner fn passing in the left and right variables respectively.
+        3. Find the larger value between the diameter and the sum of the left and right values, set diameter to the larger.
+        4. Return the greater of the left and right values, plus one.
+     3. Call inner fn passing in the root node.
+     4. Return the diameter, plus one.
+
+### **LeetCode Version of the Problem:**
+
+- Very similar, but with one very important key difference:
+  - *The length of a path between two nodes is represented by the number of **edges** between them.*
+
+```js
+var diameterOfBinaryTree = function(root) {
+    let diameter = 0;
+    
+    
+    
+    function dfs(node) {
+        if (!node) return 0;
+        
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+        
+        // update diameter at every node
+        diameter = Math.max(diameter, left + right);
+
+        // update the largest number of edge so far
+        return 1 + Math.max(left, right);
+    }
+
+    dfs(root);
+    
+    return diameter; // notice here that we are not adding one.
+};
+```
+
+### **Similar Leetcode Problem:**
+
+- Binary Tree Maximum Path Sum (hard)
+
+<br>
+
+- In this problem, we are searching for the path with the largest sum.
+
+```js
+var maxPathSum = function(root) {
+    let maxPathSum = -Infinity;
+    
+    dfs(root);
+    
+    return pathSum;
+    
+    function dfs(node) {
+        if (!node) return 0;
+        
+        const left = dfs(node.left);
+        const right = dfs(node.right);
+        
+        // Check the current path sum vs the largest path sum
+        maxPathSum = Math.max(maxPathSum, left + right + node.val);
+
+        // Zero here represents ignoring all the values the the current node
+        // If for instance all the values are negative.
+        return Math.max(0, node.val, node.val + left, node.val + right);
+    }
+};
+```
