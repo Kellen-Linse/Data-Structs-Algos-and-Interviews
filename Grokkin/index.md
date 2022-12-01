@@ -11,3 +11,4 @@
 5. [**Pattern:** Cyclic Sort](Patterns/Cyclic_Sort/index.md)
 6. [**Pattern:** Merge Intervals](Patterns/Merge_Intervals/index.md)
 7. [**Pattern:** Tree: Breadth First Search](Patterns/Tree_BFS/index.md)
+8. [**Pattern:** Tree: Depth First Search](Patterns/Tree_DFS/index.md)

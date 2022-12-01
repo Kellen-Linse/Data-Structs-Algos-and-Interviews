@@ -1,4 +1,4 @@
-# Two (plus) Pointer Technique
+# Tree: Breadth First Search
 
 ## [General Notes](./gNotes.md)
 

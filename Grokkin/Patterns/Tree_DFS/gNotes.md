@@ -7,6 +7,25 @@
 <hr>
 <br> 
 
+  - The "Worst Case" for a DFS problem is if the tree is actually just a linked list.
+
+<br>
+
+  - Article on DFS of binary tree: [LINK](https://blog.bitsrc.io/depth-first-search-of-a-binary-tree-in-javascript-874701d8210a)
+
+<br>
+
+- Always ask, "in what direction do I need to process the nodes?"
+  - DFS traversal can be thought of as a height first traversal:
+    - **Top Down:** preOrder
+    - **Bottom Up:** inOrder and postOrder
+  - In standard form, these will traverse the tree from **Left to Right**
+    - This happens because in the code we explore the left child node before the right.
+  - If we want to traverse **Right to Left**
+    - We can explore the right child node before the left.
+
+<br>
+
 - Depth First Searches methods are **Top Down**,
   - We can visit every node in the tree in three main ways:
     - inOrder
