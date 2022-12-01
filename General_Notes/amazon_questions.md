@@ -2,7 +2,7 @@ This is a copy of a leetcode post found here:
 
 https://leetcode.com/discuss/interview-question/1590162/Amazon-Final-Interview-Questions-or-All-Combined-2021-or-SDE-and-New-Grad
 
-Saved in case it is deleted.
+**Saved in case it is deleted.**
 
 <br>
 <hr>
